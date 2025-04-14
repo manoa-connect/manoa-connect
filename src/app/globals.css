@@ -12,3 +12,71 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.bg-manoa-green {
+  background-color: #024731;
+  color: white;
+}
+
+.top-left-image {
+  top: 10px;
+  left: 10px;
+  width: 70px;          /* or whatever size you need */
+  height: 70px;
+  border-radius: 50%;   /* optional for circular */
+}
+
+.card-page-container {
+  position: relative;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px; /* leaves space for bottom buttons */
+  box-sizing: border-box;
+}
+
+.center-card {
+  position: relative; /* required for absolute positioning inside */
+  width: 80%;
+  max-width: 1000px;
+  max-height: 500px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  padding-bottom: 50px;
+  background-color: #024731 !important;
+  color: white !important;
+}
+
+.card-body {
+  max-height: 80vh; 
+  overflow-y: auto;
+}
+
+.card-image {
+  max-height: 35vh;
+  width: 100%;
+  object-fit: contain; 
+}
+
+.corner-button-card {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.corner-button {
+  position: absolute;
+  bottom: 30px;
+  padding: 10px 20px;
+  z-index: 2;
+}
+
+.bottom-left {
+  left: 30px;
+}
+
+.bottom-right {
+  right: 30px;
+}
