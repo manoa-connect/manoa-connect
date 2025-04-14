@@ -1,10 +1,10 @@
-import MatchingPage from '@/components/MatchingPage';
+import MatchingPage2 from '@/components/MatchingPage2';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 
 /** The Home page. */
 const Home = () => (
   <main>
-  <MatchingPage />
+  <MatchingPage2 />
 
   </main>
 );
