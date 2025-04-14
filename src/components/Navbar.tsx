@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
-import logo from "../../public/assets/manoa-connect_logo.svg";
+import logo from "../../public/assets/manoa-connect_logo-text.svg";
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -15,10 +15,10 @@ const NavBar: React.FC = () => {
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
-    <Navbar className="bg-manoa-green" data-bs-theme="dark" expand="lg">
+    <Navbar className="bg-manoa-green" data-bs-theme="dark" expand="lg" sticky="top">
       <Container>
         <Navbar.Brand href="/">
-          <Image src={logo.src} width="50px" alt="Manoa Connect" className="d-inline-block align-top invert"/>
+          <Image src={logo.src} width="150px" alt="Manoa Connect" className="d-inline-block invert m-2"/>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

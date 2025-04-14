@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Heavitas';
+  src: url('../../public/assets/Heavitas.ttf') format('truetype');
+}
+
 html,
 body {
   --bs-light-rgb: 236, 236, 236;
@@ -29,6 +34,10 @@ body {
 .bg-manoa-green {
   background-color: #024731;
   color: white;
+}
+
+.text-heavitas {
+  font-family: 'Heavitas', sans-serif;
 }
 
 .v-middle {
