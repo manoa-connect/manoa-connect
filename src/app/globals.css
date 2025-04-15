@@ -15,6 +15,16 @@
   }
 }
 
+@keyframes appear-fade {
+  from {
+      opacity: 1;
+  }
+
+  to {
+      opacity: 0;
+  }
+}
+
 :root {
   --manoa-green: #024731;
 }
@@ -77,6 +87,13 @@ body {
   animation: appear-slideUp linear;
   animation-timeline: view();
   animation-range: entry cover 35%;
+}
+
+.fade-out {
+  animation: appear-fade linear;
+  animation-timeline: view();
+  animation-range: entry cover 20%;
+  opacity: 0;
 }
 
 .top-left-image {
