@@ -110,7 +110,7 @@ body {
 }
 
 .card-body {
-  max-height: 80vh; 
+  height: 50vh; 
   overflow-y: auto;
 }
 

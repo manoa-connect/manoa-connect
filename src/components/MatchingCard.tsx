@@ -1,8 +1,9 @@
 'use client';
  
  import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
+ import Link from 'next/link';
  
- const MatchingPage = () => (
+ const MatchingPage = ({ onFlip }: { onFlip: () => void }) => (
     <Container fluid className="card-page-container">
 
       <Button variant="dark" className="corner-button bottom-left btn-lg">
@@ -55,7 +56,7 @@
                 I am also looking for someone to go to the gym with. I love to play basketball and go hiking.
             </Card.Text>
           </Card.Body>
-                <Button variant="primary" className="corner-button-card btn-sm">
+                <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlip}>
                 View Profile
                 </Button>
         </Card>
@@ -65,5 +66,5 @@
       </Button>
     </Container>
  );
- 
- export default MatchingPage;
+
+export default MatchingPage;
