@@ -4,8 +4,9 @@
 
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import logo from "../../public/assets/manoa-connect_logo-text.svg";
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -14,19 +15,30 @@ const NavBar: React.FC = () => {
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="bg-manoa-green" data-bs-theme="dark" expand="lg" sticky="top">
       <Container>
-        <Navbar.Brand href="/">Next.js Application Template</Navbar.Brand>
+        <Navbar.Brand href="/">
+          <Image src={logo.src} width="150px" alt="Manoa Connect" className="d-inline-block invert m-2"/>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
+            <Nav.Link id="home-nav" href="/home" key="home" active={pathName === '/home'}>
+              Home
+            </Nav.Link>
             {currentUser
               ? [
                   <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
-                    Add Stuff
+                    Schedule
                   </Nav.Link>,
                   <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
-                    List Stuff
+                    Map
+                  </Nav.Link>,
+                  <Nav.Link id="connect" href="/chat" key="list" active={pathName === '/list'}>
+                  Chat
+                  </Nav.Link>,
+                  <Nav.Link id="connect" href="/connect" key="list" active={pathName === '/list'}>
+                  Connect
                   </Nav.Link>,
                 ]
               : ''}
@@ -51,7 +63,7 @@ const NavBar: React.FC = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <NavDropdown id="login-dropdown" title="Login">
+              <NavDropdown id="login-dropdown" title="Login" data-bs-theme="light">
                 <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin">
                   <PersonFill />
                   Sign in
