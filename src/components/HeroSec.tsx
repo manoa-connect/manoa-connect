@@ -1,3 +1,5 @@
+'use client'
+
 import { Col, Container, Image, Row, Button, Card, Navbar, Nav } from 'react-bootstrap';
 import text_logo from '../../public/assets/manoa-connect_logo-text.svg'
 import card_image from '../../public/img/hero-img.jpg';

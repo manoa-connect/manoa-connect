@@ -1,4 +1,5 @@
 'use client';
+
 import { Col, Container, Row } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
 

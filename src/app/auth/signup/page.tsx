@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
+import { Card, Col, Container, Button, Form, Row, Nav } from 'react-bootstrap';
 import { createUser } from '@/lib/dbActions';
 
 type SignUpForm = {
@@ -45,64 +45,60 @@ const SignUp = () => {
 
   return (
     <main>
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={5}>
-            <h1 className="text-center">Sign Up</h1>
-            <Card>
-              <Card.Body>
-                <Form onSubmit={handleSubmit(onSubmit)}>
-                  <Form.Group className="form-group">
-                    <Form.Label>Email</Form.Label>
-                    <input
-                      type="text"
-                      {...register('email')}
-                      className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                    />
-                    <div className="invalid-feedback">{errors.email?.message}</div>
-                  </Form.Group>
+      <Container id="bg-image" fluid>
+        <Container className="py-5">
+          <Row className="justify-content-center">
+            <Col xs={5} className="bg-white pb-5 mb-5 my-auto">
+              <h1 className="text-center text-black text-heavitas mt-5 pt-5">Sign Up</h1>
+                  <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Form.Group className="form-group p-3">
+                      <Form.Label>Email</Form.Label>
+                      <input
+                        type="text"
+                        {...register('email')}
+                        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                      />
+                      <div className="invalid-feedback">{errors.email?.message}</div>
+                    </Form.Group>
 
-                  <Form.Group className="form-group">
-                    <Form.Label>Password</Form.Label>
-                    <input
-                      type="password"
-                      {...register('password')}
-                      className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                    />
-                    <div className="invalid-feedback">{errors.password?.message}</div>
-                  </Form.Group>
-                  <Form.Group className="form-group">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <input
-                      type="password"
-                      {...register('confirmPassword')}
-                      className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
-                    />
-                    <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
-                  </Form.Group>
-                  <Form.Group className="form-group py-3">
+                    <Form.Group className="form-group p-3">
+                      <Form.Label>Password</Form.Label>
+                      <input
+                        type="password"
+                        {...register('password')}
+                        className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                      />
+                      <div className="invalid-feedback">{errors.password?.message}</div>
+                    </Form.Group>
+                    <Form.Group className="form-group px-3 pt-3 pb-2">
+                      <Form.Label>Confirm Password</Form.Label>
+                      <input
+                        type="password"
+                        {...register('confirmPassword')}
+                        className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                      />
+                      <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
+                    </Form.Group>
                     <Row>
-                      <Col>
-                        <Button type="submit" className="btn btn-primary">
-                          Register
-                        </Button>
-                      </Col>
-                      <Col>
-                        <Button type="button" onClick={() => reset()} className="btn btn-warning float-right">
-                          Reset
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Form.Group>
-                </Form>
-              </Card.Body>
-              <Card.Footer>
-                Already have an account?
-                <a href="/auth/signin">Sign in</a>
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
+                        <Nav.Link type="button" onClick={() => reset()} className="link-danger float-right text-center hover-line">
+                              Reset
+                            </Nav.Link>
+                      </Row>
+                    <Container className="px-3 pt-5">
+                      <Row>
+                          <Button type="submit" className="btn btn-success">
+                            Register
+                          </Button>
+                      </Row>
+                    </Container>
+                  </Form>
+                <Card.Footer className="text-center text-black pt-3 mb-5 pb-5">
+                  Already have an account?
+                  <a href="/auth/signin" className="ps-2 link-success">Sign in</a>
+                </Card.Footer>
+            </Col>
+          </Row>
+        </Container>
       </Container>
     </main>
   );

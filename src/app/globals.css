@@ -44,6 +44,14 @@ body {
   background-position-y: 30%;
 }
 
+#bg-image {
+  background-image: linear-gradient(rgba(192, 192, 192, 0.2), rgba(0, 0, 0, 0.6)), url(../../public/img/hero-img.jpg);
+  background-size: cover;
+  height: 100vh;
+  background-position-x: 60%;
+  background-position-y: 30%;
+}
+
 .invert {
   filter: invert();
 }
