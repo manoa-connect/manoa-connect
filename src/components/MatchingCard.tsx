@@ -1,5 +1,6 @@
 'use client';
  
+import Link from 'next/link';
  import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
  
  const MatchingPage = () => (
