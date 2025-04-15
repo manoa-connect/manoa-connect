@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill, Person } from 'react-bootstrap-icons';
 import logo from "../../public/assets/manoa-connect_logo-text.svg";
+import { prisma } from '@/lib/prisma';
+import React from 'react';
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -14,6 +16,26 @@ const NavBar: React.FC = () => {
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
+
+  // Fetch user profile only if `currentUser` is a valid string
+  const fetchUserProfile = async () => {
+    if (!currentUser) return null;
+    return await prisma.userProfile.findUnique({
+      where: { owner: currentUser },
+    });
+  };
+
+  const [userProfile, setUserProfile] = React.useState<{ id: number } | null>(null);
+
+  React.useEffect(() => {
+    const getUserProfile = async () => {
+      const profile = await fetchUserProfile();
+      setUserProfile(profile);
+    };
+    getUserProfile();
+  }, [currentUser]);
+
+  const id = userProfile?.id;
   
   return (
     <Navbar className="bg-manoa-green" data-bs-theme="dark" expand="lg" sticky="top">
@@ -48,7 +70,7 @@ const NavBar: React.FC = () => {
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
-                <NavDropdown.Item id="login-dropdown-user-profile" href="/auth/profile/${id}">
+                <NavDropdown.Item id="login-dropdown-user-profile" href={` /auth/profile/${id} `}>
                   <Person />
                   User Profile
                 </NavDropdown.Item>

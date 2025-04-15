@@ -41,7 +41,7 @@ model Stuff {
   name      String
   quantity  Int
   condition Condition @default(good)
-  owner     String
+  owner     String    @unique
 }
 
 enum Major {
