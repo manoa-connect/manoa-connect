@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, UserProfile, Major } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -91,4 +91,23 @@ export async function changePassword(credentials: { email: string; password: str
       password,
     },
   });
+}
+
+/**
+ * Edits an existing profile in the database.
+ * @param userprofile, an object with the following properties: id, name, major, owner.
+ */
+export async function editProfile(userprofile: UserProfile) {
+  // console.log(`editProfile data: ${JSON.stringify(stuff, null, 2)}`);
+  await prisma.userProfile.update({
+    where: { id: userprofile.id },
+    data: {
+      name: userprofile.name,
+      owner: userprofile.owner,
+      major: userprofile.major,
+      year: userprofile.year,
+    },
+  });
+  // After updating, redirect to the list page
+  redirect('/list');
 }

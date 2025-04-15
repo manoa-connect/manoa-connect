@@ -1,4 +1,4 @@
-import { PrismaClient, Role, Condition } from '@prisma/client';
+import { PrismaClient, Role, Condition, Major, Year } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
 
@@ -36,6 +36,21 @@ async function main() {
       },
     });
   }
+  config.defaultProfiles.forEach(async (profile, index) => {
+    const major = profile.major as Major || Major.engineering;
+    const year = profile.year as Year || 'freshman';
+    console.log(`  Adding profile: ${profile.name} ${profile.year} ${profile.owner}`);
+    await prisma.userProfile.upsert({
+      where: { id: index + 1 },
+      update: {},
+      create: {
+        name: profile.name,
+        major,
+        year,
+        owner: profile.owner,
+      },
+    });
+  });
 }
 main()
   .then(() => prisma.$disconnect())

@@ -5,7 +5,7 @@
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
-import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import { BoxArrowRight, Lock, PersonFill, PersonPlusFill, Person } from 'react-bootstrap-icons';
 import logo from "../../public/assets/manoa-connect_logo-text.svg";
 
 const NavBar: React.FC = () => {
@@ -14,6 +14,7 @@ const NavBar: React.FC = () => {
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
+  
   return (
     <Navbar className="bg-manoa-green" data-bs-theme="dark" expand="lg" sticky="top">
       <Container>
@@ -47,6 +48,10 @@ const NavBar: React.FC = () => {
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
+                <NavDropdown.Item id="login-dropdown-user-profile" href="/auth/profile/${id}">
+                  <Person />
+                  User Profile
+                </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
                   <BoxArrowRight />
                   Sign Out

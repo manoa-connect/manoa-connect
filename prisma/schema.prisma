@@ -43,3 +43,28 @@ model Stuff {
   condition Condition @default(good)
   owner     String
 }
+
+enum Major {
+  computerscience
+  business
+  engineering
+  arts
+  sciences
+  socialsciences
+}
+
+enum Year {
+  freshman
+  sophomore
+  junior
+  senior
+  graduate
+}
+
+model UserProfile {
+  id        Int       @id @default(autoincrement())
+  name      String
+  major     Major
+  year      Year
+  owner     String
+}
