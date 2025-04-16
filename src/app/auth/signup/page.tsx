@@ -4,8 +4,9 @@ import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Card, Col, Container, Button, Form, Row, Nav } from 'react-bootstrap';
+import { Card, Col, Container, Button, Form, Row, Nav, Navbar, Image } from 'react-bootstrap';
 import { createUser } from '@/lib/dbActions';
+import logo from "../../../../public/assets/manoa-connect_logo.svg";
 
 type SignUpForm = {
   email: string;
@@ -49,7 +50,10 @@ const SignUp = () => {
         <Container className="py-5">
           <Row className="justify-content-center">
             <Col xs={5} className="bg-white pb-5 mb-5 my-auto">
-              <h1 className="text-center text-black text-heavitas mt-5 pt-5">Sign Up</h1>
+              <Navbar className="pt-5 justify-content-center align-middle text-center">
+                <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto"/>
+                <Navbar.Text className="text-center text-black text-heavitas h1 mt-4 ms-2">Sign Up</Navbar.Text>
+              </Navbar>
                   <Form onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group className="form-group p-3">
                       <Form.Label>Email</Form.Label>
@@ -80,11 +84,11 @@ const SignUp = () => {
                       <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
                     </Form.Group>
                     <Row>
-                        <Nav.Link type="button" onClick={() => reset()} className="link-danger float-right text-center hover-line">
-                              Reset
+                        <Nav.Link type="button" onClick={() => reset()} className="link-danger text-end pe-4 pt-3 hover-line">
+                              Reset Form
                             </Nav.Link>
                       </Row>
-                    <Container className="px-3 pt-5">
+                    <Container className="px-3 pt-4">
                       <Row>
                           <Button type="submit" className="btn btn-success">
                             Register
