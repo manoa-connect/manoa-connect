@@ -9,6 +9,8 @@ import { createUser } from '@/lib/dbActions';
 import logo from "../../../../public/assets/manoa-connect_logo.svg";
 
 type SignUpForm = {
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -18,6 +20,8 @@ type SignUpForm = {
 /** The sign up page. */
 const SignUp = () => {
   const validationSchema = Yup.object().shape({
+    firstName: Yup.string().required('First Name is required'),
+    lastName: Yup.string().required('Last Name is required'),
     email: Yup.string().required('Email is required').email('Email is invalid'),
     password: Yup.string()
       .required('Password is required')
@@ -41,7 +45,7 @@ const SignUp = () => {
     // console.log(JSON.stringify(data, null, 2));
     await createUser(data);
     // After creating, signIn with redirect to the add page
-    await signIn('credentials', { callbackUrl: '/add', ...data });
+    await signIn('credentials', { callbackUrl: '/', ...data });
   };
 
   return (
@@ -55,6 +59,32 @@ const SignUp = () => {
                 <Navbar.Text className="text-center text-black text-heavitas h1 mt-4 ms-2">Sign Up</Navbar.Text>
               </Navbar>
                   <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Row>
+                      <Col>
+                        <Form.Group className="form-group ps-3 py-3">
+                        <Form.Label>First Name</Form.Label>
+                        <input
+                          type="text"
+                          {...register('firstName')}
+                          className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+                        />
+                        <div className="invalid-feedback">{errors.firstName?.message}</div>
+                      </Form.Group>
+                      </Col>
+
+                      <Col>
+                        <Form.Group className="form-group py-3 pe-3">
+                        <Form.Label>Last Name</Form.Label>
+                        <input
+                          type="text"
+                          {...register('lastName')}
+                          className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                        />
+                        <div className="invalid-feedback">{errors.lastName?.message}</div>
+                      </Form.Group>
+                      </Col>
+                    </Row>
+                    
                     <Form.Group className="form-group p-3">
                       <Form.Label>Email</Form.Label>
                       <input

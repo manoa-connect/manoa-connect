@@ -23,12 +23,20 @@ enum Role {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  email     String @unique
-  firstName String
-  lastName  String
+  id        Int      @id @default(autoincrement())
+  firstName String   @default("first")
+  lastName  String   @default("last")
+  email     String   @unique
   password  String
-  role      Role   @default(USER)
+  role      Role     @default(USER)
+  profile   Profile?
+}
+
+enum Condition {
+  excellent
+  good
+  fair
+  poor
 }
 
 model Stuff {
@@ -54,10 +62,13 @@ enum Year {
 }
 
 model Profile {
-  id          Int    @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
+  userId      Int       @unique
+  user        User      @relation(fields: [email], references: [email]) // Also owner of the profile
+  // contacts    Contact[] 
   firstName   String
   lastName    String
-  email       String @unique
+  email       String    @unique
   description String
   year        Year
   major       String
@@ -66,14 +77,4 @@ model Profile {
   commute     Commute
   current     String
   previous    String
-  User        User  @relation(fields: [email], references: [email]) // Also owner of the profile
-}
-
-model Contact {
-  id        Int    @id @default(autoincrement())
-  firstName String
-  lastName  String
-  email     String @unique
-  owner     String
-  Profile   Profile @relation(fields: [firstName, lastName, email], references: [firstName, lastName, email])
 }
