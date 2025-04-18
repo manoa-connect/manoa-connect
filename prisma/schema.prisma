@@ -23,10 +23,13 @@ enum Role {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  role     Role   @default(USER)
+  id        Int    @id @default(autoincrement())
+  email     String @unique
+  firstName String?
+  lastName  String?
+  password  String
+  role      Role   @default(USER)
+  Profile   Profile[]
 }
 
 enum Condition {
@@ -42,4 +45,48 @@ model Stuff {
   quantity  Int
   condition Condition @default(good)
   owner     String
+}
+
+enum Commute {
+  Dorm
+  Commuter
+  Other
+}
+
+enum Year {
+  Freshman
+  Sophomore
+  Junior
+  Senior
+  Graduate
+}
+
+model Chat {
+    id        Int      @id @default(autoincrement())
+    contactId Int
+    chat      String
+    owner     String
+    createdAt DateTime @default(now())
+    Profile   Profile  @relation(fields: [contactId], references: [id])
+}
+
+model Profile {
+  id          Int    @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String @unique
+  description String
+  note        Chat[]
+  year        Year
+  major       String
+  likes       String
+  mbti        String
+  commute     Commute
+  current     String
+  previous    String
+  User        User  @relation(fields: [email], references: [email]) // Also owner of the profile
+  accepts     Profile[] @relation("LikesGiven")
+  acceptedBy  Profile[] @relation("LikesGiven")
+  matches     Profile[] @relation("MatchedProfiles")
+  matchedBy   Profile[] @relation("MatchedProfiles")
 }
