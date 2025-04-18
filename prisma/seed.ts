@@ -43,6 +43,8 @@ async function main() {
         previous: data.previous,
       },
     });
+  }
+  for (const data of config.defaultProfiles) {
     if (data.liked?.length) {
       await prisma.profile.update({
         where: { email: data.email },
