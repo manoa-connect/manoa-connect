@@ -29,6 +29,14 @@ model User {
   lastName  String
   password  String
   role      Role   @default(USER)
+  Profile   Profile[]
+}
+
+enum Condition {
+  excellent
+  good
+  fair
+  poor
 }
 
 model Stuff {
@@ -53,12 +61,22 @@ enum Year {
   Graduate
 }
 
+model Chat {
+    id        Int      @id @default(autoincrement())
+    contactId Int
+    note      String
+    owner     String
+    createdAt DateTime @default(now())
+    Profile   Profile  @relation(fields: [contactId], references: [id])
+}
+
 model Profile {
   id          Int    @id @default(autoincrement())
   firstName   String
   lastName    String
   email       String @unique
   description String
+  note        Chat[]
   year        Year
   major       String
   likes       String
@@ -67,13 +85,4 @@ model Profile {
   current     String
   previous    String
   User        User  @relation(fields: [email], references: [email]) // Also owner of the profile
-}
-
-model Contact {
-  id        Int    @id @default(autoincrement())
-  firstName String
-  lastName  String
-  email     String @unique
-  owner     String
-  Profile   Profile @relation(fields: [firstName, lastName, email], references: [firstName, lastName, email])
 }
