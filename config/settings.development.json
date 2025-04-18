@@ -17,7 +17,9 @@
       "mbti": "ENFP",
       "commute": "Dorm",
       "current": "Hale Aloha",
-      "previous": "Waikiki"
+      "previous": "Waikiki",
+      "liked": ["masaki@foo.com"],
+      "matched": ["masaki@foo.com"]
     },
     {
       "firstName": "Masaki",
@@ -30,7 +32,9 @@
       "mbti": "ENFJ",
       "commute": "Commuter",
       "current": "Kaimuki",
-      "previous": "Tokyo"
+      "previous": "Tokyo",
+      "liked": ["john@foo.com"],
+      "matched": ["john@foo.com"]
     }
   ]
 }

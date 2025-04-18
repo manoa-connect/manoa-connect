@@ -85,4 +85,8 @@ model Profile {
   current     String
   previous    String
   User        User  @relation(fields: [email], references: [email]) // Also owner of the profile
+  accepts     Profile[] @relation("LikesGiven")
+  acceptedBy  Profile[] @relation("LikesGiven")
+  matches     Profile[] @relation("MatchedProfiles")
+  matchedBy   Profile[] @relation("MatchedProfiles")
 }

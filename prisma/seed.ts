@@ -43,6 +43,26 @@ async function main() {
         previous: data.previous,
       },
     });
+    if (data.liked?.length) {
+      await prisma.profile.update({
+        where: { email: data.email },
+        data: {
+          accepts: {
+            connect: data.liked.map((email: string) => ({ email }))
+          }
+        }
+      });
+    }
+    if (data.matched?.length) {
+      await prisma.profile.update({
+        where: { email: data.email },
+        data: {
+          matches: {
+            connect: data.matched.map((email: string) => ({ email }))
+          }
+        }
+      });
+    }
   }
 }
 main()
