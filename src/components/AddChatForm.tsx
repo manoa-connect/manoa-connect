@@ -21,7 +21,7 @@ const onSubmit = async (
   });
 };
 
-const AddChatForm = ({ contact }: { contact: Profile }) => {
+const AddChatForm = ({ profile }: { profile: Profile }) => {
   const { data: session, status } = useSession();
   // console.log('AddContactForm', status, session);
   const currentUser = session?.user?.email || '';
@@ -62,7 +62,7 @@ const AddChatForm = ({ contact }: { contact: Profile }) => {
                   />
                   <div className="invalid-feedback">{errors.chat?.message}</div>
                 </Form.Group>
-                <input type="hidden" {...register('contactId')} value={contact.id} />
+                <input type="hidden" {...register('contactId')} value={profile.id} />
                 <input type="hidden" {...register('owner')} value={currentUser} />
                 <Form.Group className="form-group">
                   <Row className="pt-3">

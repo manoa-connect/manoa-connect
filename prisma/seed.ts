@@ -1,4 +1,4 @@
-import { PrismaClient, Role, Condition } from '@prisma/client';
+import { PrismaClient, Role, Year, Commute } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
 
@@ -23,18 +23,24 @@ async function main() {
     });
     // console.log(`  Created user: ${user.email} with role: ${user.role}`);
   });
-  for (const data of config.defaultData) {
-    const condition = data.condition as Condition || Condition.good;
-    console.log(`  Adding stuff: ${JSON.stringify(data)}`);
+  for (const data of config.defaultProfiles) {
+    console.log(`  Adding profile: \n${JSON.stringify(data)}`);
     // eslint-disable-next-line no-await-in-loop
-    await prisma.stuff.upsert({
-      where: { id: config.defaultData.indexOf(data) + 1 },
+    await prisma.profile.upsert({
+      where: { email: data.email },
       update: {},
       create: {
-        name: data.name,
-        quantity: data.quantity,
-        owner: data.owner,
-        condition,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        description: data.description,
+        year: data.year as Year,
+        major: data.major,
+        likes: data.likes,
+        mbti: data.mbti,
+        commute: data.commute as Commute,
+        current: data.current,
+        previous: data.previous,
       },
     });
   }
