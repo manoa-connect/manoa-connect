@@ -24,7 +24,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
     <main className="p-4">
       <Row>
         <Col xs={4}>
-              <h5>Matches</h5>
+              <h5>Friends</h5>
               <ListGroup>
                 {matchs.map((match) => (
                   <ListGroup.Item
