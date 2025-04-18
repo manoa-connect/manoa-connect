@@ -4,25 +4,17 @@ import { useSession } from 'next-auth/react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import swal from 'sweetalert';
-import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
+import { redirect, useRouter } from 'next/navigation';
 import { addChat } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddChatSchema } from '@/lib/validationSchemas';
 import { Profile } from '@prisma/client';
 import { ArrowUpCircle } from 'react-bootstrap-icons';
 
-const onSubmit = async (
-  data: { chat: string; contactId: number; owner: string },
-) => {
-  // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-  await addChat(data);
-  swal('Success', 'Your item has been added', 'success', {
-    timer: 2000,
-  });
-};
-
 const AddChatForm = ({ profile }: { profile: Profile }) => {
+  const router = useRouter();
+
   const { data: session, status } = useSession();
   // console.log('AddContactForm', status, session);
   const currentUser = session?.user?.email || '';
@@ -30,9 +22,25 @@ const AddChatForm = ({ profile }: { profile: Profile }) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(AddChatSchema),
   });
+
+  useEffect(() => {
+    setValue('contactId', profile.id);
+  }, [profile.id, setValue]);
+
+  const onSubmit = async (
+    data: { chat: string; contactId: number; owner: string },
+  ) => {
+    // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
+    await addChat(data);
+    reset();
+    router.push('/chat');
+  };
+
   if (status === 'loading') {
     return <LoadingSpinner />;
   }
