@@ -25,11 +25,16 @@ const Home = async () => {
   }
 
   const chats = await prisma.chat.findMany({
-    where: { owner: email },
+    where: {
+        OR: [
+        { owner: email },                       // 自分が送った
+        { contactId: profile.id },              // 自分が受け取った
+      ],
+    },
     orderBy: { createdAt: 'asc' },
   });
 
-  return <ChatPage chats={chats} matchs={profile.matches} />;
+  return <ChatPage profile={profile} chats={chats} matchs={profile.matches} />;
 };
 
 export default Home;

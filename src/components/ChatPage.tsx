@@ -6,13 +6,18 @@ import { Chat, Profile } from '@prisma/client';
 import ChatItem from './ChatItem';
 import AddChatForm from './AddChatForm';
 
-const ChatCard = ({ chats, matchs }: { chats: Chat[], matchs: Profile[] }) => {
+const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[], matchs: Profile[] }) => {
+  const sessionUserEmail = profile.email;
+  const currentProfileId = profile.id;
+
   const [selectedMatch, setSelectedMatch] = useState<Profile | null>(
     matchs.length > 0 ? matchs[0] : null
   );
 
   const filteredChats = chats.filter(
-    (chat) => chat.contactId === selectedMatch?.id
+    (chat) =>
+      (chat.contactId === selectedMatch?.id && chat.owner === sessionUserEmail) || 
+      (chat.contactId === currentProfileId && chat.owner === selectedMatch?.email) 
   );
 
   return (
