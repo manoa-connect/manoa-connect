@@ -1,6 +1,7 @@
 'use server';
 
 import { Stuff, Condition } from '@prisma/client';
+import { Year, Commute } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -93,4 +94,63 @@ export async function changePassword(credentials: { email: string; password: str
       password,
     },
   });
+}
+
+/**
+ * Adds a new Profile to the database.
+ * @param profile, an object with the following properties.
+ */
+export async function createProfile(profile: { 
+  firstName: string; 
+  lastName: string; 
+  email: string;
+  description: string;
+  year: string;
+  major: string;
+  likes: string;
+  mbti: string;
+  commute: string;
+  current: string;
+  previous: string; 
+}) {
+  let year: Year = 'freshman';
+  if (profile.year === 'freshman') {
+    year = 'freshman';
+  } else if (profile.year === 'sophomore') {
+    year = 'sophomore';
+  } else if (profile.year === 'junior') {
+    year = 'junior';
+  } else if (profile.year === 'senior') {
+    year = 'senior';
+  } else {
+    year = 'graduate';
+  }
+
+  let commute: Commute = 'dorm';
+  if (profile.commute === 'dorm') {
+    commute = 'dorm';
+  } else if (profile.commute === 'commuter') {
+    commute = 'commuter';
+  } else {
+    commute = 'other';
+  }
+
+  await prisma.profile.create({
+    data: {
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      email: profile.email,
+      description: profile.description,
+      year,
+      major: profile.major,
+      likes: profile.likes,
+      mbti: profile.mbti,
+      commute,
+      current: profile.current,
+      previous: profile.previous, 
+    },
+  });
+
+  // After adding, redirect to the user home page
+  redirect('/home');
 }

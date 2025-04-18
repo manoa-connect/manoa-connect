@@ -1,8 +1,8 @@
-import HomePage from '@/components/UserHome';
+import UserHome from '@/components/UserHome';
 
 /** The Home page. */
 const Home = () => (
-  <HomePage />
+  <UserHome />
 );
 
-export default Home;
+export default UserHome;

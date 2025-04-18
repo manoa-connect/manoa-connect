@@ -29,7 +29,6 @@ model User {
   email     String   @unique
   password  String
   role      Role     @default(USER)
-  profile   Profile?
 }
 
 enum Condition {
@@ -48,27 +47,25 @@ model Stuff {
 }
 
 enum Commute {
-  Dorm
-  Commuter
-  Other
+  dorm
+  commuter
+  other
 }
 
 enum Year {
-  Freshman
-  Sophomore
-  Junior
-  Senior
-  Graduate
+  freshman
+  sophomore
+  junior
+  senior
+  graduate
 }
 
 model Profile {
   id          Int       @id @default(autoincrement())
-  userId      Int       @unique
-  user        User      @relation(fields: [email], references: [email]) // Also owner of the profile
   // contacts    Contact[] 
   firstName   String
   lastName    String
-  email       String    @unique
+  email       String
   description String
   year        Year
   major       String
@@ -78,3 +75,4 @@ model Profile {
   current     String
   previous    String
 }
+

@@ -10,8 +10,18 @@ const authOptions: NextAuthOptions = {
   },
   providers: [
     CredentialsProvider({
-      name: 'Email and Password',
+      name: 'First and Last Name, Email, and Password',
       credentials: {
+        firstName: {
+          label: 'First Name',
+          type: 'text',
+          placeholder: 'John',
+        },
+        lastName: {
+          label: 'Last Name',
+          type: 'text',
+          placeholder: 'Doe',
+        },
         email: {
           label: 'Email',
           type: 'email',
@@ -61,6 +71,8 @@ const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
+          firstName: token.firstName,
+          lastName: token.lastName,
           id: token.id,
           randomKey: token.randomKey,
         },
@@ -69,9 +81,11 @@ const authOptions: NextAuthOptions = {
     jwt: ({ token, user }) => {
       // console.log('JWT Callback', { token, user })
       if (user) {
-        const u = user as unknown as { id: string; randomKey: string };
+        const u = user as unknown as { firstName: string; lastName: string; id: string; randomKey: string };
         return {
           ...token,
+          firstName: u.firstName,
+          lastName: u.lastName,
           id: u.id,
           randomKey: u.randomKey,
         };
