@@ -29,7 +29,7 @@ const Home = async () => {
     orderBy: { createdAt: 'asc' },
   });
 
-  return <ChatPage profile={profile} chats={chats} />;
+  return <ChatPage profile={profile} chats={chats} matchs={profile.matches} />;
 };
 
 export default Home;

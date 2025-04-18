@@ -10,6 +10,7 @@ import { addChat } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddChatSchema } from '@/lib/validationSchemas';
 import { Profile } from '@prisma/client';
+import { ArrowUpCircle } from 'react-bootstrap-icons';
 
 const onSubmit = async (
   data: { chat: string; contactId: number; owner: string },
@@ -28,7 +29,6 @@ const AddChatForm = ({ profile }: { profile: Profile }) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(AddChatSchema),
@@ -45,39 +45,24 @@ const AddChatForm = ({ profile }: { profile: Profile }) => {
       <Row className="justify-content-center">
         <Col xs={10}>
           <Col className="text-center">
-            <h2>Add Chat</h2>
           </Col>
           <Card>
-            <Card.Header>
-              Add Timestamped Chat
-            </Card.Header>
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
-                <Form.Group>
-                  <Form.Label>Chat</Form.Label>
+                <Form.Group className="d-flex gap-2 align-items-center">
                   <input
                     type="text"
                     {...register('chat')}
                     className={`form-control ${errors.chat ? 'is-invalid' : ''}`}
+                    placeholder="Enter a message"
                   />
                   <div className="invalid-feedback">{errors.chat?.message}</div>
+                  <Button type="submit" variant="primary">
+                    <ArrowUpCircle />
+                  </Button>
                 </Form.Group>
                 <input type="hidden" {...register('contactId')} value={profile.id} />
                 <input type="hidden" {...register('owner')} value={currentUser} />
-                <Form.Group className="form-group">
-                  <Row className="pt-3">
-                    <Col>
-                      <Button type="submit" variant="primary">
-                        Submit
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button type="button" onClick={() => reset()} variant="warning" className="float-right">
-                        Reset
-                      </Button>
-                    </Col>
-                  </Row>
-                </Form.Group>
               </Form>
             </Card.Body>
           </Card>
