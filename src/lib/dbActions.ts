@@ -92,3 +92,14 @@ export async function changePassword(credentials: { email: string; password: str
     },
   });
 }
+
+export async function addChat(chat: { chat: string; contactId: number, owner: string }) {
+  await prisma.chat.create({
+    data: {
+      chat: chat.chat,
+      contactId: chat.contactId,
+      owner: chat.owner,
+    },
+  });
+  redirect('/list');
+}
