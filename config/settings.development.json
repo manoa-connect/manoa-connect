@@ -1,13 +1,56 @@
 {
   "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
-    { "email": "john@foo.com", "password": "changeme" }
+    { "email": "admin@foo.com", "firstName": "Admin", "lastName": "Foo", "password": "changeme", "role": "ADMIN" },
+    { "email": "john@foo.com", "firstName": "John", "lastName": "Foo", "password": "changeme" },
+    { "email": "masaki@foo.com", "firstName": "Masaki", "lastName": "Sakai", "password": "changeme" },
+    { "email": "uncle@foo.com", "firstName": "Guest", "lastName": "Foo", "password": "changeme" }
   ],
 
-  "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+  "defaultProfiles": [
+    {
+      "firstName": "John",
+      "lastName": "Foo",
+      "email": "john@foo.com",
+      "description": "I like surfing and long walks on the beach.",
+      "year": "Sophomore",
+      "major": "Computer Science",
+      "likes": "Surfing, movies, hiking",
+      "mbti": "ENFP",
+      "commute": "Dorm",
+      "current": "Hale Aloha",
+      "previous": "Waikiki",
+      "liked": ["masaki@foo.com"],
+      "matched": ["masaki@foo.com"]
+    },
+    {
+      "firstName": "Masaki",
+      "lastName": "Sakai",
+      "email": "masaki@foo.com",
+      "description": "Nice to meet you!",
+      "year": "Junior",
+      "major": "Fundamental Science and Engineering",
+      "likes": "Surfing, movies, hiking",
+      "mbti": "ENFJ",
+      "commute": "Commuter",
+      "current": "Kaimuki",
+      "previous": "Tokyo",
+      "liked": ["john@foo.com", "uncle@foo.com"],
+      "matched": ["john@foo.com", "uncle@foo.com"]
+    },
+    {
+      "firstName": "Uncle",
+      "lastName": "Foo",
+      "email": "uncle@foo.com",
+      "description": "I like surfing and long walks on the beach.",
+      "year": "Sophomore",
+      "major": "Computer Science",
+      "likes": "Surfing, movies, hiking",
+      "mbti": "ENFP",
+      "commute": "Dorm",
+      "current": "Hale Aloha",
+      "previous": "Waikiki",
+      "liked": ["masaki@foo.com"],
+      "matched": ["masaki@foo.com"]
+    }
   ]
 }
