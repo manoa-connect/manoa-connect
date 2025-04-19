@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, Year, Commute } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -99,6 +99,61 @@ export async function addChat(chat: { chat: string; contactId: number, owner: st
       chat: chat.chat,
       contactId: chat.contactId,
       owner: chat.owner,
+    },
+  });
+}
+  /**
+ * Adds a new Profile to the database.
+ * @param profile, an object with the following properties.
+ */
+export async function createProfile(profile: { 
+  firstName: string; 
+  lastName: string; 
+  email: string;
+  description: string;
+  year: string;
+  major: string;
+  likes: string;
+  mbti: string;
+  commute: string;
+  current: string;
+  previous: string; 
+}) {
+  let year: Year = 'Freshman';
+  if (profile.year === 'Freshman') {
+    year = 'Freshman';
+  } else if (profile.year === 'Sophomore') {
+    year = 'Sophomore';
+  } else if (profile.year === 'Junior') {
+    year = 'Junior';
+  } else if (profile.year === 'Senior') {
+    year = 'Senior';
+  } else {
+    year = 'Graduate';
+  }
+
+  let commute: Commute = 'Dorm';
+  if (profile.commute === 'Dorm') {
+    commute = 'Dorm';
+  } else if (profile.commute === 'Commuter') {
+    commute = 'Commuter';
+  } else {
+    commute = 'Other';
+  }
+
+  await prisma.profile.create({
+    data: {
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      email: profile.email,
+      description: profile.description,
+      year,
+      major: profile.major,
+      likes: profile.likes,
+      mbti: profile.mbti,
+      commute,
+      current: profile.current,
+      previous: profile.previous, 
     },
   });
   redirect('/list');
