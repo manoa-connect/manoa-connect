@@ -1,0 +1,12 @@
+html,
+.text-body {
+    color: #05704d !important;
+    font-weight: bold !important;
+}
+
+.active-friend {
+    background-color: #05704d !important;
+    color: #ffffff !important;
+    font-weight: bold;
+  }
+
