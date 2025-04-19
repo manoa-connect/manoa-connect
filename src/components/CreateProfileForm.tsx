@@ -34,8 +34,6 @@ const CreateProfileForm: React.FC = () => {
   const { data: session, status } = useSession();
   // console.log('createProfileForm', status, session);
   const currentUser = session?.user?.email || '';
-  const currentFirstName = session?.user?.firstName || '';
-  const currentLastName = session?.user?.lastName || '';
   const {
     register,
     handleSubmit,
@@ -143,8 +141,6 @@ const CreateProfileForm: React.FC = () => {
                   <div className="invalid-feedback">{errors.previous?.message}</div>
                 </Form.Group>
 
-                <input type="hidden" {...register('firstName')} value={currentFirstName} />
-                <input type="hidden" {...register('lastName')} value={currentLastName} />
                 <input type="hidden" {...register('email')} value={currentUser} />
 
                 <Form.Group className="form-group">

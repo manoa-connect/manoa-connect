@@ -101,7 +101,7 @@ export async function addChat(chat: { chat: string; contactId: number, owner: st
       owner: chat.owner,
     },
   });
-
+}
   /**
  * Adds a new Profile to the database.
  * @param profile, an object with the following properties.
@@ -156,7 +156,5 @@ export async function createProfile(profile: {
       previous: profile.previous, 
     },
   });
-}
-
   redirect('/list');
 }
