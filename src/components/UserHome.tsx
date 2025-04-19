@@ -38,6 +38,9 @@ const UserHome = async () => {
             </Card>
           </Link>
           <Button href="/connect" className='mb-3'>Connect</Button>
+          <Button href="/match" className='mb-3'>Match</Button>
+          <Button href="/chat" className='mb-3'>Chat</Button>
+          <Button href="/createProfile" className='mb-3'>Change your Profile</Button>
         </Col>
         <Col className="justify-content-end">
           <Card>
