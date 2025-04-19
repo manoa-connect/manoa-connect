@@ -5,7 +5,7 @@ import authOptions from '@/lib/authOptions';
 import Link from 'next/link';
 
 /** Render a list of stuff for the logged in user. */
-const HomePage = async () => {
+const UserHome = async () => {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
@@ -38,6 +38,9 @@ const HomePage = async () => {
             </Card>
           </Link>
           <Button href="/connect" className='mb-3'>Connect</Button>
+          <Button href="/match" className='mb-3'>Match</Button>
+          <Button href="/chat" className='mb-3'>Chat</Button>
+          <Button href="/createProfile" className='mb-3'>Change your Profile</Button>
         </Col>
         <Col className="justify-content-end">
           <Card>
@@ -50,4 +53,4 @@ const HomePage = async () => {
   );
 };
 
-export default HomePage;
+export default UserHome;
