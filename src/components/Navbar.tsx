@@ -9,7 +9,7 @@ import logo from "../../public/assets/manoa-connect_logo-text.svg";
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
-  const userWithRole = session?.user as { email: string; randomKey: string };
+  const userWithRole = session?.user as { firstName: string; lastName: string; email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
@@ -26,16 +26,16 @@ const NavBar: React.FC = () => {
             </Nav.Link>
             {currentUser
               ? [
-                  <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
+                  <Nav.Link id="schedule-nav" href="/schedule" key="schedule" active={pathName === '/schedule'}>
                     Schedule
                   </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
+                  <Nav.Link id="map-nav" href="/map" key="map" active={pathName === '/map'}>
                     Map
                   </Nav.Link>,
-                  <Nav.Link id="connect" href="/chat" key="list" active={pathName === '/list'}>
+                  <Nav.Link id="chat-nav" href="/chat" key="chat" active={pathName === '/chat'}>
                   Chat
                   </Nav.Link>,
-                  <Nav.Link id="connect" href="/connect" key="list" active={pathName === '/list'}>
+                  <Nav.Link id="connect-nav" href="/connect" key="connect" active={pathName === '/connect'}>
                   Connect
                   </Nav.Link>,
                 ]
