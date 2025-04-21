@@ -1,11 +1,9 @@
-import MatchingCardBack from '@/components/MatchingCardBack';
-import MatchingCard from '@/components/MatchingCard';
+import MatchCardFlip from '@/components/MatchCardFlip';
 
 /** The Home page. */
 const Home = () => (
   <main>
-  <MatchingCard />
-  <MatchingCardBack />
+  <MatchCardFlip />
 
   </main>
 );

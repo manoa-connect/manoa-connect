@@ -3,7 +3,7 @@
  import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
 import OldClassList from './OldClasses';
  
- const MatchingPage2 = () => (
+ const MatchingPage2 = ({ onFlipBack }: { onFlipBack: () => void }) => (
     <Container fluid className="card-page-container">
 
       <Button variant="dark" className="corner-button bottom-left btn-lg">
@@ -62,7 +62,7 @@ import OldClassList from './OldClasses';
             </Col>
             </Row>
           </Card.Body>
-                <Button variant="primary" className="corner-button-card btn-sm">
+                <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlipBack}>
                 Back
                 </Button>
         </Card>
@@ -72,5 +72,5 @@ import OldClassList from './OldClasses';
       </Button>
     </Container>
  );
- 
- export default MatchingPage2;
+
+export default MatchingPage2;
