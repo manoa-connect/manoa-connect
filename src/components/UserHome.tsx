@@ -3,6 +3,8 @@ import { Col, Container, Row, Card, Button, CardTitle } from 'react-bootstrap';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import Link from 'next/link';
+import { PeopleFill } from 'react-bootstrap-icons';
+// import { prisma } from '@/lib/prisma';
 
 /** Render a list of stuff for the logged in user. */
 const UserHome = async () => {
@@ -14,38 +16,41 @@ const UserHome = async () => {
       // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
+  
   /**
-  const owner = (session && session.user && session.user.email) || '';
-  const stuff = await prisma.stuff.findMany({
+  const email = (session && session.user && session.user.email) || '';
+  const profile = await prisma.profile.findMany({
     where: {
-      owner,
+      email,
     },
   });
   */
   // console.log(stuff);
   return (
     <main>
-      <Container id="home" fluid className="py-3">
-        <h2 className='text-center'>User Home Page</h2>
+      <Container id="home" fluid className="py-4 px-3">
+        <h2 className='text-center mb-4'>User Home Page</h2>
         <Row>
-        <Col className='justify-content-start'>
-          <Card className='mb-3'>
+        <Col md={6} className='d-flex flex-column'>
+          <Card className='mb-3 p-3 text-center'>
             <CardTitle>You have XX new matches!</CardTitle>
           </Card>
           <Link href="/chat">
-            <Card className='mb-3'>
+            <Card className='mb-3 p-3 text-center'>
               <CardTitle>You have XX new messages!</CardTitle>
             </Card>
           </Link>
-          <Button href="/connect" className='mb-3'>Connect</Button>
-          <Button href="/match" className='mb-3'>Match</Button>
-          <Button href="/chat" className='mb-3'>Chat</Button>
-          <Button href="/createProfile" className='mb-3'>Change your Profile</Button>
+          <Button className="btn-success py-2 px-4 w-100" href="/connect">
+            <PeopleFill /> Connect
+          </Button>
         </Col>
-        <Col className="justify-content-end">
-          <Card>
+        <Col md={6} className="d-flex flex-column">
+          <Card className='mb-3 p-3 text-center'>
             <CardTitle>You have made XX total new friends!</CardTitle>
           </Card>
+          <Button className="btn-success py-2 px-4 w-100" href="/profile">
+            <PeopleFill /> Edit Profile
+          </Button>
         </Col>
         </Row>
       </Container>

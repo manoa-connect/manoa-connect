@@ -12,6 +12,7 @@ const NavBar: React.FC = () => {
   const userWithRole = session?.user as { firstName: string; lastName: string; email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
+
   return (
     <Navbar className="bg-manoa-green" data-bs-theme="dark" expand="lg" sticky="top">
       <Container>
@@ -51,6 +52,10 @@ const NavBar: React.FC = () => {
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
+                <NavDropdown.Item id="profile-dropdown" href="/profile">
+                  <PersonFill />
+                  Profile
+                </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
                   <BoxArrowRight />
                   Sign Out
