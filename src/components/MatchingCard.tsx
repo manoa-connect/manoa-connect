@@ -50,8 +50,11 @@
             />
             </Col>
             </Row>
+            {/*<Subtitle src={profile.major} />*/}
+            {/*<Subtitle src={profile.year} />*/}
             <Card.Subtitle className="mb-2 text-center">Mechanical Engineering, 2nd year</Card.Subtitle>
             <Card.Text className="text-center">
+              {/*<Text src={profile.description} />*/}
                 I am a sophomore at the University of Hawaii at Manoa. I am looking for a study buddy for my classes.
                 I am also looking for someone to go to the gym with. I love to play basketball and go hiking.
             </Card.Text>
