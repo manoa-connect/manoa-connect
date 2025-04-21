@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Card, Col, Container, Button, Form, Row, Nav, Navbar, Image } from 'react-bootstrap';
+import { Card, Col, Container, Button, Form, Row, Navbar, Image } from 'react-bootstrap';
 import { createUser } from '@/lib/dbActions';
 import logo from "../../../../public/assets/manoa-connect_logo.svg";
 
@@ -114,10 +114,12 @@ const SignUp = () => {
                       <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
                     </Form.Group>
                     <Row>
-                        <Nav.Link type="button" onClick={() => reset()} className="link-danger text-end pe-4 pt-3 hover-line">
+                      <Col md={{span: 3, offset: 9}}>
+                        <a type="button" onClick={() => reset()} className="link-danger text-end pe-2 pt-3 hover-line">
                               Reset Form
-                            </Nav.Link>
-                      </Row>
+                        </a>
+                      </Col>
+                    </Row>
                     <Container className="px-3 pt-4">
                       <Row>
                           <Button type="submit" className="btn btn-success">

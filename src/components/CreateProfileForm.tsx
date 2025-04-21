@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { Button, Navbar, Nav, Col, Container, Form, Row, Image } from 'react-bootstrap';
+import { Button, Navbar, Col, Container, Form, Row, Image } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
@@ -163,9 +163,11 @@ const CreateProfileForm: React.FC = () => {
               <input type="hidden" {...register('email')} value={currentUser} />
 
               <Row>
-                <Nav.Link type="button" onClick={() => reset()} className="link-danger text-end pe-4 pt-3 hover-line">
-                      Reset Form
-                    </Nav.Link>
+                <Col md={{span: 3, offset: 9}}>
+                  <a type="button" onClick={() => reset()} className="link-danger text-end pe-2 pt-3 hover-line">
+                        Reset Form
+                  </a>
+                </Col>
               </Row>
               <Container className="px-3 pt-4">
                 <Row>
