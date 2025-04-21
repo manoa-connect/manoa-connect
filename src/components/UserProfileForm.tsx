@@ -11,7 +11,7 @@ import { editProfile } from '@/lib/dbActions';
 const onSubmit = async (data: Profile) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   await editProfile(data);
-  swal('Success', 'Your item has been updated', 'success', {
+  swal('Success', 'Your profile has been updated', 'success', {
     timer: 2000,
   });
 };
@@ -30,14 +30,15 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
-        <Col xs={5}>
+        <Col xs={10}>
           <Col className="text-center">
             <h2>Edit Profile</h2>
           </Col>
           <Card>
             <Card.Body>
-              <Form onSubmit={handleSubmit(onSubmit)}>
+              <Form onSubmit={handleSubmit(onSubmit, (formErrors) => console.log(formErrors))}>
                 <input type="hidden" {...register('id')} value={profile.id} />
+                <input type="hidden" {...register('userId')} value={profile.userId} />
                 <Form.Group>
                   <Form.Label>First Name</Form.Label>
                   <input

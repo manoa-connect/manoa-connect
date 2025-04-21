@@ -100,11 +100,10 @@ export async function changePassword(credentials: { email: string; password: str
 export async function editProfile(profile: Profile) {
   // console.log(`editProfile data: ${JSON.stringify(stuff, null, 2)}`);
   await prisma.profile.update({
-    where: { id: profile.id },
+    where: { email: profile.email },
     data: {
       firstName: profile.firstName,
       lastName: profile.lastName,
-      email: profile.email,
       description: profile.description,
       year: profile.year,
       major: profile.major,
@@ -115,6 +114,4 @@ export async function editProfile(profile: Profile) {
       previous: profile.previous,
     },
   });
-  // After updating, redirect to the list page
-  redirect('/list');
 }

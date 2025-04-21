@@ -33,10 +33,10 @@ const NavBar: React.FC = () => {
                   <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
                     Map
                   </Nav.Link>,
-                  <Nav.Link id="connect" href="/chat" key="list" active={pathName === '/list'}>
+                  <Nav.Link id="connect" href="/chat" key="chat" active={pathName === '/chat'}>
                   Chat
                   </Nav.Link>,
-                  <Nav.Link id="connect" href="/connect" key="list" active={pathName === '/list'}>
+                  <Nav.Link id="connect" href="/connect" key="connect" active={pathName === '/connect'}>
                   Connect
                   </Nav.Link>,
                 ]
