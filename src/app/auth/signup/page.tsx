@@ -61,7 +61,7 @@ const SignUp = () => {
                   <Form onSubmit={handleSubmit(onSubmit)}>
                     <Row>
                       <Col>
-                        <Form.Group className="form-group ps-3 py-3">
+                        <Form.Group className="form-group ps-3">
                         <Form.Label>First Name</Form.Label>
                         <input
                           type="text"
@@ -73,7 +73,7 @@ const SignUp = () => {
                       </Col>
 
                       <Col>
-                        <Form.Group className="form-group py-3 pe-3">
+                        <Form.Group className="form-group pe-3">
                         <Form.Label>Last Name</Form.Label>
                         <input
                           type="text"
@@ -95,7 +95,7 @@ const SignUp = () => {
                       <div className="invalid-feedback">{errors.email?.message}</div>
                     </Form.Group>
 
-                    <Form.Group className="form-group p-3">
+                    <Form.Group className="form-group pt-0 p-3">
                       <Form.Label>Password</Form.Label>
                       <input
                         type="password"
@@ -104,7 +104,7 @@ const SignUp = () => {
                       />
                       <div className="invalid-feedback">{errors.password?.message}</div>
                     </Form.Group>
-                    <Form.Group className="form-group px-3 pt-3 pb-2">
+                    <Form.Group className="form-group px-3 pt-0 pb-2">
                       <Form.Label>Confirm Password</Form.Label>
                       <input
                         type="password"
@@ -126,7 +126,7 @@ const SignUp = () => {
                       </Row>
                     </Container>
                   </Form>
-                <Card.Footer className="text-center text-black pt-3 mb-5 pb-5">
+                <Card.Footer className="text-center text-black pt-3 mb-5 pb-2">
                   Already have an account?
                   <a href="/auth/signin" className="ps-2 link-success">Sign in</a>
                 </Card.Footer>
