@@ -152,7 +152,7 @@ export async function createProfile(profile: {
   });
 
   // After adding, redirect to the user home page
-  redirect('/home');
+  redirect('/profile');
 }
 
 /**

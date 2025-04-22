@@ -48,7 +48,7 @@ const UserHome = async () => {
           <Card className='mb-3 p-3 text-center'>
             <CardTitle>You have made XX total new friends!</CardTitle>
           </Card>
-          <Button className="btn-success py-2 px-4 w-100" href="/profile">
+          <Button className="btn-success py-2 px-4 w-100" href="/editProfile">
             <PeopleFill /> Edit Profile
           </Button>
         </Col>
