@@ -114,7 +114,7 @@ const SignUp = () => {
                       <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
                     </Form.Group>
                     <Row>
-                      <Col md={{span: 3, offset: 9}}>
+                      <Col className="justify-content-end d-flex">
                         <span onClick={() => reset()} className="link-danger text-end pe-2 pt-3 hover-line">
                               Reset Form
                         </span>

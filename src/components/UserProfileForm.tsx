@@ -1,12 +1,13 @@
 'use client';
 
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Row, Navbar, Image } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import swal from 'sweetalert';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Profile } from '@prisma/client';
 import { EditProfileSchema } from '@/lib/validationSchemas';
 import { editProfile } from '@/lib/dbActions';
+import logo from "../../public/assets/manoa-connect_logo.svg";
 
 const onSubmit = async (data: Profile) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
@@ -20,7 +21,6 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<Profile>({
     resolver: yupResolver(EditProfileSchema),
@@ -28,149 +28,190 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
   // console.log(profile);
 
   return (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={10}>
-          <Col className="text-center">
-          <h2>Edit Profile</h2>
-          </Col>
-          <Card>
-            <Card.Body>
-              <Form onSubmit={handleSubmit(onSubmit, (formErrors) => console.log(formErrors))}>
-                <input type="hidden" {...register('id')} value={profile.id} />
-                <input type="hidden" {...register('userId')} value={profile.userId} />
-                <Form.Group>
-                  <Form.Label>First Name</Form.Label>
-                  <input
-                    type="text"
-                    {...register('firstName')}
-                    defaultValue={profile.firstName}
-                    required
-                    className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.firstName?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Last Name</Form.Label>
-                  <input
-                    type="text"
-                    {...register('lastName')}
-                    defaultValue={profile.lastName}
-                    required
-                    className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.lastName?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Description</Form.Label>
-                  <textarea
-                    {...register('description')}
-                    defaultValue={profile.description}
-                    required
-                    className={`form-control ${errors.description ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.description?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Select Your Year</Form.Label>
-                    <select
-                      {...register('year')}
-                      className={`form-control ${errors.year ? 'is-invalid' : ''}`}
-                      defaultValue={profile.year}
-                    >
-                      <option value="freshman">Freshman</option>
-                      <option value="sophomore">Sophomore</option>
-                      <option value="junior">Junior</option>
-                      <option value="senior">Senior</option>
-                      <option value="graduate">Graduate</option>
-                    </select>
-                    <div className="invalid-feedback">{errors.year?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Major</Form.Label>
-                  <input
-                    type="text"
-                    {...register('major')}
-                    defaultValue={profile.major}
-                    required
-                    className={`form-control ${errors.major ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.major?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Likes</Form.Label>
-                  <textarea
-                    {...register('likes')}
-                    defaultValue={profile.likes}
-                    required
-                    className={`form-control ${errors.likes ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.likes?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>MBTI</Form.Label>
-                  <input
-                    type="text"
-                    {...register('mbti')}
-                    defaultValue={profile.mbti}
-                    required
-                    className={`form-control ${errors.mbti ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.mbti?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Select Your Commuter Status</Form.Label>
-                    <select
-                      {...register('commute')}
-                      className={`form-control ${errors.commute ? 'is-invalid' : ''}`}
-                      defaultValue={profile.commute}
-                    >
-                      <option value="Dorm">Dorm</option>
-                      <option value="Commute">Commute</option>
-                      <option value="Other">Other</option>
-                    </select>
-                    <div className="invalid-feedback">{errors.commute?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Current Classes</Form.Label>
-                  <textarea
-                    {...register('current')}
-                    defaultValue={profile.current}
-                    required
-                    className={`form-control ${errors.current ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.current?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Previous Classes</Form.Label>
-                  <textarea
-                    {...register('previous')}
-                    defaultValue={profile.previous}
-                    required
-                    className={`form-control ${errors.previous ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.previous?.message}</div>
-                </Form.Group>
-                <input type="hidden" {...register('email')} value={profile.email} />
-                <Form.Group className="form-group">
-                  <Row className="pt-3">
+    <Container id="bg-image" fluid>
+      <Container className="py-5">
+        <Row className="justify-content-center">
+          <Col xs={10} className="pb-5 mb-5 my-auto px-4">
+            <Card border="0" className="slide-up">
+              <Navbar className="pt-5 justify-content-center align-middle text-center">
+                <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto"/>
+                <Navbar.Text className="text-center text-black text-heavitas h1 mt-3 ms-2">Edit Profile</Navbar.Text>
+              </Navbar>
+              <Card.Body>
+                <Form onSubmit={handleSubmit(onSubmit, (formErrors) => console.log(formErrors))}>
+                  <input type="hidden" {...register('id')} value={profile.id} />
+                  
+                  <Row className="px-3">
                     <Col>
-                      <Button type="submit" variant="primary">
-                        Submit
+                      <Row>
+                        <Col>
+                          <Form.Group className="form-group">
+                            <Form.Label>First Name</Form.Label>
+                              <input
+                                type="text"
+                                {...register('firstName')}
+                                defaultValue={profile.firstName}
+                                required
+                                className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+                              />
+                              <div className="invalid-feedback">{errors.firstName?.message}</div>
+                          </Form.Group>
+                        </Col>
+                        <Col>
+                          <Form.Group className="form-group">
+                            <Form.Label>Last Name</Form.Label>
+                            <input
+                                type="text"
+                                {...register('lastName')}
+                                defaultValue={profile.lastName}
+                                required
+                                className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                              />
+                              <div className="invalid-feedback">{errors.lastName?.message}</div>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row className="py-3">
+                        <Form.Group>
+                          <Form.Label>Major</Form.Label>
+                          <input
+                            type="text"
+                            {...register('major')}
+                            defaultValue={profile.major}
+                            required
+                            className={`form-control ${errors.major ? 'is-invalid' : ''}`}
+                          />
+                          <div className="invalid-feedback">{errors.major?.message}</div>
+                        </Form.Group>
+                      </Row>
+
+                      <Row>
+                        <Col>
+                          <Form.Group>
+                              <Form.Label><strong>Year</strong></Form.Label>
+                              <select
+                                {...register('year')}
+                                className={`form-control ${errors.year ? 'is-invalid' : ''}`}
+                                defaultValue={profile.year}
+                              >
+                                <option value="freshman">Freshman</option>
+                                <option value="sophomore">Sophomore</option>
+                                <option value="junior">Junior</option>
+                                <option value="senior">Senior</option>
+                                <option value="graduate">Graduate</option>
+                              </select>
+                              <div className="invalid-feedback">{errors.year?.message}</div>
+                          </Form.Group>
+                        </Col>
+                        <Col>
+                          <Form.Group>
+                            <Form.Label><strong>Commute Status</strong></Form.Label>
+                            <select
+                              {...register('commute')}
+                              className={`form-control ${errors.commute ? 'is-invalid' : ''}`}
+                              defaultValue={profile.commute}
+                            >
+                              <option value="dorm">Dorm</option>
+                              <option value="commuter">Commute</option>
+                              <option value="other">Other</option>
+                            </select>
+                            <div className="invalid-feedback">{errors.commute?.message}</div>
+                          </Form.Group>
+                        </Col>
+                        <Col>
+                        <Form.Group>
+                          <Form.Label>MBTI</Form.Label>
+                          <input
+                            type="text"
+                            {...register('mbti')}
+                            defaultValue={profile.mbti}
+                            required
+                            className={`form-control ${errors.mbti ? 'is-invalid' : ''}`}
+                          />
+                          <div className="invalid-feedback">{errors.mbti?.message}</div>
+                        </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row className="py-3">
+                        <Form.Group>
+                          <Form.Label><strong className="text-manoa-green">Current Classes</strong></Form.Label>
+                          <textarea
+                            rows={1}
+                            {...register('current')}
+                            defaultValue={profile.current}
+                            required
+                            className={`form-control ${errors.current ? 'is-invalid' : ''}`}
+                          />
+                          <div className="invalid-feedback">{errors.current?.message}</div>
+                        </Form.Group>
+                      </Row>
+
+                      <Row>
+                        <Form.Group>
+                          <Form.Label>Previous Classes</Form.Label>
+                          <textarea
+                            {...register('previous')}
+                            defaultValue={profile.previous}
+                            required
+                            className={`form-control ${errors.previous ? 'is-invalid' : ''}`}
+                          />
+                          <div className="invalid-feedback">{errors.previous?.message}</div>
+                        </Form.Group>
+                      </Row>
+                    </Col>
+
+                    <Col>
+                      <Row>
+                        <Form.Group>
+                          <Form.Label>About Me</Form.Label>
+                          <textarea
+                            rows={7}
+                            {...register('description')}
+                            defaultValue={profile.description}
+                            required
+                            className={`form-control ${errors.description ? 'is-invalid' : ''}`}
+                          />
+                          <div className="invalid-feedback">{errors.description?.message}</div>
+                        </Form.Group>
+                      </Row>
+                      <Row className="pt-3">
+                        <Form.Group>
+                          <Form.Label>Likes</Form.Label>
+                          <textarea
+                            rows={7}
+                            {...register('likes')}
+                            defaultValue={profile.likes}
+                            required
+                            className={`form-control ${errors.likes ? 'is-invalid' : ''}`}
+                          />
+                          <div className="invalid-feedback">{errors.likes?.message}</div>
+                        </Form.Group>
+                      </Row>
+                    </Col>
+                  </Row>
+
+                  <input type="hidden" {...register('email')} value={profile.email} />
+      
+                  <Row className="pt-3 pb-5 px-3">
+                    <Col>
+                      <Button href="/profile" className="btn btn-danger w-100 py-2">
+                        Discard Changes
                       </Button>
                     </Col>
                     <Col>
-                      <Button type="button" onClick={() => reset()} variant="warning" className="float-right">
-                        Reset
+                      <Button type="submit" className="btn btn-success w-100 py-2">
+                        Save Changes
                       </Button>
                     </Col>
                   </Row>
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </Container>
   );
 };

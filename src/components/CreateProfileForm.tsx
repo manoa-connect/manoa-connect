@@ -11,7 +11,6 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { createProfileSchema } from '@/lib/validationSchemas';
 import logo from "../../public/assets/manoa-connect_logo.svg";
 
-
 const onSubmit = async (data: { 
   firstName: string; 
   lastName: string; 
@@ -163,7 +162,7 @@ const CreateProfileForm: React.FC = () => {
               <input type="hidden" {...register('email')} value={currentUser} />
 
               <Row>
-                <Col md={{span: 3, offset: 9}}>
+                <Col className="justify-content-end d-flex">
                   <a type="button" onClick={() => reset()} className="link-danger text-end pe-2 pt-3 hover-line">
                         Reset Form
                   </a>
@@ -171,9 +170,9 @@ const CreateProfileForm: React.FC = () => {
               </Row>
               <Container className="px-3 pt-4">
                 <Row>
-                    <Button type="submit" className="btn btn-success">
-                      Create
-                    </Button>
+                  <Button type="submit" className="btn btn-success">
+                    Create
+                  </Button>
                 </Row>
               </Container>
             </Form>
