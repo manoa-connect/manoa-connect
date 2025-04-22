@@ -65,7 +65,7 @@ model Profile {
   // contacts    Contact[] 
   firstName   String
   lastName    String
-  email       String
+  email       String    @unique 
   description String
   year        Year
   major       String

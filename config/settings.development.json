@@ -12,7 +12,7 @@
   ],
 
   "defaultProfiles": [
-    { "userId": 1, "firstName": "Codie", "lastName": "Nakamura", "email": "admin@foo.com", "description": "buh", "year": "junior", "major": "computer science", "likes": "sleep", "mbti": "infp", "commute": "Commute", "current": "ICS 314", "previous": "ICS 211" },
-    { "userId": 2, "firstName": "Brian", "lastName": "Le", "email": "john@foo.com", "description": "buh", "year": "junior", "major": "engineering", "likes": "art", "mbti": "infj", "commute": "Commute", "current": "CEE 375", "previous": "CEE 370" }
+    { "userId": 1, "firstName": "Codie", "lastName": "Nakamura", "email": "admin@foo.com", "description": "buh", "year": "junior", "major": "computer science", "likes": "sleep", "mbti": "infp", "commute": "commuter", "current": "ICS 314", "previous": "ICS 211" },
+    { "userId": 2, "firstName": "Brian", "lastName": "Le", "email": "john@foo.com", "description": "buh", "year": "junior", "major": "engineering", "likes": "art", "mbti": "infj", "commute": "commuter", "current": "CEE 375", "previous": "CEE 370" }
   ]
 }

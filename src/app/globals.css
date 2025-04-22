@@ -78,8 +78,13 @@ body {
   height: 75vh;
 }
 
+.hover-line {
+  text-decoration: none;
+}
+
 .hover-line:hover{
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .slide-up {    

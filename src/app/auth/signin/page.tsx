@@ -54,7 +54,7 @@ const SignIn = () => {
               </Form>
               <Card.Footer className="text-center text-black pt-3 mb-5 pb-2">
                 Don&apos;t have an account?
-                <a href="/auth/signup" className="ps-2 link-success">Sign Up</a>
+                <a href="/auth/signup" className="ps-2 link-success hover-line">Sign Up</a>
               </Card.Footer>
             </Col>
           </Row>

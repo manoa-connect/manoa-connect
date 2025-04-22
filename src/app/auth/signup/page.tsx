@@ -115,9 +115,9 @@ const SignUp = () => {
                     </Form.Group>
                     <Row>
                       <Col md={{span: 3, offset: 9}}>
-                        <a type="button" onClick={() => reset()} className="link-danger text-end pe-2 pt-3 hover-line">
+                        <span onClick={() => reset()} className="link-danger text-end pe-2 pt-3 hover-line">
                               Reset Form
-                        </a>
+                        </span>
                       </Col>
                     </Row>
                     <Container className="px-3 pt-4">
@@ -130,7 +130,7 @@ const SignUp = () => {
                   </Form>
                 <Card.Footer className="text-center text-black pt-3 mb-5 pb-2">
                   Already have an account?
-                  <a href="/auth/signin" className="ps-2 link-success">Sign in</a>
+                  <a href="/auth/signin" className="ps-2 link-success hover-line">Sign in</a>
                 </Card.Footer>
             </Col>
           </Row>

@@ -32,7 +32,7 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
       <Row className="justify-content-center">
         <Col xs={10}>
           <Col className="text-center">
-            <h2>Edit Profile</h2>
+          <h2>Edit Profile</h2>
           </Col>
           <Card>
             <Card.Body>

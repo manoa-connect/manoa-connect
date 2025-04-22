@@ -1,7 +1,7 @@
 'use server';
 
-import { Stuff, Condition, Profile } from '@prisma/client';
-import { Year, Commute } from '@prisma/client';
+import { Stuff, Condition } from '@prisma/client';
+import { Year, Commute, Profile } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -162,7 +162,7 @@ export async function createProfile(profile: {
 export async function editProfile(profile: Profile) {
   // console.log(`editProfile data: ${JSON.stringify(stuff, null, 2)}`);
   await prisma.profile.update({
-    where: { email: profile.email },
+    where: { id: profile.id },
     data: {
       firstName: profile.firstName,
       lastName: profile.lastName,
