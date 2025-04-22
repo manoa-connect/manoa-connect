@@ -2,10 +2,13 @@
  
 import { Profile } from '@prisma/client';
 import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
+import OldClassList from './OldClasses';
+import ClassList from './ClassList';
  
- const MatchingCard = ({ profile}: { profile: Profile }) => {
+ const MatchCardBack = ({ profile}: { profile: Profile }) => {
 
   return (
+    <Container fluid className="card-page-container">
       <Card className="center-card">
           <Card.Body className="card-body">
             <Row className="align-items-center">
@@ -17,51 +20,61 @@ import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
                     />
                 </Col>
                 <Col lg={10}>
-                <Card.Title>
-                  {profile.firstName}
-                  &nbsp;
-                  {profile.lastName}
-                </Card.Title>
+                    <Card.Title className="text-center">
+                    {profile.firstName} 
+                    &nbsp;
+                    {profile.lastName}
+                    </Card.Title>
                 </Col>
             </Row>
-            <Row className="justify-content-center">
-                <Col lg={4} className="text-center">
-                    {/*<Image src={profile.image1} />*/}
-                    <Image
-                        className="card-image py-2"
-                        src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ9eKWFe3yzlc53VlG1-yz6-8fzyCFXCyQgWkETmpYOxxzxX8KrgZwQl4z4oDfg48c-hUhnCYcmflKM1LIl8sdELyyQu4fkJNIOX7P8Qi3Wjw"
-                        alt="Profile Picture1"
-                    />
+            <Card.Subtitle className="mb-2 text-center">
+            {profile.major},&nbsp;{profile.year}
+              </Card.Subtitle>
+            <Row className="align-items-start">            
+                <Col className="text-start" xs={4}>
+                <h3 className="text-start">Current Classes</h3>
+                <ul className="list-unstyled text-start">
+                    <li>{profile.current}</li>
+                    <li>ICS-314</li>
+                    <li>Physics 2</li>
+                    <li>Linear Algebra</li>
+                </ul>
+                <h4 className="text-start">Old Classes</h4>
+                <OldClassList profile={profile}/>
+                <ClassList label="Previous Classes" classListString={profile.previous} />
+                <ClassList label="Current Classes" classListString={profile.current} />   
             </Col>
-            <Col lg={4} className="text-center">
-            {/*<Image src={profile.image2} />*/}
-            <Image
-              className="card-image py-2"
-              src="data:image/jpeg;base64,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"
-              alt="Profile Picture2"
-            />
+            <Col className="text-start" xs={4}>
+            <h3 className="text-start">Status: {profile.commute}</h3>
+                <h3 className="text-start">Clubs</h3>
+                <ul className="list-unstyled text-start">
+                    <li>Panda</li>
+                    <li>GreyHat Hackers</li>
+                </ul>
+                <h3 className="text-start">Languages</h3>
+                <ul className="list-unstyled text-start">
+                    <li>English</li>
+                    <li>Hawaiian</li>
+                </ul>
             </Col>
-            <Col lg={4} className="text-center">
-            {/*<Image src={profile.image3} />*/}
-            <Image
-              className="card-image py-2"
-              src="data:image/webp;base64,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"
-              alt="Profile Picture3"
-            />
+            <Col className="text-start" xs={4}>
+            <h4 className="text-start">{profile.mbti}</h4>
+                <h3 className="text-start">Interests</h3>
+                <ul className="list-unstyled text-start">
+                    <li>Gaming</li>
+                    <li>Programming</li>
+                    <li>Music</li>
+                    <li>Cooking</li>
+                  </ul>
             </Col>
             </Row>
-            <Card.Subtitle className="mb-2 text-center">
-              {profile.major}, {profile.year}
-            </Card.Subtitle>
-            <Card.Text className="text-center">
-              {profile.description}
-            </Card.Text>
           </Card.Body>
-{ /*               <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlip}>
-                View Profile
- </Button>*/}
+               {/*} <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlipBack}>
+                Back
+                </Button> */}
         </Card>
+        </Container>
   );
 };
 
-export default MatchingCard;
+export default MatchCardBack;

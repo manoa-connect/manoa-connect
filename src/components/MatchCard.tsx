@@ -1,13 +1,13 @@
 'use client';
- 
+
 import { Profile } from '@prisma/client';
 import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
  
- const MatchingCard = ({ profile}: { profile: Profile }) => {
+ const MatchCard = ({ profile }: { profile: Profile }) => {
 
   return (
     <Container fluid className="card-page-container">
-      <Card className="center-card">
+          <Card className="center-card">
           <Card.Body className="card-body">
             <Row className="align-items-center">
                 <Col xs="auto">
@@ -18,11 +18,11 @@ import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
                     />
                 </Col>
                 <Col lg={10}>
-                <Card.Title>
-                  {profile.firstName}
-                  &nbsp;
-                  {profile.lastName}
-                </Card.Title>
+                    <Card.Title className="text-center">
+                    {profile.firstName} 
+                    &nbsp;
+                    {profile.lastName}
+                    </Card.Title>
                 </Col>
             </Row>
             <Row className="justify-content-center">
@@ -51,19 +51,17 @@ import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
             />
             </Col>
             </Row>
-            <Card.Subtitle className="mb-2 text-center">
-              {profile.major}, {profile.year}
-            </Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-center">{profile.major}, {profile.year}</Card.Subtitle>
             <Card.Text className="text-center">
               {profile.description}
             </Card.Text>
           </Card.Body>
 { /*               <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlip}>
                 View Profile
- </Button>*/}
-        </Card>
+                </Button>*/}
+          </Card>
         </Container>
   );
 };
 
-export default MatchingCard;
+export default MatchCard;

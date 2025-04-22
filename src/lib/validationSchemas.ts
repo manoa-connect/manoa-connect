@@ -39,7 +39,7 @@ export const EditProfileSchema = Yup.object({
   major: Yup.string().required(),
   likes: Yup.string().required(),
   mbti: Yup.string().required(),
-  commute: Yup.string().oneOf(['dorm', 'commute', 'other']).required(),
+  commute: Yup.string().oneOf(['dorm', 'commuter', 'other']).required(),
   current: Yup.string().required(),
   previous: Yup.string().required(),
 });
