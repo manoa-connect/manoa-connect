@@ -24,6 +24,8 @@ import OldClassList from './OldClasses';
                     <Card.Title className="text-center">Mark Fishbach</Card.Title>
                 </Col>
             </Row>
+            {/*<Subtitle src={profile.major} />*/}
+            {/*<Subtitle src={profile.year} />*/}
             <Card.Subtitle className="mb-2 text-center">Mechanical Engineering, 2nd year</Card.Subtitle>
             <Row className="align-items-start">            
                 <Col className="text-start" xs={4}>

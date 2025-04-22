@@ -6,6 +6,7 @@ import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
  const MatchingCard = ({ profile}: { profile: Profile }) => {
 
   return (
+    <Container fluid className="card-page-container">
       <Card className="center-card">
           <Card.Body className="card-body">
             <Row className="align-items-center">
@@ -61,6 +62,7 @@ import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
                 View Profile
  </Button>*/}
         </Card>
+        </Container>
   );
 };
 
