@@ -28,3 +28,18 @@ export const createProfileSchema = Yup.object({
   current: Yup.string().required(),
   previous: Yup.string().required(),
 });
+
+export const EditProfileSchema = Yup.object({
+  id: Yup.number().required(),
+  firstName: Yup.string().required(),
+  lastName: Yup.string().required(),
+  email: Yup.string().email().required(),
+  description: Yup.string().required(),
+  year: Yup.string().oneOf(['freshman', 'sophomore', 'junior', 'senior', 'graduate']).required(),
+  major: Yup.string().required(),
+  likes: Yup.string().required(),
+  mbti: Yup.string().required(),
+  commute: Yup.string().oneOf(['dorm', 'commute', 'other']).required(),
+  current: Yup.string().required(),
+  previous: Yup.string().required(),
+});

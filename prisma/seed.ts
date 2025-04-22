@@ -1,4 +1,4 @@
-import { PrismaClient, Role, Condition } from '@prisma/client';
+import { PrismaClient, Role, Condition, Commute, Year } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
 
@@ -38,7 +38,31 @@ async function main() {
       },
     });
   }
+
+  config.defaultProfiles.forEach(async (profile, index) => {
+    const commute = profile.commute as Commute || 'other';
+    const year = profile.year as Year || 'freshman';
+    console.log(`  Adding profile: ${profile.firstName} ${profile.lastName} (${profile.email})`);
+    await prisma.profile.upsert({
+      where: { id: index + 1 },
+      update: {},
+      create: {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        email: profile.email,
+        description: profile.description,
+        year,
+        major: profile.major,
+        likes: profile.likes,
+        mbti: profile.mbti,
+        commute,
+        current: profile.current,
+        previous: profile.previous,
+      },
+    });
+  });
 }
+
 main()
   .then(() => prisma.$disconnect())
   .catch(async (e) => {
