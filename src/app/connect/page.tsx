@@ -1,28 +1,54 @@
-import MatchCardFlip from '@/components/MatchCardFlip';
+import MatchCard from '@/components/MatchCard';
+import { getServerSession } from 'next-auth';
+import { Col, Container, Row, Table, Button } from 'react-bootstrap';
+import { prisma } from '@/lib/prisma';
+import { loggedInProtectedPage } from '@/lib/page-protection';
+import authOptions from '@/lib/authOptions';
+import MatchCardBack from '@/components/MatchCardBack';
 
-/** The Home page. */
-const Home = () => (
-  <main>
-  <MatchCardFlip />
-  {/* 
-  const MatchPage = async () => {
-  const profiles = await prisma.profile.findMany();
-  profiles.sort((a, b) => a.email.localeCompare(b.email));
+const Home = async () => {
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+    } | null,
+  );
 
-  const randomProfiles = profiles[Math.floor(Math.random() * profiles.length)];
+  const email = session?.user?.email || '';
+
+  // Get all other profiles except the logged-in user
+  const otherProfiles = await prisma.profile.findMany({
+    where: {
+      NOT: {
+        email,
+      },
+    },
+  });
+
+  // Pick one at random
+  const randomProfile =
+    otherProfiles.length > 0
+      ? otherProfiles[Math.floor(Math.random() * otherProfiles.length)]
+      : null;
 
   return (
-    <Container id={PageIDs.profilesPage} style={pageStyle}>
-      <Row xs={1} md={2} lg={4} className="g-2">
-        <ProfileCardHelper key={randomProfiles.id} profile={randomProfiles} />
-      </Row>
-    </Container>
+    <main>
+      <Button variant="dark" className="corner-button bottom-left btn-lg">
+        Skip
+      </Button>
+      {randomProfile ? (
+        <>
+          <MatchCard profile={randomProfile} />
+          <MatchCardBack profile={randomProfile} />
+        </>
+      ) : (
+        <p>No other profiles available.</p>
+      )}
+      <Button variant="success" className="corner-button bottom-right btn-lg">
+        Match
+      </Button>
+    </main>
   );
 };
-
-export default MatchPage;
-  */}
-  </main>
-);
 
 export default Home;

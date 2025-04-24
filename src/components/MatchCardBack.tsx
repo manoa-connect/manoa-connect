@@ -32,17 +32,10 @@ import ClassList from './ClassList';
               </Card.Subtitle>
             <Row className="align-items-start">            
                 <Col className="text-start" xs={4}>
-                <h3 className="text-start">Current Classes</h3>
-                <ul className="list-unstyled text-start">
-                    <li>{profile.current}</li>
-                    <li>ICS-314</li>
-                    <li>Physics 2</li>
-                    <li>Linear Algebra</li>
-                </ul>
-                <h4 className="text-start">Old Classes</h4>
-                <OldClassList profile={profile}/>
+                <ClassList label="Current Classes" classListString={profile.current} />
                 <ClassList label="Previous Classes" classListString={profile.previous} />
-                <ClassList label="Current Classes" classListString={profile.current} />   
+{/*                <h4 className="text-start">Old Classes</h4>
+                <OldClassList profile={profile}/>*/}
             </Col>
             <Col className="text-start" xs={4}>
             <h3 className="text-start">Status: {profile.commute}</h3>
@@ -59,13 +52,8 @@ import ClassList from './ClassList';
             </Col>
             <Col className="text-start" xs={4}>
             <h4 className="text-start">{profile.mbti}</h4>
-                <h3 className="text-start">Interests</h3>
-                <ul className="list-unstyled text-start">
-                    <li>Gaming</li>
-                    <li>Programming</li>
-                    <li>Music</li>
-                    <li>Cooking</li>
-                  </ul>
+            <ClassList label="Interests" classListString={profile.likes} />
+
             </Col>
             </Row>
           </Card.Body>
