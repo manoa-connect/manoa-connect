@@ -185,6 +185,4 @@ export async function editProfile(profile: Profile) {
       previous: profile.previous,
     },
   });
-
-  redirect('/profile');
 }
