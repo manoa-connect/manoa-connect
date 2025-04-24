@@ -15,7 +15,7 @@ const HeroSec = () => {
         <Row className="align-items-center justify-content-center v-middle">
             <Col s={1} />
             <Col xs={3}>
-                <Card style={{ width: '18rem' }}>
+                <Card style={{ width: '18rem', height: '350px'}}>
                     <Card.Img variant="top" src={card_image.src} />
                     <Card.Body>
                     <Card.Title>Placeholder Card</Card.Title>

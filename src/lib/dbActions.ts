@@ -123,22 +123,22 @@ export async function createProfile(profile: {
   previous: string; 
 }) {
   let year: Year = 'Freshman';
-  if (profile.year === 'freshman') {
+  if (profile.year === 'Freshman') {
     year = 'Freshman';
-  } else if (profile.year === 'sophomore') {
+  } else if (profile.year === 'Sophomore') {
     year = 'Sophomore';
-  } else if (profile.year === 'junior') {
+  } else if (profile.year === 'Junior') {
     year = 'Junior';
-  } else if (profile.year === 'senior') {
+  } else if (profile.year === 'Senior') {
     year = 'Senior';
   } else {
     year = 'Graduate';
   }
 
   let commute: Commute = 'Dorm';
-  if (profile.commute === 'dorm') {
+  if (profile.commute === 'Dorm') {
     commute = 'Dorm';
-  } else if (profile.commute === 'commuter') {
+  } else if (profile.commute === 'Commuter') {
     commute = 'Commuter';
   } else {
     commute = 'Other';
