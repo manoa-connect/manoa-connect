@@ -1,7 +1,9 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "firstName": "Admin", "lastName": "Doe", "password": "changeme", "role": "ADMIN" },
-    { "email": "john@foo.com", "firstName": "John", "lastName": "Foo", "password": "changeme" }
+    { "email": "john@foo.com", "firstName": "John", "lastName": "Foo", "password": "changeme" },
+    { "email": "austin@foo.com", "firstName": "Auton", "lastName": "Tilton", "password": "changeme"},
+    { "email": "jayden@foo.com", "firstName": "Jayden", "lastName": "Boyd", "password": "changeme"}
   ],
 
   "defaultData": [

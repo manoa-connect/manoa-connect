@@ -52,8 +52,8 @@ import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
             </Col>
             </Row>
             <Card.Subtitle className="mb-2 text-center">
-              {profile.major}
-              <br />
+              {profile.major},
+              &nbsp;
               {profile.year}
             </Card.Subtitle>
             <Card.Text className="text-center">

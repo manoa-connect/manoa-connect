@@ -27,10 +27,10 @@ import ClassList from './ClassList';
                 </Col>
             </Row>
             <Card.Subtitle className="mb-2 text-center">
-            {profile.major}
-            <br />
-            {profile.year}
-              </Card.Subtitle>
+              {profile.major},
+              &nbsp;
+              {profile.year}
+            </Card.Subtitle>
             <Row className="align-items-start">            
                 <Col className="text-start" xs={4}>
                 <ClassList label="Current Classes" classListString={profile.current} />
