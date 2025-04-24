@@ -1,7 +1,6 @@
 'use client';
  
  import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
- import Link from 'next/link';
  
  const MatchingPage = ({ onFlip }: { onFlip: () => void }) => (
     <Container fluid className="card-page-container">

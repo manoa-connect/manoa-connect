@@ -1,6 +1,6 @@
 import MatchCard from '@/components/MatchCard';
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row, Table, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';

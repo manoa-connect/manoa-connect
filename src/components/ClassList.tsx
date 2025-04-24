@@ -1,8 +1,6 @@
 'use client'; 
 
 import { useState } from 'react';
-import { Profile } from '@prisma/client'
-import { Button } from 'react-bootstrap';
 
 interface ClassListProps {
   label: string;

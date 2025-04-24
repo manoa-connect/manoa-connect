@@ -1,7 +1,7 @@
 'use client';
 
 import { Profile } from '@prisma/client';
-import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
+import { Col, Container, Image, Row, Card } from 'react-bootstrap';
  
  const MatchCard = ({ profile }: { profile: Profile }) => {
 
