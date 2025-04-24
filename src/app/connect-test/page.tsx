@@ -26,8 +26,15 @@ const Home = async () => {
             <Button variant="dark" className="corner-button bottom-left btn-lg">
                 Skip
             </Button>
-            <MatchCard profile={profile} />
-            <MatchCardBack profile={profile} />
+            {profile ? (
+              <>
+                <MatchCard profile={profile} />
+                  <MatchCardBack profile={profile} />
+              </>
+              ) : (
+                <p>No profile found.</p>
+            )}
+            
             <Button variant="success" className="corner-button bottom-right btn-lg">
                 Match
             </Button>

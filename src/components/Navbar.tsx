@@ -9,7 +9,7 @@ import logo from "../../public/assets/manoa-connect_logo-text.svg";
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
-  const userWithRole = session?.user as { firstName: string; lastName: string; email: string; randomKey: string };
+  const userWithRole = session?.user as { firstName?: string | null; lastName?: string | null; email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
 
@@ -22,11 +22,11 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            <Nav.Link id="home-nav" href="/profile" key="home" active={pathName === '/profile'}>
-              Profile
-            </Nav.Link>
             {currentUser
               ? [
+                  <Nav.Link id="home-nav" href="/profile" key="home" active={pathName === '/profile'}>
+                    Profile
+                  </Nav.Link>,
                   <Nav.Link id="schedule-nav" href="/schedule" key="schedule" active={pathName === '/schedule'}>
                     Schedule
                   </Nav.Link>,

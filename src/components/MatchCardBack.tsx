@@ -35,9 +35,6 @@ import ClassList from './ClassList';
                 <h3 className="text-start">Current Classes</h3>
                 <ul className="list-unstyled text-start">
                     <li>{profile.current}</li>
-                    <li>ICS-314</li>
-                    <li>Physics 2</li>
-                    <li>Linear Algebra</li>
                 </ul>
                 <h4 className="text-start">Old Classes</h4>
                 <OldClassList profile={profile}/>
