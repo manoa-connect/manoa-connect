@@ -95,6 +95,16 @@ export async function changePassword(credentials: { email: string; password: str
   });
 }
 
+export async function addChat(chat: { chat: string; contactId: number, owner: string }) {
+  await prisma.chat.create({
+    data: {
+      chat: chat.chat,
+      contactId: chat.contactId,
+      owner: chat.owner,
+    },
+  });
+}
+
 /**
  * Adds a new Profile to the database.
  * @param profile, an object with the following properties.
