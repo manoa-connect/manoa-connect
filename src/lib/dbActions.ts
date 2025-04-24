@@ -1,5 +1,6 @@
 'use server';
 
+import { Stuff, Condition, Year, Commute } from '@prisma/client';
 import { Stuff, Condition } from '@prisma/client';
 import { Year, Commute, Profile } from '@prisma/client';
 import { hash } from 'bcrypt';

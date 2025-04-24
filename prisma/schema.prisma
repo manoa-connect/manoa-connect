@@ -27,8 +27,13 @@ model User {
   firstName String   @default("first")
   lastName  String   @default("last")
   email     String   @unique
+  id        Int    @id @default(autoincrement())
+  email     String @unique
+  firstName String?
+  lastName  String?
   password  String
-  role      Role     @default(USER)
+  role      Role   @default(USER)
+  Profile   Profile[]
 }
 
 enum Condition {
@@ -53,11 +58,20 @@ enum Commute {
 }
 
 enum Year {
-  freshman
-  sophomore
-  junior
-  senior
-  graduate
+  Freshman
+  Sophomore
+  Junior
+  Senior
+  Graduate
+}
+
+model Chat {
+    id        Int      @id @default(autoincrement())
+    contactId Int
+    chat      String
+    owner     String
+    createdAt DateTime @default(now())
+    Profile   Profile  @relation(fields: [contactId], references: [id])
 }
 
 model Profile {
@@ -67,6 +81,7 @@ model Profile {
   lastName    String
   email       String    @unique 
   description String
+  note        Chat[]
   year        Year
   major       String
   likes       String
@@ -74,5 +89,9 @@ model Profile {
   commute     Commute
   current     String
   previous    String
+  User        User  @relation(fields: [email], references: [email]) // Also owner of the profile
+  accepts     Profile[] @relation("LikesGiven")
+  acceptedBy  Profile[] @relation("LikesGiven")
+  matches     Profile[] @relation("MatchedProfiles")
+  matchedBy   Profile[] @relation("MatchedProfiles")
 }
-

@@ -40,9 +40,10 @@ const UserHome = async () => {
               <CardTitle>You have XX new messages!</CardTitle>
             </Card>
           </Link>
-          <Button className="btn-success py-2 px-4 w-100" href="/connect">
-            <PeopleFill /> Connect
-          </Button>
+          <Button href="/connect" className="btn-success py-2 px-4 w-100">Connect</Button>
+          <Button href="/match" className="btn-success py-2 px-4 w-100">Match</Button>
+          <Button href="/chat" className="btn-success py-2 px-4 w-100">Chat</Button>
+          <Button href="/createProfile" className="btn-success py-2 px-4 w-100">Change your Profile</Button>
         </Col>
         <Col md={6} className="d-flex flex-column">
           <Card className='mb-3 p-3 text-center'>

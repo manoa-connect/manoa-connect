@@ -15,6 +15,12 @@ export const EditStuffSchema = Yup.object({
   owner: Yup.string().required(),
 });
 
+export const AddChatSchema = Yup.object({
+  chat: Yup.string().required(),
+  contactId: Yup.number().required(),
+  owner: Yup.string().required(),
+});
+
 export const createProfileSchema = Yup.object({
   firstName: Yup.string().required(),
   lastName: Yup.string().required(),
