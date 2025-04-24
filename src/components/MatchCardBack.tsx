@@ -2,10 +2,9 @@
  
 import { Profile } from '@prisma/client';
 import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
-import OldClassList from './OldClasses';
 import ClassList from './ClassList';
  
- const MatchCardBack = ({ profile}: { profile: Profile }) => {
+ const MatchCardBack = ({ profile, onFlipBack, }: { profile: Profile; onFlipBack: () => void; }) => {
 
   return (
     <Container fluid className="card-page-container">
@@ -14,7 +13,7 @@ import ClassList from './ClassList';
             <Row className="align-items-center">
                 <Col xs="auto">
                     <Image
-                        src="https://media.discordapp.net/attachments/1359756631692415118/1359783965346762823/manoa-connect_logo_light.png?ex=67fd5a40&is=67fc08c0&hm=f6bdefb19cf618524461fd1827769284146442e63342cdfee3a3f0d81f201b27&=&format=webp&quality=lossless&width=986&height=986"
+                        src="/manoa-connect_logo_light.png"
                         alt="Top left"
                         className="top-left-image"
                     />
@@ -28,27 +27,20 @@ import ClassList from './ClassList';
                 </Col>
             </Row>
             <Card.Subtitle className="mb-2 text-center">
-            {profile.major},&nbsp;{profile.year}
+            {profile.major}
+            <br />
+            {profile.year}
               </Card.Subtitle>
             <Row className="align-items-start">            
                 <Col className="text-start" xs={4}>
                 <ClassList label="Current Classes" classListString={profile.current} />
                 <ClassList label="Previous Classes" classListString={profile.previous} />
-{/*                <h4 className="text-start">Old Classes</h4>
-                <OldClassList profile={profile}/>*/}
             </Col>
             <Col className="text-start" xs={4}>
             <h3 className="text-start">Status: {profile.commute}</h3>
-                <h3 className="text-start">Clubs</h3>
-                <ul className="list-unstyled text-start">
-                    <li>Panda</li>
-                    <li>GreyHat Hackers</li>
-                </ul>
-                <h3 className="text-start">Languages</h3>
-                <ul className="list-unstyled text-start">
-                    <li>English</li>
-                    <li>Hawaiian</li>
-                </ul>
+            <ClassList label="Clubs" classListString={profile.clubs} />
+            <ClassList label="Languages" classListString={profile.languages} />
+
             </Col>
             <Col className="text-start" xs={4}>
             <h4 className="text-start">{profile.mbti}</h4>
@@ -57,9 +49,9 @@ import ClassList from './ClassList';
             </Col>
             </Row>
           </Card.Body>
-               {/*} <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlipBack}>
+              <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlipBack}>
                 Back
-                </Button> */}
+                </Button>
         </Card>
         </Container>
   );

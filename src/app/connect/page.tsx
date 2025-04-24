@@ -1,10 +1,9 @@
-import MatchCard from '@/components/MatchCard';
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row, Table, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import MatchCardBack from '@/components/MatchCardBack';
+import MatchCardFlip from '@/components/MatchCardFlip';
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -25,7 +24,6 @@ const Home = async () => {
     },
   });
 
-  // Pick one at random
   const randomProfile =
     otherProfiles.length > 0
       ? otherProfiles[Math.floor(Math.random() * otherProfiles.length)]
@@ -33,13 +31,12 @@ const Home = async () => {
 
   return (
     <main>
-      <Button variant="dark" className="corner-button bottom-left btn-lg">
+      <Button variant="dark" className="corner-button bottom-left btn-lg" href="/connect">
         Skip
       </Button>
       {randomProfile ? (
         <>
-          <MatchCard profile={randomProfile} />
-          <MatchCardBack profile={randomProfile} />
+          <MatchCardFlip profile={randomProfile} />
         </>
       ) : (
         <p>No other profiles available.</p>
