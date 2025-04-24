@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, Year, Commute, Profile } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -67,11 +67,13 @@ export async function deleteStuff(id: number) {
  * Creates a new user in the database.
  * @param credentials, an object with the following properties: email, password.
  */
-export async function createUser(credentials: { email: string; password: string }) {
+export async function createUser(credentials: { firstName: string; lastName: string; email: string; password: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
   await prisma.user.create({
     data: {
+      firstName: credentials.firstName,
+      lastName: credentials.lastName,
       email: credentials.email,
       password,
     },
@@ -89,6 +91,88 @@ export async function changePassword(credentials: { email: string; password: str
     where: { email: credentials.email },
     data: {
       password,
+    },
+  });
+}
+
+/**
+ * Adds a new Profile to the database.
+ * @param profile, an object with the following properties.
+ */
+export async function createProfile(profile: { 
+  firstName: string; 
+  lastName: string; 
+  email: string;
+  description: string;
+  year: string;
+  major: string;
+  likes: string;
+  mbti: string;
+  commute: string;
+  current: string;
+  previous: string; 
+}) {
+  let year: Year = 'Freshman';
+  if (profile.year === 'freshman') {
+    year = 'Freshman';
+  } else if (profile.year === 'sophomore') {
+    year = 'Sophomore';
+  } else if (profile.year === 'junior') {
+    year = 'Junior';
+  } else if (profile.year === 'senior') {
+    year = 'Senior';
+  } else {
+    year = 'Graduate';
+  }
+
+  let commute: Commute = 'Dorm';
+  if (profile.commute === 'dorm') {
+    commute = 'Dorm';
+  } else if (profile.commute === 'commuter') {
+    commute = 'Commuter';
+  } else {
+    commute = 'Other';
+  }
+
+  await prisma.profile.create({
+    data: {
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      email: profile.email,
+      description: profile.description,
+      year,
+      major: profile.major,
+      likes: profile.likes,
+      mbti: profile.mbti,
+      commute,
+      current: profile.current,
+      previous: profile.previous, 
+    },
+  });
+
+  // After adding, redirect to the user home page
+  redirect('/profile');
+}
+
+/**
+ * Edits an existing profile in the database.
+ * @param profile, an object with the following properties: id, name, major, owner.
+ */
+export async function editProfile(profile: Profile) {
+  // console.log(`editProfile data: ${JSON.stringify(stuff, null, 2)}`);
+  await prisma.profile.update({
+    where: { id: profile.id },
+    data: {
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      description: profile.description,
+      year: profile.year,
+      major: profile.major,
+      likes: profile.likes,
+      mbti: profile.mbti,
+      commute: profile.commute,
+      current: profile.current,
+      previous: profile.previous,
     },
   });
 }

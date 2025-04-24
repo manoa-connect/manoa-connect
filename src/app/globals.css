@@ -15,6 +15,16 @@
   }
 }
 
+@keyframes appear-fade {
+  from {
+      opacity: 1;
+  }
+
+  to {
+      opacity: 0;
+  }
+}
+
 :root {
   --manoa-green: #024731;
 }
@@ -47,7 +57,6 @@ body {
 #bg-image {
   background-image: linear-gradient(rgba(192, 192, 192, 0.2), rgba(0, 0, 0, 0.6)), url(../../public/img/hero-img.jpg);
   background-size: cover;
-  height: 100vh;
   background-position-x: 60%;
   background-position-y: 30%;
 }
@@ -69,14 +78,26 @@ body {
   height: 75vh;
 }
 
+.hover-line {
+  text-decoration: none;
+}
+
 .hover-line:hover{
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .slide-up {    
   animation: appear-slideUp linear;
   animation-timeline: view();
   animation-range: entry cover 35%;
+}
+
+.fade-out {
+  animation: appear-fade linear;
+  animation-timeline: view();
+  animation-range: entry cover 80%;
+  opacity: 0;
 }
 
 .top-left-image {
@@ -110,7 +131,7 @@ body {
 }
 
 .card-body {
-  max-height: 80vh; 
+  height: 50vh; 
   overflow-y: auto;
 }
 

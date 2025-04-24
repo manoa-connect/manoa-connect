@@ -6,7 +6,14 @@ import * as Icon from 'react-bootstrap-icons';
 const LandingHome = () => (
     <Container className="bg-white pb-4" fluid>
         <Container fluid="md">
-            <Row className="align-items-center justify-content-center v-middle text-center">
+            <Row className="px-5 pt-4 justify-content-center text-center">
+            <Col xs={2} />
+            <Col xs={7}>
+                <a href="#icons"><Icon.ChevronDoubleDown className="text-right fade-out link-success" size={45} /></a>
+            </Col>
+            <Col xs={2} />
+            </Row>
+            <Row id="icons" className="align-items-center justify-content-center v-middle text-center">
                 <Col className="slide-up">
                     <Icon.Calendar2Check size={100} className="m-4" style={{color: "var(--manoa-green)"}} />
                     <h1 className="text-heavitas">Match Your Schedules</h1>

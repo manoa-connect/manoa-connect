@@ -3,9 +3,11 @@ import { Col, Container, Row, Card, Button, CardTitle } from 'react-bootstrap';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import Link from 'next/link';
+import { PeopleFill } from 'react-bootstrap-icons';
+// import { prisma } from '@/lib/prisma';
 
 /** Render a list of stuff for the logged in user. */
-const HomePage = async () => {
+const UserHome = async () => {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
@@ -14,35 +16,41 @@ const HomePage = async () => {
       // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
+  
   /**
-  const owner = (session && session.user && session.user.email) || '';
-  const stuff = await prisma.stuff.findMany({
+  const email = (session && session.user && session.user.email) || '';
+  const profile = await prisma.profile.findMany({
     where: {
-      owner,
+      email,
     },
   });
   */
   // console.log(stuff);
   return (
     <main>
-      <Container id="home" fluid className="py-3">
-        <h2 className='text-center'>User Home Page</h2>
+      <Container id="home" fluid className="py-4 px-3">
+        <h2 className='text-center mb-4'>User Home Page</h2>
         <Row>
-        <Col className='justify-content-start'>
-          <Card className='mb-3'>
+        <Col md={6} className='d-flex flex-column'>
+          <Card className='mb-3 p-3 text-center'>
             <CardTitle>You have XX new matches!</CardTitle>
           </Card>
           <Link href="/chat">
-            <Card className='mb-3'>
+            <Card className='mb-3 p-3 text-center'>
               <CardTitle>You have XX new messages!</CardTitle>
             </Card>
           </Link>
-          <Button href="/connect" className='mb-3'>Connect</Button>
+          <Button href="/connect" className="btn-success py-2 px-4 w-100">Connect</Button>
+          <Button href="/match" className="btn-success py-2 px-4 w-100">Match</Button>
+          <Button href="/chat" className="btn-success py-2 px-4 w-100">Chat</Button>
         </Col>
-        <Col className="justify-content-end">
-          <Card>
+        <Col md={6} className="d-flex flex-column">
+          <Card className='mb-3 p-3 text-center'>
             <CardTitle>You have made XX total new friends!</CardTitle>
           </Card>
+          <Button className="btn-success py-2 px-4 w-100" href="/editProfile">
+            <PeopleFill /> Edit Profile
+          </Button>
         </Col>
         </Row>
       </Container>
@@ -50,4 +58,4 @@ const HomePage = async () => {
   );
 };
 
-export default HomePage;
+export default UserHome;

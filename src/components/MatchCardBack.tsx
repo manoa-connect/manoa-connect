@@ -1,15 +1,14 @@
 'use client';
  
- import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
+import { Profile } from '@prisma/client';
+import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
 import OldClassList from './OldClasses';
+import ClassList from './ClassList';
  
- const MatchingPage2 = ({ onFlipBack }: { onFlipBack: () => void }) => (
+ const MatchCardBack = ({ profile}: { profile: Profile }) => {
+
+  return (
     <Container fluid className="card-page-container">
-
-      <Button variant="dark" className="corner-button bottom-left btn-lg">
-        Skip
-      </Button>
-
       <Card className="center-card">
           <Card.Body className="card-body">
             <Row className="align-items-center">
@@ -21,26 +20,32 @@ import OldClassList from './OldClasses';
                     />
                 </Col>
                 <Col lg={10}>
-                    <Card.Title className="text-center">Mark Fishbach</Card.Title>
+                    <Card.Title className="text-center">
+                    {profile.firstName} 
+                    &nbsp;
+                    {profile.lastName}
+                    </Card.Title>
                 </Col>
             </Row>
-            {/*<Subtitle src={profile.major} />*/}
-            {/*<Subtitle src={profile.year} />*/}
-            <Card.Subtitle className="mb-2 text-center">Mechanical Engineering, 2nd year</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-center">
+            {profile.major},&nbsp;{profile.year}
+              </Card.Subtitle>
             <Row className="align-items-start">            
                 <Col className="text-start" xs={4}>
                 <h3 className="text-start">Current Classes</h3>
                 <ul className="list-unstyled text-start">
-                    <li>ICS-311</li>
+                    <li>{profile.current}</li>
                     <li>ICS-314</li>
                     <li>Physics 2</li>
                     <li>Linear Algebra</li>
                 </ul>
                 <h4 className="text-start">Old Classes</h4>
-                <OldClassList />
+                <OldClassList profile={profile}/>
+                <ClassList label="Previous Classes" classListString={profile.previous} />
+                <ClassList label="Current Classes" classListString={profile.current} />   
             </Col>
             <Col className="text-start" xs={4}>
-            <h3 className="text-start">Status: Commuter</h3>
+            <h3 className="text-start">Status: {profile.commute}</h3>
                 <h3 className="text-start">Clubs</h3>
                 <ul className="list-unstyled text-start">
                     <li>Panda</li>
@@ -53,26 +58,23 @@ import OldClassList from './OldClasses';
                 </ul>
             </Col>
             <Col className="text-start" xs={4}>
-            <h4 className="text-start">MBTI: INFP</h4>
+            <h4 className="text-start">{profile.mbti}</h4>
                 <h3 className="text-start">Interests</h3>
                 <ul className="list-unstyled text-start">
                     <li>Gaming</li>
                     <li>Programming</li>
                     <li>Music</li>
                     <li>Cooking</li>
-                </ul>
+                  </ul>
             </Col>
             </Row>
           </Card.Body>
-                <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlipBack}>
+               {/*} <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlipBack}>
                 Back
-                </Button>
+                </Button> */}
         </Card>
+        </Container>
+  );
+};
 
-      <Button variant="success" className="corner-button bottom-right btn-lg">
-        Match
-      </Button>
-    </Container>
- );
-
-export default MatchingPage2;
+export default MatchCardBack;
