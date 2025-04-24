@@ -1,8 +1,6 @@
 'use server';
 
-import { Stuff, Condition, Year, Commute } from '@prisma/client';
-import { Stuff, Condition } from '@prisma/client';
-import { Year, Commute, Profile } from '@prisma/client';
+import { Stuff, Condition, Year, Commute, Profile } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -114,26 +112,26 @@ export async function createProfile(profile: {
   current: string;
   previous: string; 
 }) {
-  let year: Year = 'freshman';
+  let year: Year = 'Freshman';
   if (profile.year === 'freshman') {
-    year = 'freshman';
+    year = 'Freshman';
   } else if (profile.year === 'sophomore') {
-    year = 'sophomore';
+    year = 'Sophomore';
   } else if (profile.year === 'junior') {
-    year = 'junior';
+    year = 'Junior';
   } else if (profile.year === 'senior') {
-    year = 'senior';
+    year = 'Senior';
   } else {
-    year = 'graduate';
+    year = 'Graduate';
   }
 
-  let commute: Commute = 'dorm';
+  let commute: Commute = 'Dorm';
   if (profile.commute === 'dorm') {
-    commute = 'dorm';
+    commute = 'Dorm';
   } else if (profile.commute === 'commuter') {
-    commute = 'commuter';
+    commute = 'Commuter';
   } else {
-    commute = 'other';
+    commute = 'Other';
   }
 
   await prisma.profile.create({

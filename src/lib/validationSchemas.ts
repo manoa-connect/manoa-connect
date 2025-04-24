@@ -26,11 +26,11 @@ export const createProfileSchema = Yup.object({
   lastName: Yup.string().required(),
   email: Yup.string().required(), // Also owner
   description: Yup.string().required(),
-  year: Yup.string().oneOf(['freshman', 'sophomore', 'junior', 'senior', 'graduate']).required(),
+  year: Yup.string().oneOf(['Freshman', 'Sophomore', 'Junior', 'Senior', 'Graduate']).required(),
   major: Yup.string().required(),
   likes: Yup.string().required(),
   mbti: Yup.string().required(),
-  commute: Yup.string().oneOf(['dorm', 'commuter', 'other']).required(),
+  commute: Yup.string().oneOf(['Dorm', 'Commuter', 'Other']).required(),
   current: Yup.string().required(),
   previous: Yup.string().required(),
 });
@@ -41,11 +41,11 @@ export const EditProfileSchema = Yup.object({
   lastName: Yup.string().required(),
   email: Yup.string().email().required(),
   description: Yup.string().required(),
-  year: Yup.string().oneOf(['freshman', 'sophomore', 'junior', 'senior', 'graduate']).required(),
+  year: Yup.string().oneOf(['Freshman', 'Sophomore', 'Junior', 'Senior', 'Graduate']).required(),
   major: Yup.string().required(),
   likes: Yup.string().required(),
   mbti: Yup.string().required(),
-  commute: Yup.string().oneOf(['dorm', 'commuter', 'other']).required(),
+  commute: Yup.string().oneOf(['Dorm', 'Commuter', 'Other']).required(),
   current: Yup.string().required(),
   previous: Yup.string().required(),
 });

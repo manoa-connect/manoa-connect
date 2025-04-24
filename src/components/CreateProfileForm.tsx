@@ -78,11 +78,11 @@ const CreateProfileForm: React.FC = () => {
                   <Form.Group className="form-group ps-3 py-3">
                     <Form.Label>Year</Form.Label>
                     <select {...register('year')} className={`form-control ${errors.year ? 'is-invalid' : ''}`}>
-                      <option value="freshman">Freshman</option>
-                      <option value="sophomore">Sophomore</option>
-                      <option value="junior">Junior</option>
-                      <option value="senior">Senior</option>
-                      <option value="graduate">Graduate</option>
+                      <option value="Freshman">Freshman</option>
+                      <option value="Sophomore">Sophomore</option>
+                      <option value="Junior">Junior</option>
+                      <option value="Senior">Senior</option>
+                      <option value="Graduate">Graduate</option>
                     </select>
                     <div className="invalid-feedback">{errors.year?.message}</div>
                   </Form.Group>
@@ -128,9 +128,9 @@ const CreateProfileForm: React.FC = () => {
                   <Form.Group className="form-group pe-3 py-3">
                     <Form.Label>Commute Status</Form.Label>
                     <select {...register('commute')} className={`form-control ${errors.commute ? 'is-invalid' : ''}`}>
-                      <option value="dorm">Dorm</option>
-                      <option value="commuter">Commuter</option>
-                      <option value="other">Other</option>
+                      <option value="Dorm">Dorm</option>
+                      <option value="Commuter">Commuter</option>
+                      <option value="Other">Other</option>
                     </select>
                     <div className="invalid-feedback">{errors.year?.message}</div>
                   </Form.Group>

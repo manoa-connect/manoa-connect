@@ -26,6 +26,28 @@ async function main() {
   for (const data of config.defaultProfiles) {
     console.log(`  Adding profile: \n${JSON.stringify(data)}`);
     // eslint-disable-next-line no-await-in-loop
+    let year: Year = 'Freshman';
+    if (data.year === 'freshman') {
+      year = 'Freshman';
+    } else if (data.year === 'sophomore') {
+      year = 'Sophomore';
+    } else if (data.year === 'junior') {
+      year = 'Junior';
+    } else if (data.year === 'senior') {
+      year = 'Senior';
+    } else {
+      year = 'Graduate';
+    }
+  
+    let commute: Commute = 'Dorm';
+    if (data.commute === 'dorm') {
+      commute = 'Dorm';
+    } else if (data.commute === 'commuter') {
+      commute = 'Commuter';
+    } else {
+      commute = 'Other';
+    }
+
     await prisma.profile.upsert({
       where: { email: data.email },
       update: {},
@@ -34,11 +56,11 @@ async function main() {
         lastName: data.lastName,
         email: data.email,
         description: data.description,
-        year: data.year as Year,
+        year,
         major: data.major,
         likes: data.likes,
         mbti: data.mbti,
-        commute: data.commute as Commute,
+        commute,
         current: data.current,
         previous: data.previous,
       },

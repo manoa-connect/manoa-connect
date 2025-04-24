@@ -32,12 +32,11 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
       <Container className="py-5">
         <Row className="justify-content-center">
           <Col xs={10} className="pb-5 mb-5 my-auto px-4">
-            <Card border="0" className="slide-up">
+            <Card border="0" className="px-4">
               <Navbar className="pt-5 justify-content-center align-middle text-center">
                 <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto"/>
                 <Navbar.Text className="text-center text-black text-heavitas h1 mt-3 ms-2">Edit Profile</Navbar.Text>
               </Navbar>
-              <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit, (formErrors) => console.log(formErrors))}>
                   <input type="hidden" {...register('id')} value={profile.id} />
                   
@@ -95,11 +94,11 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
                                 className={`form-control ${errors.year ? 'is-invalid' : ''}`}
                                 defaultValue={profile.year}
                               >
-                                <option value="freshman">Freshman</option>
-                                <option value="sophomore">Sophomore</option>
-                                <option value="junior">Junior</option>
-                                <option value="senior">Senior</option>
-                                <option value="graduate">Graduate</option>
+                                <option value="Freshman">Freshman</option>
+                                <option value="Sophomore">Sophomore</option>
+                                <option value="Junior">Junior</option>
+                                <option value="Senior">Senior</option>
+                                <option value="Graduate">Graduate</option>
                               </select>
                               <div className="invalid-feedback">{errors.year?.message}</div>
                           </Form.Group>
@@ -112,9 +111,9 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
                               className={`form-control ${errors.commute ? 'is-invalid' : ''}`}
                               defaultValue={profile.commute}
                             >
-                              <option value="dorm">Dorm</option>
-                              <option value="commuter">Commute</option>
-                              <option value="other">Other</option>
+                              <option value="Dorm">Dorm</option>
+                              <option value="Commuter">Commute</option>
+                              <option value="Other">Other</option>
                             </select>
                             <div className="invalid-feedback">{errors.commute?.message}</div>
                           </Form.Group>
@@ -206,8 +205,8 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
                       </Button>
                     </Col>
                   </Row>
+
                 </Form>
-              </Card.Body>
             </Card>
           </Col>
         </Row>
