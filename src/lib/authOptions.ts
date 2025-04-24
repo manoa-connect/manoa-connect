@@ -74,7 +74,7 @@ const authOptions: NextAuthOptions = {
           firstName: token.firstName,
           lastName: token.lastName,
           id: token.id,
-          randomKey: token.randomKey,
+          randomKey: token.randomKey || 'defaultKey',
         },
       };
     },

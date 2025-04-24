@@ -1,28 +1,21 @@
 import MatchCardFlip from '@/components/MatchCardFlip';
+import { prisma } from '@/lib/prisma';
 
 /** The Home page. */
-const Home = () => (
-  <main>
-  <MatchCardFlip />
-  {/* 
-  const MatchPage = async () => {
+const Home = async () => {
+  // Fetch a random profile from the database
   const profiles = await prisma.profile.findMany();
-  profiles.sort((a, b) => a.email.localeCompare(b.email));
-
-  const randomProfiles = profiles[Math.floor(Math.random() * profiles.length)];
+  const randomProfile = profiles[Math.floor(Math.random() * profiles.length)];
 
   return (
-    <Container id={PageIDs.profilesPage} style={pageStyle}>
-      <Row xs={1} md={2} lg={4} className="g-2">
-        <ProfileCardHelper key={randomProfiles.id} profile={randomProfiles} />
-      </Row>
-    </Container>
+    <main>
+      {randomProfile ? (
+        <MatchCardFlip profile={randomProfile} />
+      ) : (
+        <p>No profiles found.</p>
+      )}
+    </main>
   );
 };
-
-export default MatchPage;
-  */}
-  </main>
-);
 
 export default Home;

@@ -10,6 +10,7 @@ declare module 'next-auth' {
     user?: User & {
       firstName?: string | null;
       lastName?: string | null;
+      randomKey?: string;
     };
   }
 }

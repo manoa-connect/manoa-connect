@@ -3,8 +3,9 @@
 import { useState } from "react";
 import MatchingCard from "./MatchingCard";
 import MatchingCardBack from "./MatchingCardBack";
+import { Profile } from "@prisma/client";
 
-const MatchCardFlip = () => {
+const MatchCardFlip = ({ profile }: { profile: Profile }) => {
   const [showFront, setShowFront] = useState(true);
 
   return (
@@ -12,7 +13,7 @@ const MatchCardFlip = () => {
       {showFront ? (
         <MatchingCard onFlip={() => setShowFront(false)} />
       ) : (
-        <MatchingCardBack onFlipBack={() => setShowFront(true)} />
+        <MatchingCardBack onFlipBack={() => setShowFront(true)} profile={profile} />
       )}
     </div>
   );
