@@ -15,7 +15,7 @@ const HeroSec = () => {
         <Row className="align-items-center justify-content-center v-middle">
             <Col s={1} />
             <Col xs={3}>
-                <Card style={{ width: '18rem' }}>
+                <Card style={{ width: '18rem', height: '350px'}}>
                     <Card.Img variant="top" src={card_image.src} />
                     <Card.Body>
                     <Card.Title>Placeholder Card</Card.Title>
@@ -33,10 +33,10 @@ const HeroSec = () => {
                     <>
                     <Col />
                     <Col>
-                        <Button className="btn-success my-1 py-2 px-5 m-4" href="/connect">
+                        <Button className="btn-success my-1 py-2 px-5 m-2" href="/connect">
                             <Icon.PeopleFill /> Connect
                         </Button>
-                        <Button className="btn-success my-1 py-2 px-5 m-4" href="/home">
+                        <Button className="btn-success my-1 py-2 px-5 m-4" href="/profile">
                             <Icon.PersonFill /> Your Profile
                         </Button>
                     </Col>

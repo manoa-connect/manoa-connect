@@ -9,9 +9,10 @@ import logo from "../../public/assets/manoa-connect_logo-text.svg";
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
-  const userWithRole = session?.user as { email: string; randomKey: string };
+  const userWithRole = session?.user as { firstName?: string | null; lastName?: string | null; email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
+
   return (
     <Navbar className="bg-manoa-green" data-bs-theme="dark" expand="lg" sticky="top">
       <Container>
@@ -26,16 +27,19 @@ const NavBar: React.FC = () => {
             </Nav.Link>
             {currentUser
               ? [
-                  <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
+                  <Nav.Link id="home-nav" href="/profile" key="home" active={pathName === '/profile'}>
+                    Profile
+                  </Nav.Link>,
+                  <Nav.Link id="schedule-nav" href="/schedule" key="schedule" active={pathName === '/schedule'}>
                     Schedule
                   </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
+                  <Nav.Link id="map-nav" href="/map" key="map" active={pathName === '/map'}>
                     Map
                   </Nav.Link>,
-                  <Nav.Link id="connect" href="/chat" key="list" active={pathName === '/list'}>
+                  <Nav.Link id="chat-nav" href="/chat" key="chat" active={pathName === '/chat'}>
                   Chat
                   </Nav.Link>,
-                  <Nav.Link id="connect" href="/connect" key="list" active={pathName === '/list'}>
+                  <Nav.Link id="connect-nav" href="/connect-test" key="connect" active={pathName === '/connect'}>
                   Connect
                   </Nav.Link>,
                 ]
@@ -51,6 +55,10 @@ const NavBar: React.FC = () => {
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
+                <NavDropdown.Item id="profile-dropdown" href="/profile">
+                  <PersonFill />
+                  Profile
+                </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
                   <BoxArrowRight />
                   Sign Out

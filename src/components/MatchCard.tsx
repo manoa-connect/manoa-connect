@@ -1,15 +1,13 @@
 'use client';
+
+import { Profile } from '@prisma/client';
+import { Col, Container, Image, Row, Card } from 'react-bootstrap';
  
- import { Col, Container, Image, Row, Button, Card } from 'react-bootstrap';
- 
- const MatchingPage = ({ onFlip }: { onFlip: () => void }) => (
+ const MatchCard = ({ profile }: { profile: Profile }) => {
+
+  return (
     <Container fluid className="card-page-container">
-
-      <Button variant="dark" className="corner-button bottom-left btn-lg">
-        Skip
-      </Button>
-
-      <Card className="center-card">
+          <Card className="center-card">
           <Card.Body className="card-body">
             <Row className="align-items-center">
                 <Col xs="auto">
@@ -20,7 +18,11 @@
                     />
                 </Col>
                 <Col lg={10}>
-                    <Card.Title className="text-center">Mark Fishbach</Card.Title>
+                    <Card.Title className="text-center">
+                    {profile.firstName} 
+                    &nbsp;
+                    {profile.lastName}
+                    </Card.Title>
                 </Col>
             </Row>
             <Row className="justify-content-center">
@@ -49,24 +51,17 @@
             />
             </Col>
             </Row>
-            {/*<Subtitle src={profile.major} />*/}
-            {/*<Subtitle src={profile.year} />*/}
-            <Card.Subtitle className="mb-2 text-center">Mechanical Engineering, 2nd year</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-center">{profile.major}, {profile.year}</Card.Subtitle>
             <Card.Text className="text-center">
-              {/*<Text src={profile.description} />*/}
-                I am a sophomore at the University of Hawaii at Manoa. I am looking for a study buddy for my classes.
-                I am also looking for someone to go to the gym with. I love to play basketball and go hiking.
+              {profile.description}
             </Card.Text>
           </Card.Body>
-                <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlip}>
+{ /*               <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlip}>
                 View Profile
-                </Button>
-        </Card>
+                </Button>*/}
+          </Card>
+        </Container>
+  );
+};
 
-      <Button variant="success" className="corner-button bottom-right btn-lg">
-        Match
-      </Button>
-    </Container>
- );
-
-export default MatchingPage;
+export default MatchCard;

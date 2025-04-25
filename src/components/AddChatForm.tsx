@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { Button, Card, Container, Form, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
@@ -49,28 +49,32 @@ const AddChatForm = ({ profile }: { profile: Profile }) => {
   }
 
   return (
-    <Container>
+    <Container className="py-3">
       <Row className="justify-content-center">
-        <Card>
-          <Card.Body className="p-2">
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Form.Group className="d-flex align-items-center mb-0">
-                <input
-                  type="text"
-                  {...register('chat')}
-                  className={`form-control ${errors.chat ? 'is-invalid' : ''}`}
-                  placeholder="Enter a message"
-                />
-                <div className="invalid-feedback">{errors.chat?.message}</div>
-                <Button type="submit" variant="primary">
-                  <ArrowUpCircle />
-                </Button>
-              </Form.Group>
-              <input type="hidden" {...register('contactId')} value={profile.id} />
-              <input type="hidden" {...register('owner')} value={currentUser} />
-            </Form>
-          </Card.Body>
-        </Card>
+        <Col xs={10}>
+          <Col className="text-center">
+          </Col>
+          <Card>
+            <Card.Body>
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form.Group className="d-flex gap-2 align-items-center">
+                  <input
+                    type="text"
+                    {...register('chat')}
+                    className={`form-control ${errors.chat ? 'is-invalid' : ''}`}
+                    placeholder="Enter a message"
+                  />
+                  <div className="invalid-feedback">{errors.chat?.message}</div>
+                  <Button type="submit" variant="primary">
+                    <ArrowUpCircle />
+                  </Button>
+                </Form.Group>
+                <input type="hidden" {...register('contactId')} value={profile.id} />
+                <input type="hidden" {...register('owner')} value={currentUser} />
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
       </Row>
     </Container>
   );

@@ -15,7 +15,7 @@ const SignIn = () => {
     const email = target.email.value;
     const password = target.password.value;
     const result = await signIn('credentials', {
-      callbackUrl: '/list',
+      callbackUrl: '/profile',
       email,
       password,
     });
@@ -36,7 +36,7 @@ const SignIn = () => {
                 <Navbar.Text className="text-center text-black text-heavitas h1 mt-4 ms-2">Login</Navbar.Text>
               </Navbar>
               <Form method="post" onSubmit={handleSubmit}>
-                <Form.Group controlId="formBasicEmail" className="p-3">
+                <Form.Group controlId="formBasicEmail" className="form-group px-3">
                   <Form.Label className="text-black">Email</Form.Label>
                   <input name="email" type="text" className="form-control" />
                 </Form.Group>
@@ -45,16 +45,16 @@ const SignIn = () => {
                   <input name="password" type="password" className="form-control" />
                 </Form.Group>
                 <Container>
-                  <Row className="justify-content-center px-3">
+                  <Row className="justify-content-center pt-2 px-3">
                       <Button type="submit" className="mt-3 btn-success">
                           Login
                       </Button>
                   </Row>
                 </Container>
               </Form>
-              <Card.Footer className="text-center text-black pt-3 mb-5 pb-4">
+              <Card.Footer className="text-center text-black pt-3 mb-5 pb-2">
                 Don&apos;t have an account?
-                <a href="/auth/signup" className="ps-2 link-success">Sign Up</a>
+                <a href="/auth/signup" className="ps-2 link-success hover-line">Sign Up</a>
               </Card.Footer>
             </Col>
           </Row>

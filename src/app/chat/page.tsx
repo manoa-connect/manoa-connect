@@ -27,8 +27,8 @@ const Home = async () => {
   const chats = await prisma.chat.findMany({
     where: {
         OR: [
-        { owner: email },                      
-        { contactId: profile.id },              
+        { owner: email },                       // 自分が送った
+        { contactId: profile.id },              // 自分が受け取った
       ],
     },
     orderBy: { createdAt: 'asc' },

@@ -1,8 +1,6 @@
 'use client';
 
-import '@/app/chatcard.css';
-
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { ListGroup, Row, Col  } from 'react-bootstrap';
 import { Chat, Profile } from '@prisma/client';
 import ChatItem from './ChatItem';
@@ -11,7 +9,6 @@ import AddChatForm from './AddChatForm';
 const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[], matchs: Profile[] }) => {
   const sessionUserEmail = profile.email;
   const currentProfileId = profile.id;
-  const chatListRef = useRef<HTMLDivElement | null>(null);
 
   const [selectedMatch, setSelectedMatch] = useState<Profile | null>(
     matchs.length > 0 ? matchs[0] : null
@@ -23,38 +20,31 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
       (chat.contactId === currentProfileId && chat.owner === selectedMatch?.email) 
   );
 
-  useEffect(() => {
-    if (chatListRef.current) {
-      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
-    }
-  }, [filteredChats]);
-
   return (
     <main className="p-4">
       <Row>
-        <Col style={{ width: '200px', flex: '0 0 auto' , borderRight: '1px solid #ccc'}}>
-          <h5 className="text-body">Friends ({matchs.length})</h5>
-          <ListGroup style={{ maxHeight: '300px', overflowY: 'auto' }}>
-            {matchs.map((match) => (
-              <ListGroup.Item
-                key={match.id}
-                action
-                active={selectedMatch?.id === match.id}
-                onClick={() => setSelectedMatch(match)}
-                className={selectedMatch?.id === match.id ? 'active-friend' : ''}
-              >
-                {match.firstName} {match.lastName}
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
+        <Col xs={4}>
+              <h5>Friends</h5>
+              <ListGroup>
+                {matchs.map((match) => (
+                  <ListGroup.Item
+                    key={match.id}
+                    action
+                    active={selectedMatch?.id === match.id}
+                    onClick={() => setSelectedMatch(match)}
+                  >
+                    {match.firstName} {match.lastName}
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
         </Col>
         <Col>
-          <h5 className="text-body">
+          <h5 className="text-center">
             {selectedMatch?.firstName} {selectedMatch?.lastName}
           </h5>
-          <ListGroup variant="flush" style={{ maxHeight: '310px', overflowY: 'auto' }} ref={chatListRef}>
+          <ListGroup variant="flush">
             {filteredChats.map((chat) => (
-              <ChatItem key={chat.id} chat={chat} currentUserEmail={sessionUserEmail} />
+              <ChatItem key={chat.id} chat={chat} />
             ))}
           </ListGroup>
           {selectedMatch && <AddChatForm profile={selectedMatch} />}
