@@ -12,14 +12,14 @@ const Footer = () => {
   return (
     <footer className="mt-auto py-3 bg-manoa-green">
       <Container>
-        <Row className="pt-4">
+        <Row className="py-4">
           <Col className="text-start link-light">
             <Row>
               <Navbar>
                 <Nav.Link 
                   id="home-nav"href="/profile" 
                   key="home" active={pathName === '/profile'} 
-                  className="link-light px-2">
+                  className="link-light px-2 hover-line">
                     <strong>Profile</strong> 
                 </Nav.Link>
 
@@ -68,7 +68,7 @@ const Footer = () => {
 
           <Col className="text-end text-light">
             <Navbar.Brand href="/">
-              <Image src={text_logo.src} width="300px" alt="Manoa Connect" className="d-inline-block invert pt-3"/>
+              <Image src={text_logo.src} width="350px" alt="Manoa Connect" className="d-inline-block invert pt-3"/>
             </Navbar.Brand>
           </Col>
         </Row>

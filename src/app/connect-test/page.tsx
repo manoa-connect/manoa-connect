@@ -40,6 +40,6 @@ const Home = async () => {
             </Button>
         </main>
     );    
-    };
+};
 
 export default Home;
