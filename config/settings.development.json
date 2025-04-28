@@ -2,6 +2,8 @@
   "defaultAccounts": [
     { "email": "admin@foo.com", "firstName": "Admin", "lastName": "Foo", "password": "changeme", "role": "ADMIN" },
     { "email": "john@foo.com", "firstName": "John", "lastName": "Foo", "password": "changeme" },
+    { "email": "austin@foo.com", "firstName": "Auton", "lastName": "Tilton", "password": "changeme"},
+    { "email": "jayden@foo.com", "firstName": "Jayden", "lastName": "Boyd", "password": "changeme"},
     { "email": "masaki@foo.com", "firstName": "Masaki", "lastName": "Sakai", "password": "changeme" },
     { "email": "uncle@foo.com", "firstName": "Guest", "lastName": "Foo", "password": "changeme" }
   ],
@@ -51,6 +53,8 @@
       "previous": "Waikiki",
       "liked": ["masaki@foo.com"],
       "matched": ["masaki@foo.com"]
-    }
+    },
+    { "firstName": "Auton", "lastName": "Tilton", "email": "austin@foo.com", "description": "Oh Hi!", "year": "junior", "major": "Music", "likes": "Guitar, anime, firetrucks", "mbti": "INFP", "commute": "commuter", "current": "MUS-212, MUS-201, TEST-111, TEST-222, TEST-333", "previous": "MUS-111, MUS-171, MUS-151, Test-1234, test 134, test123" },
+    { "firstName": "Jayden", "lastName": "Boyd", "email": "jayden@foo.com", "description": "im jayden", "year": "senior", "major": "Business", "likes": "Basketball, One Piece, Balatro", "mbti": "ITBS", "commute": "commuter", "current": "ACC-312", "previous": "ACC-121, BUS-131, BUS-111" }
   ]
 }
