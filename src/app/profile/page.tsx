@@ -38,7 +38,7 @@ const ProfilePage = async () => {
     <UserHome profile={profile as ProfileWithMatches} chatList = {chatList}/>
     </>
   ) : (
-    <p>No profile found.</p>
+    <p>No profile found. Please create one <a className="link-success" href="/createProfile">here.</a></p>
   )}
   </main>
 )
