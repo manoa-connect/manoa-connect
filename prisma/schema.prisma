@@ -1,59 +1,19 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
-  firstName String?
-  lastName  String?
-  Profile   Profile?
-}
-
-model Stuff {
-  id        Int       @id @default(autoincrement())
-  name      String
-  quantity  Int
-  condition Condition
-  owner     String
-}
-
-model Chat {
-  id        Int      @id @default(autoincrement())
-  contactId Int
-  owner     String
-  isRead    Boolean
-  createdAt DateTime @default(now())
-  chat      String
-  Profile   Profile  @relation(fields: [contactId], references: [id])
-}
-
-model Profile {
-  id                        Int       @id @default(autoincrement())
-  firstName                 String
-  lastName                  String
-  email                     String    @unique
-  description               String
-  year                      Year
-  major                     String
-  likes                     String
-  mbti                      String
-  commute                   Commute
-  current                   String
-  previous                  String
-  note                      Chat[]
-  User                      User      @relation(fields: [email], references: [email])
-  Profile_LikesGiven_A      Profile[] @relation("LikesGiven")
-  Profile_LikesGiven_B      Profile[] @relation("LikesGiven")
-  Profile_MatchedProfiles_A Profile[] @relation("MatchedProfiles")
-  Profile_MatchedProfiles_B Profile[] @relation("MatchedProfiles")
+  // for local development
+  // url      = env("DATABASE_URL")
+  // for Vercel
+  url       = env("DATABASE_URL")
 }
 
 enum Role {
@@ -61,11 +21,29 @@ enum Role {
   ADMIN
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String   @default("First")
+  lastName  String   @default("Last")
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  Profile   Profile[]
+}
+
 enum Condition {
   excellent
   good
   fair
   poor
+}
+
+model Stuff {
+  id        Int       @id @default(autoincrement())
+  name      String
+  quantity  Int
+  condition Condition @default(good)
+  owner     String
 }
 
 enum Commute {
@@ -80,4 +58,36 @@ enum Year {
   Junior
   Senior
   Graduate
+}
+
+model Chat {
+    id        Int      @id @default(autoincrement())
+    contactId Int
+    chat      String
+    owner     String
+    isRead    Boolean
+    createdAt DateTime @default(now())
+    Profile   Profile  @relation(fields: [contactId], references: [id])
+}
+
+model Profile {
+  id          Int       @id @default(autoincrement())
+  // contacts    Contact[] 
+  firstName   String
+  lastName    String
+  email       String    @unique 
+  description String
+  note        Chat[]
+  year        Year
+  major       String
+  likes       String
+  mbti        String
+  commute     Commute
+  current     String
+  previous    String
+  User        User  @relation(fields: [email], references: [email]) // Also owner of the profile
+  accepts     Profile[] @relation("LikesGiven")
+  acceptedBy  Profile[] @relation("LikesGiven")
+  matches     Profile[] @relation("MatchedProfiles")
+  matchedBy   Profile[] @relation("MatchedProfiles")
 }
