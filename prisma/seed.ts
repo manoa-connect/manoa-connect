@@ -14,9 +14,9 @@ async function main() {
       where: { email: account.email },
       update: {},
       create: {
+        email: account.email,
         firstName: account.firstName || 'Default',
         lastName: account.lastName || 'User',
-        email: account.email,
         password,
         role,
       },

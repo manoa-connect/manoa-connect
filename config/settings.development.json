@@ -5,7 +5,8 @@
     { "email": "austin@foo.com", "firstName": "Auton", "lastName": "Tilton", "password": "changeme"},
     { "email": "jayden@foo.com", "firstName": "Jayden", "lastName": "Boyd", "password": "changeme"},
     { "email": "masaki@foo.com", "firstName": "Masaki", "lastName": "Sakai", "password": "changeme" },
-    { "email": "uncle@foo.com", "firstName": "Guest", "lastName": "Foo", "password": "changeme" }
+    { "email": "uncle@foo.com", "firstName": "Guest", "lastName": "Foo", "password": "changeme" },
+    { "email": "jschmoe@foo.com", "firstName": "Joseph", "lastName": "Biden", "password": "changeme" }
   ],
 
   "defaultProfiles": [
@@ -83,6 +84,21 @@
       "previous": "ACC-121, BUS-131, BUS-111",
       "liked": ["austin@foo.com"],
       "matched": ["austin@foo.com"]
+    },
+    {
+      "firstName": "Joseph",
+      "lastName": "Biden",
+      "email": "jschmoe@foo.com",
+      "description": "I was the 46th president",
+      "year": "Graduate",
+      "major": "Political Science",
+      "likes": "Ice Cream, Cars",
+      "mbti": "INTJ",
+      "commute": "commuter",
+      "current": "POL-444, TWH-123, UYJ-123, HED-123",
+      "previous": "POL-111, ACC-121, BUS-131, BUS-111",
+      "liked": ["austin@foo.com"],
+      "matched": []
     }
   ]
 }
