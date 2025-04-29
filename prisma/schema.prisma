@@ -65,7 +65,7 @@ model Chat {
     contactId Int
     chat      String
     owner     String
-    isRead    Boolean
+    isRead    Boolean  @default(false)
     createdAt DateTime @default(now())
     Profile   Profile  @relation(fields: [contactId], references: [id])
 }

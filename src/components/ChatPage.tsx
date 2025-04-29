@@ -17,17 +17,41 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
     matchs.length > 0 ? matchs[0] : null
   );
 
-  const filteredChats = chats.filter(
+  const [chatList, setChatList] = useState<Chat[]>(chats);
+
+  const filteredChats = chatList.filter(
     (chat) =>
       (chat.contactId === selectedMatch?.id && chat.owner === sessionUserEmail) || 
       (chat.contactId === currentProfileId && chat.owner === selectedMatch?.email) 
   );
 
   useEffect(() => {
+    if (filteredChats.length === 0) return;
+
+    async function markChatsAsRead() {
+      const unreadChatIds = filteredChats
+        .filter(chat => !chat.isRead && chat.owner !== sessionUserEmail) // 自分が受け取った未読チャットだけ
+        .map(chat => chat.id);
+
+      if (unreadChatIds.length > 0) {
+        await fetch('/api/markAsRead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chatIds: unreadChatIds }),
+        });
+
+        setChatList(prev => prev.map(chat =>
+          unreadChatIds.includes(chat.id) ? { ...chat, isRead: true } : chat
+        ));
+      }
+    }
+
+    markChatsAsRead();
+
     if (chatListRef.current) {
       chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
     }
-  }, [filteredChats]);
+  }, [filteredChats, sessionUserEmail]);
 
   return (
     <main className="p-4">
@@ -35,16 +59,26 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
         <Col style={{ width: '200px', flex: '0 0 auto' , borderRight: '1px solid #ccc'}}>
           <h5 className="text-body">Friends ({matchs.length})</h5>
           <ListGroup style={{ maxHeight: '300px', overflowY: 'auto' }}>
-            {matchs.map((match) => (
-              <ListGroup.Item
-                key={match.id}
-                active={selectedMatch?.id === match.id}
-                onClick={() => setSelectedMatch(match)}
-                className={`friend-item ${selectedMatch?.id === match.id ? 'active-friend' : ''}`}
-              >
-                {match.firstName} {match.lastName}
-              </ListGroup.Item>
-            ))}
+            {matchs.map((match) => {
+              const unreadCount = chatList.filter(chat =>
+                chat.owner === match.email &&              
+                chat.contactId === currentProfileId &&       
+                !chat.isRead
+              ).length;                             
+              return (
+                <ListGroup.Item
+                  key={match.id}
+                  active={selectedMatch?.id === match.id}
+                  onClick={() => setSelectedMatch(match)}
+                  className={`friend-item ${selectedMatch?.id === match.id ? 'active-friend' : ''}`}
+                >
+                  {match.firstName} {match.lastName}
+                  {unreadCount > 0 && (
+                    <span className="badge" style={{ float: 'right', backgroundColor: '#4CAF50', color: '#ffffff' }}>{unreadCount}</span>
+                  )}
+                </ListGroup.Item>
+              );
+            })}
           </ListGroup>
         </Col>
         <Col>

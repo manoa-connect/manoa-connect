@@ -2,6 +2,7 @@
 
 import { ListGroup } from 'react-bootstrap';
 import { Chat } from '@prisma/client';
+import { CheckAll,  EyeSlash } from 'react-bootstrap-icons';
 
 /* Renders a single row in the List Stuff table. See list/page.tsx. */
 const ChatItem = ({ chat, prevChat, currentUserEmail }: { chat: Chat; prevChat: Chat | null; currentUserEmail: string }) => {
@@ -34,12 +35,13 @@ const ChatItem = ({ chat, prevChat, currentUserEmail }: { chat: Chat; prevChat: 
       </div>
       {isOwnMessage ? (
         <div className="user-message">
+          {chat.isRead ? <CheckAll /> : <EyeSlash />}
           {new Date(chat.createdAt).toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit'
           })}
           &nbsp;
-          <p className="chat-bubble">
+          <p className="user-chat-bubble">
             {chat.chat}
           </p>
         </div>
