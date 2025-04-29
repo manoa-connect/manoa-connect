@@ -45,7 +45,7 @@ const ChatItem = ({ chat, prevChat, currentUserEmail }: { chat: Chat; prevChat: 
         </div>
       ) : (
         <div className="friend-message">
-          <p className="chat-bubble">
+          <p className="friend-chat-bubble">
             {chat.chat}
           </p>
           &nbsp;

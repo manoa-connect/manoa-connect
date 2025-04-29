@@ -29,7 +29,7 @@ html,
 .chat-date {
     display: inline-block;
     background-color: #bcc1c8 !important;
-    border-radius: 0.4rem;
+    border-radius: 1.0rem;
     padding: 0.2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
@@ -54,7 +54,23 @@ html,
     color: #adb5bd;
 }
 
-.chat-bubble {
+.user-chat-bubble {
+    display: inline-block;
+    text-align: left;
+    background-color: #C7EDBA !important;
+    font-size: 1.0rem;
+    color: #212529;
+    padding: 0.1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.5rem;
+    max-width: 70%;
+    word-break: break-word;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.friend-chat-bubble {
     display: inline-block;
     text-align: left;
     background-color: #D4F7DC !important;
@@ -69,4 +85,3 @@ html,
     margin-top: 0;
     margin-bottom: 0;
 }
-
