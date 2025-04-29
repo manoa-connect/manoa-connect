@@ -4,6 +4,7 @@ import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import MatchCardFlip from '@/components/MatchCardFlip';
 import { prisma } from '@/lib/prisma';
+import MatchButton from '@/components/MatchButton';
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
@@ -15,11 +16,23 @@ const Home = async () => {
 
   const email = session?.user?.email || '';
 
-  // Get all other profiles except the logged-in user
+  const currentUserProfile = await prisma.profile.findUnique({
+    where: { email },
+    include: {
+      matches: true,
+    },
+  });
+  
+  if (!currentUserProfile) {
+    throw new Error('Profile not found.');
+  }
+
+  const matchedProfileIds = currentUserProfile.matches.map((p: { id: number }) => p.id);
+
   const otherProfiles = await prisma.profile.findMany({
     where: {
-      NOT: {
-        email,
+      id: {
+        notIn: [currentUserProfile.id, ...matchedProfileIds], //exclude yourself and matched profiles
       },
     },
   });
@@ -41,9 +54,7 @@ const Home = async () => {
       ) : (
         <p>No other profiles available.</p>
       )}
-      <Button variant="success" className="corner-button bottom-right btn-lg">
-        Match
-      </Button>
+      <MatchButton matchedId={randomProfile?.id || 0} />
     </main>
   );
 };

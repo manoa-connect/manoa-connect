@@ -14,6 +14,7 @@ const Home = async () => {
         user: { email: string; id: string; randomKey: string };
       } | null,
     );
+
     const email = (session && session.user && session.user.email) || '';
     const profile = await prisma.profile.findUnique({
         where: {
@@ -28,8 +29,12 @@ const Home = async () => {
             </Button>
             {profile ? (
               <>
-                <MatchCard profile={profile} />
-                  <MatchCardBack profile={profile} />
+                <MatchCard profile={profile} onFlip={function (): void {
+                        throw new Error('Function not implemented.');
+                    } } />
+                  <MatchCardBack profile={profile} onFlipBack={function (): void {
+                        throw new Error('Function not implemented.');
+                    } } />
               </>
               ) : (
                 <p>No profile found.</p>

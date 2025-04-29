@@ -4,6 +4,8 @@ import { Stuff, Condition, Year, Commute, Profile } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
 
 /**
  * Adds a new stuff to the database.
@@ -185,4 +187,43 @@ export async function editProfile(profile: Profile) {
       previous: profile.previous,
     },
   });
+}
+
+export async function tryMatch(matchedId: number) {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.email) {
+    throw new Error('Not authenticated');
+  }
+
+  const currentUser = await prisma.profile.findUnique({
+    where: { email: session.user.email },
+    include: { matches: true },
+  });
+
+  if (!currentUser) {
+    throw new Error('Current user profile not found');
+  }
+
+  // Add matched profile to the current user matches
+  await prisma.profile.update({
+    where: { id: currentUser.id },
+    data: {
+      matches: {
+        connect: { id: matchedId },
+      },
+    },
+  });
+
+  // Check if the other user has also matched the current user
+  const otherUser = await prisma.profile.findUnique({
+    where: { id: matchedId },
+    include: { matches: true },
+  });
+
+  const theyAlsoMatched = otherUser?.matches.some(
+    (p) => p.id === currentUser.id,
+  );
+
+  return { matched: theyAlsoMatched };
 }
