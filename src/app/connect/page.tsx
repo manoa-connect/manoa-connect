@@ -1,18 +1,12 @@
 import { getServerSession } from 'next-auth';
-import { Button } from 'react-bootstrap';
-import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import MatchCardFlip from '@/components/MatchCardFlip';
+import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
-import MatchButton from '@/components/MatchButton';
+import MatchClient from '@/components/MatchClient';
 
-const Home = async () => {
+const Page = async () => {
   const session = await getServerSession(authOptions);
-  loggedInProtectedPage(
-    session as {
-      user: { email: string; id: string; randomKey: string };
-    } | null,
-  );
+  loggedInProtectedPage(session);
 
   const email = session?.user?.email || '';
 
@@ -22,41 +16,22 @@ const Home = async () => {
       matches: true,
     },
   });
-  
+
   if (!currentUserProfile) {
     throw new Error('Profile not found.');
   }
 
-  const matchedProfileIds = currentUserProfile.matches.map((p: { id: number }) => p.id);
+  const matchedProfileIds = currentUserProfile.matches.map((p) => p.id);
 
   const otherProfiles = await prisma.profile.findMany({
     where: {
       id: {
-        notIn: [currentUserProfile.id, ...matchedProfileIds], //exclude yourself and matched profiles
+        notIn: [currentUserProfile.id, ...matchedProfileIds],
       },
     },
   });
 
-  const randomProfile =
-    otherProfiles.length > 0
-      ? otherProfiles[Math.floor(Math.random() * otherProfiles.length)]
-      : null;
-
-  return (
-    <main>
-      <Button variant="dark" className="corner-button bottom-left btn-lg" href="/connect">
-        Skip
-      </Button>
-      {randomProfile ? (
-        <>
-          <MatchCardFlip profile={randomProfile} />
-        </>
-      ) : (
-        <p>No other profiles available.</p>
-      )}
-      <MatchButton matchedId={randomProfile?.id || 0} />
-    </main>
-  );
+  return <MatchClient otherProfiles={otherProfiles} />;
 };
 
-export default Home;
+export default Page;
