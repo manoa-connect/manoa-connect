@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <footer className="mt-auto py-3 bg-manoa-green">
       <Container>
-        <Row className="pt-4">
+        <Row>
           <Col className="text-start link-light">
             <Row>
               <Navbar>

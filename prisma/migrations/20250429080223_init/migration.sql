@@ -1,23 +1,46 @@
 -- CreateEnum
+CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
+
+-- CreateEnum
+CREATE TYPE "Condition" AS ENUM ('excellent', 'good', 'fair', 'poor');
+
+-- CreateEnum
 CREATE TYPE "Commute" AS ENUM ('Dorm', 'Commuter', 'Other');
 
 -- CreateEnum
 CREATE TYPE "Year" AS ENUM ('Freshman', 'Sophomore', 'Junior', 'Senior', 'Graduate');
 
--- AlterTable
-ALTER TABLE "Stuff" ALTER COLUMN "condition" SET DEFAULT 'good';
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'USER',
+    "firstName" TEXT,
+    "lastName" TEXT,
 
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "firstName" TEXT NOT NULL DEFAULT 'First',
-ADD COLUMN     "lastName" TEXT NOT NULL DEFAULT 'Last';
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Stuff" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "condition" "Condition" NOT NULL,
+    "owner" TEXT NOT NULL,
+
+    CONSTRAINT "Stuff_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Chat" (
     "id" SERIAL NOT NULL,
     "contactId" INTEGER NOT NULL,
-    "chat" TEXT NOT NULL,
     "owner" TEXT NOT NULL,
+    "isRead" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "chat" TEXT NOT NULL,
 
     CONSTRAINT "Chat_pkey" PRIMARY KEY ("id")
 );
@@ -43,24 +66,29 @@ CREATE TABLE "Profile" (
 -- CreateTable
 CREATE TABLE "_LikesGiven" (
     "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL,
-
-    CONSTRAINT "_LikesGiven_AB_pkey" PRIMARY KEY ("A","B")
+    "B" INTEGER NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_MatchedProfiles" (
     "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL,
-
-    CONSTRAINT "_MatchedProfiles_AB_pkey" PRIMARY KEY ("A","B")
+    "B" INTEGER NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Profile_email_key" ON "Profile"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "_LikesGiven_AB_unique" ON "_LikesGiven"("A", "B");
+
+-- CreateIndex
 CREATE INDEX "_LikesGiven_B_index" ON "_LikesGiven"("B");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_MatchedProfiles_AB_unique" ON "_MatchedProfiles"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_MatchedProfiles_B_index" ON "_MatchedProfiles"("B");

@@ -13,8 +13,7 @@ datasource db {
   // for local development
   // url      = env("DATABASE_URL")
   // for Vercel
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  url       = env("DATABASE_URL")
 }
 
 enum Role {
@@ -66,6 +65,7 @@ model Chat {
     contactId Int
     chat      String
     owner     String
+    isRead    Boolean  @default(false)
     createdAt DateTime @default(now())
     Profile   Profile  @relation(fields: [contactId], references: [id])
 }
