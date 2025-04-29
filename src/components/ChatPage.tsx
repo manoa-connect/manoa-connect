@@ -38,10 +38,9 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
             {matchs.map((match) => (
               <ListGroup.Item
                 key={match.id}
-                action
                 active={selectedMatch?.id === match.id}
                 onClick={() => setSelectedMatch(match)}
-                className={selectedMatch?.id === match.id ? 'active-friend' : ''}
+                className={`friend-item ${selectedMatch?.id === match.id ? 'active-friend' : ''}`}
               >
                 {match.firstName} {match.lastName}
               </ListGroup.Item>
@@ -52,9 +51,9 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
           <h5 className="text-body">
             {selectedMatch?.firstName} {selectedMatch?.lastName}
           </h5>
-          <ListGroup variant="flush" style={{ maxHeight: '310px', overflowY: 'auto' }} ref={chatListRef}>
-            {filteredChats.map((chat) => (
-              <ChatItem key={chat.id} chat={chat} currentUserEmail={sessionUserEmail} />
+          <ListGroup variant="flush" style={{ maxHeight: '260px', overflowY: 'auto' }} ref={chatListRef}>
+            {filteredChats.map((chat, index) => (
+              <ChatItem key={chat.id} chat={chat} prevChat={index > 0 ? filteredChats[index - 1] : null} currentUserEmail={sessionUserEmail} />
             ))}
           </ListGroup>
           {selectedMatch && <AddChatForm profile={selectedMatch} />}

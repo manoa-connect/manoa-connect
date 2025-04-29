@@ -52,7 +52,7 @@ const AddChatForm = ({ profile }: { profile: Profile }) => {
     <Container>
       <Row className="justify-content-center">
         <Card>
-          <Card.Body className="p-2">
+          <Card.Body className="chat-form-body">
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group className="d-flex align-items-center mb-0">
                 <input
