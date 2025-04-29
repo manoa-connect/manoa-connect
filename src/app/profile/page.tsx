@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
 import authOptions from '@/lib/authOptions';
+import { Profile, Chat} from '@prisma/client';
 
 /** The Home page. */
 const ProfilePage = async () => {
@@ -19,13 +20,22 @@ const ProfilePage = async () => {
     where: {
       email,
     },
+    include: {
+      matches: true,
+    },
   });
+
+  const chatList = await prisma.chat.findMany();
+
+  type ProfileWithMatches = Profile & {
+    matches: Profile[]; 
+  };
 
   return (
     <main>
     {profile ? (
       <>
-    <UserHome profile={profile} />
+    <UserHome profile={profile as ProfileWithMatches} chatList = {chatList}/>
     </>
   ) : (
     <p>No profile found.</p>

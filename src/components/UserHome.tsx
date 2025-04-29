@@ -2,11 +2,31 @@
 
 import { Col, Container, Row, Card, Button, Nav } from 'react-bootstrap';
 import Link from 'next/link';
-import { Profile } from '@prisma/client';
+import { Profile, Chat } from '@prisma/client';
 import * as Icon from 'react-bootstrap-icons';
 import card_image from '../../public/img/hero-img.jpg';
 
-const UserHome = ({ profile }: { profile: Profile }) => {
+type ProfileWithMatches = Profile & {
+  matches: Profile[];
+};
+
+const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList: Chat[] }) => {
+  function countUnreadMessages(chatList: Chat[] | undefined, currentUserId: number, currentUserEmail: string): number {
+    if (!chatList) return 0;
+    return chatList.filter(chat =>
+      chat.contactId === currentUserId &&     
+      chat.owner !== currentUserEmail &&       
+      !chat.isRead                             
+    ).length;
+  }
+
+  function countMatches(profile: ProfileWithMatches): number {
+    return profile.matches.length;
+  }
+
+  const unreadCount = countUnreadMessages(chatList, profile.id, profile.email);
+  const matchCount = countMatches(profile);
+
 /* TODO(?): Maybe we could add a feature where the user can customize the colors of their profile*/
   return (
     <>
@@ -40,7 +60,8 @@ const UserHome = ({ profile }: { profile: Profile }) => {
                     <Card className="border-0">
                       <Card.Header className="bg-success px-5" />
                       <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                        <Icon.ChatDotsFill className="me-3"/>XX new messages!
+                        <Icon.ChatDotsFill className="me-3" />
+                        {unreadCount} new message{unreadCount !== 1 ? 's' : ''}!
                       </Card.Text>
                       <Card.Footer className="text-end">
                         <a href="/chat" className="link-success hover-line">
@@ -66,9 +87,9 @@ const UserHome = ({ profile }: { profile: Profile }) => {
                 
                   <Col>
                     <Card className="border-0">
-                      <Card.Header className="bg-success px-5" />
+                      <Card.Header className="bg-success px-5" />      
                       <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                        <Icon.PeopleFill className="me-3"/>XX total friends
+                        <Icon.PeopleFill className="me-3" /> {matchCount} total friend{matchCount!==1 ? 's' : ''}
                       </Card.Text>
                       <Card.Footer className="text-end">
                         <a href="/chat" className="link-success hover-line">
