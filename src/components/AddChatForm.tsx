@@ -11,8 +11,9 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddChatSchema } from '@/lib/validationSchemas';
 import { Profile } from '@prisma/client';
 import { ArrowUpCircle } from 'react-bootstrap-icons';
+import { on } from 'events';
 
-const AddChatForm = ({ profile }: { profile: Profile }) => {
+const AddChatForm = ({ profile, onNewChat }: { profile: Profile; onNewChat: () => void }) => {
   const router = useRouter();
 
   const { data: session, status } = useSession();
@@ -38,7 +39,7 @@ const AddChatForm = ({ profile }: { profile: Profile }) => {
     // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
     await addChat(data);
     reset();
-    router.push('/chat');
+    if (onNewChat) onNewChat();
   };
 
   if (status === 'loading') {
