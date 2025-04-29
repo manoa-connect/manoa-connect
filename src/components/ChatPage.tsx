@@ -30,7 +30,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
 
     async function markChatsAsRead() {
       const unreadChatIds = filteredChats
-        .filter(chat => !chat.isRead && chat.owner !== sessionUserEmail) // 自分が受け取った未読チャットだけ
+        .filter(chat => !chat.isRead && chat.owner !== sessionUserEmail) 
         .map(chat => chat.id);
 
       if (unreadChatIds.length > 0) {
