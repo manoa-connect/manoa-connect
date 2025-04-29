@@ -63,7 +63,7 @@ const MatchClient = ({ otherProfiles }: { otherProfiles: Profile[] }) => {
       {currentProfile ? (
         <>
           <MatchCardFlip profile={currentProfile} />
-          <MatchButton matchedId={currentProfile.id} />
+          <MatchButton matchedId={currentProfile.id} onMatched={handleSkip} />
         </>
       ) : (
         <p className="text-center mt-5">No more profiles. Try refreshing the page.</p>

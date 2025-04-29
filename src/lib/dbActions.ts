@@ -198,32 +198,52 @@ export async function tryMatch(matchedId: number) {
 
   const currentUser = await prisma.profile.findUnique({
     where: { email: session.user.email },
-    include: { matches: true },
+    include: { accepts: true, acceptedBy: true, matches: true },
   });
 
   if (!currentUser) {
     throw new Error('Current user profile not found');
   }
 
-  // Add matched profile to the current user matches
-  await prisma.profile.update({
-    where: { id: currentUser.id },
-    data: {
-      matches: {
-        connect: { id: matchedId },
-      },
-    },
-  });
-
-  // Check if the other user has also matched the current user
   const otherUser = await prisma.profile.findUnique({
     where: { id: matchedId },
-    include: { matches: true },
+    include: { accepts: true },
   });
 
-  const theyAlsoMatched = otherUser?.matches.some(
-    (p) => p.id === currentUser.id,
-  );
+  if (!otherUser) {
+    throw new Error('Other user profile not found');
+  }
 
-  return { matched: theyAlsoMatched };
+  const theyLikedMe = otherUser.accepts.some(p => p.id === currentUser.id);
+
+  if (theyLikedMe) {
+    // Mutual match → move both to matches, remove from accepts
+    await prisma.profile.update({
+      where: { id: currentUser.id },
+      data: {
+        accepts: { disconnect: { id: matchedId } },
+        matches: { connect: { id: matchedId } },
+      },
+    });
+
+    await prisma.profile.update({
+      where: { id: matchedId },
+      data: {
+        accepts: { disconnect: { id: currentUser.id } },
+        matches: { connect: { id: currentUser.id } },
+      },
+    });
+
+    return { matched: true };
+  } else {
+    // One-sided like
+    await prisma.profile.update({
+      where: { id: currentUser.id },
+      data: {
+        accepts: { connect: { id: matchedId } },
+      },
+    });
+
+    return { matched: false };
+  }
 }

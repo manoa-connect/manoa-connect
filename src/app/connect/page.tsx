@@ -13,6 +13,7 @@ const Page = async () => {
   const currentUserProfile = await prisma.profile.findUnique({
     where: { email },
     include: {
+      accepts: true,
       matches: true,
     },
   });
@@ -21,12 +22,13 @@ const Page = async () => {
     throw new Error('Profile not found.');
   }
 
+  const likedProfiles = currentUserProfile.accepts.map((p) => p.id);
   const matchedProfileIds = currentUserProfile.matches.map((p) => p.id);
 
   const otherProfiles = await prisma.profile.findMany({
     where: {
       id: {
-        notIn: [currentUserProfile.id, ...matchedProfileIds],
+        notIn: [currentUserProfile.id, ...matchedProfileIds, ...likedProfiles],
       },
     },
   });
