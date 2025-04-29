@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth';
 import { Button } from 'react-bootstrap';
-import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import MatchCardFlip from '@/components/MatchCardFlip';

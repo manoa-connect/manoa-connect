@@ -54,7 +54,35 @@
       "liked": ["masaki@foo.com"],
       "matched": ["masaki@foo.com"]
     },
-    { "firstName": "Auton", "lastName": "Tilton", "email": "austin@foo.com", "description": "Oh Hi!", "year": "junior", "major": "Music", "likes": "Guitar, anime, firetrucks", "mbti": "INFP", "commute": "commuter", "current": "MUS-212, MUS-201, TEST-111, TEST-222, TEST-333", "previous": "MUS-111, MUS-171, MUS-151, Test-1234, test 134, test123" },
-    { "firstName": "Jayden", "lastName": "Boyd", "email": "jayden@foo.com", "description": "im jayden", "year": "senior", "major": "Business", "likes": "Basketball, One Piece, Balatro", "mbti": "ITBS", "commute": "commuter", "current": "ACC-312", "previous": "ACC-121, BUS-131, BUS-111" }
+    { 
+      "firstName": "Auton",
+      "lastName": "Tilton",
+      "email": "austin@foo.com",
+      "description": "Oh Hi!",
+      "year": "junior",
+      "major": "Music",
+      "likes": "Guitar, anime, firetrucks",
+      "mbti": "INFP",
+      "commute": "commuter",
+      "current": "MUS-212, MUS-201, TEST-111, TEST-222, TEST-333",
+      "previous": "MUS-111, MUS-171, MUS-151, Test-1234, test 134, test123",
+      "liked": ["jayden@foo.com"],
+      "matched": ["jayden@foo.com"]
+    },
+    { 
+      "firstName": "Jayden",
+      "lastName": "Boyd",
+      "email": "jayden@foo.com",
+      "description": "im jayden",
+      "year": "senior",
+      "major": "Business",
+      "likes": "Basketball, One Piece, Balatro",
+      "mbti": "ITBS",
+      "commute": "commuter",
+      "current": "ACC-312",
+      "previous": "ACC-121, BUS-131, BUS-111",
+      "liked": ["austin@foo.com"],
+      "matched": ["austin@foo.com"]
+    }
   ]
 }
