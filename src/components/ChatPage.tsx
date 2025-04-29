@@ -25,6 +25,12 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
       (chat.contactId === currentProfileId && chat.owner === selectedMatch?.email) 
   );
 
+  const fetchChats = async () => {
+    const res = await fetch('/api/chats');
+    const data = await res.json();
+    setChatList(data);
+  };
+
   useEffect(() => {
     if (filteredChats.length === 0) return;
 
@@ -90,7 +96,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
               <ChatItem key={chat.id} chat={chat} prevChat={index > 0 ? filteredChats[index - 1] : null} currentUserEmail={sessionUserEmail} />
             ))}
           </ListGroup>
-          {selectedMatch && <AddChatForm profile={selectedMatch} />}
+          {selectedMatch && <AddChatForm profile={selectedMatch} onNewChat={fetchChats} />}
         </Col>
       </Row>
     </main>
