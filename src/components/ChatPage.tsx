@@ -51,7 +51,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
           <h5 className="text-body">
             {selectedMatch?.firstName} {selectedMatch?.lastName}
           </h5>
-          <ListGroup variant="flush" style={{ maxHeight: '260px', overflowY: 'auto' }} ref={chatListRef}>
+          <ListGroup variant="flush" style={{ maxHeight: '280px', overflowY: 'auto' }} ref={chatListRef}>
             {filteredChats.map((chat, index) => (
               <ChatItem key={chat.id} chat={chat} prevChat={index > 0 ? filteredChats[index - 1] : null} currentUserEmail={sessionUserEmail} />
             ))}
