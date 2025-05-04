@@ -49,3 +49,11 @@ export const EditProfileSchema = Yup.object({
   current: Yup.string().required(),
   previous: Yup.string().required(),
 });
+
+export const createClassSchema = Yup.object({
+  name: Yup.string().required(),
+  startTime: Yup.string().required(),
+  endTime: Yup.string().required(),
+  location: Yup.string().oneOf(['KellerHall', 'MooreHall', 'Other']).required(),
+  email: Yup.string().email().required(),
+});

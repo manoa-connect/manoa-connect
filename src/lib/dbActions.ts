@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition, Year, Commute, Profile } from '@prisma/client';
+import { Stuff, Condition, Year, Commute, Profile, Location } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -185,4 +185,44 @@ export async function editProfile(profile: Profile) {
       previous: profile.previous,
     },
   });
+}
+
+/**
+ * Adds a new class to the database.
+ * @param class, an object with the following properties: name, startTime, endTime, location.
+ */
+export async function addClass(classData: { name: string; startTime: string; endTime: string; location: string; email: string }) {
+  // console.log(`addClass data: ${JSON.stringify(class, null, 2)}`);
+  let location: Location = 'Other';
+  if (classData.location === 'KellerHall') {
+    location = 'KellerHall';
+  } else if (classData.location === 'MooreHall') {
+    location = 'MooreHall';
+  } else {
+    location = 'Other';
+  }
+  await prisma.class.create({
+    data: {
+      name: classData.name,
+      startTime: classData.startTime,
+      endTime: classData.endTime,
+      location,
+      email: classData.email,
+    },
+  });
+  // After adding, redirect/reload the page
+  redirect('/editSchedule');
+}
+
+/**
+ * Deletes an existing class from the database.
+ * @param id, the id of the class to delete.
+ */
+export async function deleteClass(id: number) {
+  // console.log(`deleteClass id: ${id}`);
+  await prisma.class.delete({
+    where: { id },
+  });
+  // After adding, redirect/reload the page
+  redirect('/editSchedule');
 }
