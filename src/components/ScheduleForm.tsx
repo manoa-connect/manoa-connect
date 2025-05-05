@@ -12,12 +12,13 @@ import { createClassSchema } from '@/lib/validationSchemas';
 import logo from "../../public/assets/manoa-connect_logo.svg";
 import { Class } from '@prisma/client';
 import { TrashFill } from 'react-bootstrap-icons';
-
+import { locationLabels } from '@/lib/locationMappings';
 const onSubmit = async (data: { 
   name: string;
   startTime: string;
   endTime: string;
   location: string;
+  days: string[];
   email: string;
 }) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
@@ -46,6 +47,7 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
       timer: 2000,
     });
   };
+  const dayOptions = ["M", "T", "W", "R", "F", "Other"];
   if (status === 'loading') {
     return <LoadingSpinner />;
   }
@@ -73,7 +75,8 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
                       <Col xs={12} md={4} className="text-center">{new Date(`2025-05-04T${cData.endTime}:00`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Col>
                     </Row>
                     <Row className="align-items-center d-flex justify-content-between">
-                      <Col xs={12} md={4} className="text-center">{cData.location}</Col>
+                      <Col xs={12} md={4} className="text-center">{locationLabels[cData.location] || cData.location}</Col>
+                      <Col xs={12} md={4} className="text-center">{cData.days.join(', ')}</Col>
                       <Col xs={12} md={4}>
                         <Button variant="danger" className="btn-sm" onClick={() => handleDelete(cData.id)}>
                           <TrashFill />
@@ -138,15 +141,83 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
                 <Col>
                   <Form.Group className="form-group ps-3 py-3">
                     <Form.Label>Location</Form.Label>
-                    <select {...register('location')} className={`form-control ${errors.location? 'is-invalid' : ''}`}>
+                    <select {...register("location")} className={`form-control ${errors.location ? "is-invalid" : ""}`}>
                       <option value="Other">Other</option>
+                      <option value="ArchitectureSchool">Architecture School</option>
+                      <option value="AgriculturalScience">Agricultural Science</option>
+                      <option value="ArtBuilding">Art Building</option>
+                      <option value="BachmanHall">Bachman Hall</option>
+                      <option value="BilgerHall">Bilger Hall</option>
+                      <option value="BiomedicalSciences">Biomedical Sciences</option>
+                      <option value="BurnsHall">Burns Hall</option>
+                      <option value="CenterforKoreanStudies">Center for Korean Studies</option>
+                      <option value="CrawfordHall">Crawford Hall</option>
+                      <option value="DanceBuilding">Dance Building</option>
+                      <option value="DeanHall">Dean Hall</option>
+                      <option value="EdmondsonHall">Edmondson Hall</option>
+                      <option value="FrearHall">Frear Hall</option>
+                      <option value="GartleyHall">Gartley Hall</option>
+                      <option value="GeorgeHall">George Hall</option>
+                      <option value="GilmoreHall">Gilmore Hall</option>
+                      <option value="HawaiiHall">Hawaii Hall</option>
+                      <option value="HemenwayHall">Hemenway Hall</option>
+                      <option value="HenkeHall">Henke Hall</option>
+                      <option value="HolmesHall">Holmes Hall</option>
+                      <option value="InformationTechnologyCenter">Information Technology Center</option>
+                      <option value="JeffersonHall">Jefferson Hall</option>
+                      <option value="JohnsonHall">Johnson Hall</option>
+                      <option value="JohnABurnsSchoolofMedicine">John A. Burns School of Medicine</option>
+                      <option value="KamakakuokalaniCenterforHawaiianStudies">Kamakakūokalani Center for Hawaiian Studies</option>
                       <option value="KellerHall">Keller Hall</option>
+                      <option value="KennedyTheatre">Kennedy Theatre</option>
+                      <option value="KraussHall">Krauss Hall</option>
+                      <option value="KuykendallHall">Kuykendall Hall</option>
+                      <option value="LawSchool">Law School</option>
+                      <option value="LincolnHall">Lincoln Hall</option>
+                      <option value="MarineSciencesBuilding">Marine Sciences Building</option>
+                      <option value="MillerHall">Miller Hall</option>
                       <option value="MooreHall">Moore Hall</option>
+                      <option value="MusicBuildingComplex">Music Building Complex</option>
+                      <option value="PacificBiosciencesResearchCenter">Pacific Biosciences Research Center</option>
+                      <option value="PacificOceanScienceandTechnology">Pacific Ocean Science and Technology</option>
+                      <option value="PhysicalPlantBuilding">Physical Plant Building</option>
+                      <option value="PhysicalScienceBuilding">Physical Science Building</option>
+                      <option value="PopeLaboratory">Pope Laboratory</option>
+                      <option value="SakamakiHall">Sakamaki Hall</option>
+                      <option value="SaundersHall">Saunders Hall</option>
+                      <option value="ShermanLaboratory">Sherman Laboratory</option>
+                      <option value="ShidlerCollegeofBusiness">Shidler College of Business</option>
+                      <option value="SnyderHall">Snyder Hall</option>
+                      <option value="SpaldingHall">Spalding Hall</option>
+                      <option value="StJohnPlantScienceLab">St. John Plant Science Lab</option>
+                      <option value="WatanabeHall">Watanabe Hall</option>
+                      <option value="WebsterHall">Webster Hall</option>
                     </select>
                     <div className="invalid-feedback">{errors.location?.message}</div>
                   </Form.Group>
                 </Col>
               </Row>
+
+              <Row>
+                <Col>
+                  <Form.Group className="form-group ps-3 py-3">
+                    <Form.Label>Days</Form.Label>
+                    <div className="d-flex flex-wrap">
+                      {dayOptions.map((day) => (
+                        <div key={day} className="form-check pe-3">
+                          <input
+                            type="checkbox"
+                            {...register("days", { required: "Day is required" })}
+                            value={day}
+                          />
+                          <label className="form-check-label">{day}</label>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="invalid-feedback">{errors.days?.message}</div>
+                  </Form.Group>
+                </Col>
+              </Row> 
               <input type="hidden" {...register('email')} value={currentUser} />
 
               <Row>

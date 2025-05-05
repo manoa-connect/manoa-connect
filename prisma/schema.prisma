@@ -94,16 +94,31 @@ model Profile {
 }
 
 enum Location {
+  ArchitectureSchool
+  AgriculturalScience
   ArtBuilding
   BachmanHall
   BilgerHall
+  BiomedicalSciences
+  BurnsHall
+  CenterforKoreanStudies
+  CrawfordHall
+  DanceBuilding
+  DeanHall
+  EdmondsonHall
   FrearHall
+  GartleyHall
+  GeorgeHall
   GilmoreHall
   HawaiiHall
   HemenwayHall
+  HenkeHall
   HolmesHall
+  InformationTechnologyCenter
   JeffersonHall
+  JohnsonHall
   JohnABurnsSchoolofMedicine
+  KamakakuokalaniCenterforHawaiianStudies
   KellerHall
   KennedyTheatre
   KraussHall
@@ -113,15 +128,30 @@ enum Location {
   MarineSciencesBuilding
   MillerHall
   MooreHall
+  MusicBuildingComplex
+  PacificBiosciencesResearchCenter
   PacificOceanScienceandTechnology
+  PhysicalPlantBuilding
   PhysicalScienceBuilding
+  PopeLaboratory
   SakamakiHall
   SaundersHall
+  ShermanLaboratory
   ShidlerCollegeofBusiness
   SnyderHall
   SpaldingHall
+  StJohnPlantScienceLab
   WatanabeHall
   WebsterHall
+  Other
+}
+
+enum Days {
+  M
+  T
+  W
+  R
+  F
   Other
 }
 
@@ -131,6 +161,7 @@ model Class {
   startTime   String
   endTime     String
   location    Location
+  days        Days[]
   email       String
   Profile     Profile @relation(fields: [email], references: [email], onDelete: SetNull) // Keeps Profile even if Class is deleted
 }
