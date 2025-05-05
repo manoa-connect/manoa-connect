@@ -1,7 +1,6 @@
 'use client';
-
-import { Profile } from '@prisma/client';
-import { Button } from 'react-bootstrap';
+ 
+import { Profile } from "@prisma/client";
 
 const MatchingCardBack = ({
   onFlipBack,
@@ -9,15 +8,13 @@ const MatchingCardBack = ({
 }: {
   onFlipBack: () => void;
   profile: Profile;
-}) => (
-  <div>
-    <h1>
-      {profile.firstName}
-      {' '}
-      {profile.lastName}
-    </h1>
-    <Button onClick={onFlipBack}>Flip Back</Button>
-  </div>
-);
+}) => {
+  return (
+    <div>
+      <h1>{profile.firstName} {profile.lastName}</h1>
+      <button onClick={onFlipBack}>Flip Back</button>
+    </div>
+  );
+};
 
 export default MatchingCardBack;

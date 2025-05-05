@@ -136,6 +136,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
               {currPic.length === 1 ? (currPic.map((url) => (
                 <Card.Img
                   src={url}
+                  key={url}
                   className="bg-secondary rounded-circle d-block mt-5 mx-auto"
                   style={{ width: '150px', height: '150px', objectFit: 'cover', maxHeight: '150px' }}
                 />
@@ -337,7 +338,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                     <div style={{ overflow: 'scroll', maxHeight: '300px' }}>
                       <Row className="overflow-auto py-3 px-4">
                         {currImgs.length > 0 ? (currImgs.map((url) => (
-                          <Card className="w-50 border-0 p-3">
+                          <Card className="w-50 border-0 p-3" key={url}>
                             <Card.Img src={url} key={url} />
                           </Card>
                         ))

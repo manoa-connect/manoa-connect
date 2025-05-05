@@ -4,6 +4,8 @@ import { Stuff, Condition, Year, Commute, Profile } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
 
 /**
  * Adds a new stuff to the database.
@@ -123,26 +125,26 @@ export async function createProfile(profile: {
   likes: string;
   mbti: string;
   commute: string;
-  current: string;
-  previous: string;
+  clubs: string;
+  languages: string;
 }) {
   let year: Year = 'Freshman';
-  if (profile.year === 'Freshman') {
+  if (profile.year === 'freshman') {
     year = 'Freshman';
-  } else if (profile.year === 'Sophomore') {
+  } else if (profile.year === 'sophomore') {
     year = 'Sophomore';
-  } else if (profile.year === 'Junior') {
+  } else if (profile.year === 'junior') {
     year = 'Junior';
-  } else if (profile.year === 'Senior') {
+  } else if (profile.year === 'senior') {
     year = 'Senior';
   } else {
     year = 'Graduate';
   }
 
   let commute: Commute = 'Dorm';
-  if (profile.commute === 'Dorm') {
+  if (profile.commute === 'dorm') {
     commute = 'Dorm';
-  } else if (profile.commute === 'Commuter') {
+  } else if (profile.commute === 'commuter') {
     commute = 'Commuter';
   } else {
     commute = 'Other';
@@ -159,8 +161,8 @@ export async function createProfile(profile: {
       likes: profile.likes,
       mbti: profile.mbti,
       commute,
-      current: profile.current,
-      previous: profile.previous,
+      clubs: profile.clubs,
+      languages: profile.languages,
     },
   });
 
@@ -185,10 +187,67 @@ export async function editProfile(profile: Profile) {
       likes: profile.likes,
       mbti: profile.mbti,
       commute: profile.commute,
-      current: profile.current,
-      previous: profile.previous,
+      clubs: profile.clubs,
+      languages: profile.languages,
     },
   });
+}
 
-  redirect('/profile');
+export async function tryMatch(matchedId: number) {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.email) {
+    throw new Error('Not authenticated');
+  }
+
+  const currentUser = await prisma.profile.findUnique({
+    where: { email: session.user.email },
+    include: { accepts: true, acceptedBy: true, matches: true },
+  });
+
+  if (!currentUser) {
+    throw new Error('Current user profile not found');
+  }
+
+  const otherUser = await prisma.profile.findUnique({
+    where: { id: matchedId },
+    include: { accepts: true },
+  });
+
+  if (!otherUser) {
+    throw new Error('Other user profile not found');
+  }
+
+  const theyLikedMe = otherUser.accepts.some(p => p.id === currentUser.id);
+
+  if (theyLikedMe) {
+    // Mutual match → move both to matches, remove from accepts
+    await prisma.profile.update({
+      where: { id: currentUser.id },
+      data: {
+        accepts: { disconnect: { id: matchedId } },
+        matches: { connect: { id: matchedId } },
+      },
+    });
+
+    await prisma.profile.update({
+      where: { id: matchedId },
+      data: {
+        accepts: { disconnect: { id: currentUser.id } },
+        matches: { connect: { id: currentUser.id } },
+      },
+    });
+
+    return { matched: true };
+  } else {
+    // One-sided like
+    await prisma.profile.update({
+      where: { id: currentUser.id },
+      data: {
+        accepts: { connect: { id: matchedId } },
+      },
+    });
+
+    return { matched: false };
+  }
 }

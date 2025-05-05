@@ -142,15 +142,15 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
 
                     <Row className="py-3">
                       <Form.Group>
-                        <Form.Label><strong className="text-manoa-green">Current Classes</strong></Form.Label>
+                        <Form.Label><strong className="text-manoa-green">Current Clubs</strong></Form.Label>
                         <textarea
                           rows={1}
-                          {...register('current')}
-                          defaultValue={profile.current}
+                          {...register('clubs')}
+                          defaultValue={profile.clubs}
                           required
-                          className={`form-control ${errors.current ? 'is-invalid' : ''}`}
+                          className={`form-control ${errors.clubs ? 'is-invalid' : ''}`}
                         />
-                        <div className="invalid-feedback">{errors.current?.message}</div>
+                        <div className="invalid-feedback">{errors.clubs?.message}</div>
                       </Form.Group>
                     </Row>
 

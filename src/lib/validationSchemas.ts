@@ -31,8 +31,8 @@ export const createProfileSchema = Yup.object({
   likes: Yup.string().required(),
   mbti: Yup.string().required(),
   commute: Yup.string().oneOf(['Dorm', 'Commuter', 'Other']).required(),
-  current: Yup.string().required(),
-  previous: Yup.string().required(),
+  clubs: Yup.string().required(),
+  languages: Yup.string().required(),
 });
 
 export const EditProfileSchema = Yup.object({
@@ -46,6 +46,6 @@ export const EditProfileSchema = Yup.object({
   likes: Yup.string().required(),
   mbti: Yup.string().required(),
   commute: Yup.string().oneOf(['Dorm', 'Commuter', 'Other']).required(),
-  current: Yup.string().required(),
-  previous: Yup.string().required(),
+  clubs: Yup.string().required(),
+  languages: Yup.string().required(),
 });

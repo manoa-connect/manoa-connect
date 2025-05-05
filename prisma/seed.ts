@@ -15,9 +15,9 @@ async function main() {
       where: { email: account.email },
       update: {},
       create: {
+        email: account.email,
         firstName: account.firstName || 'Default',
         lastName: account.lastName || 'User',
-        email: account.email,
         password,
         role,
       },
@@ -39,7 +39,6 @@ async function main() {
     } else {
       year = 'Graduate';
     }
-
     let commute: Commute = 'Dorm';
     if (data.commute === 'dorm') {
       commute = 'Dorm';
@@ -62,8 +61,8 @@ async function main() {
         likes: data.likes,
         mbti: data.mbti,
         commute,
-        current: data.current,
-        previous: data.previous,
+        clubs: data.clubs,
+        languages: data.languages,
       },
     });
   }

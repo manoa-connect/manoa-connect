@@ -1,21 +1,39 @@
-import MatchCardFlip from '@/components/MatchCardFlip';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
+import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
+import MatchClient from '@/components/MatchClient';
 
-/** The Home page. */
-const Home = async () => {
-  // Fetch a random profile from the database
-  const profiles = await prisma.profile.findMany();
-  const randomProfile = profiles[Math.floor(Math.random() * profiles.length)];
+const Page = async () => {
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(session);
 
-  return (
-    <main>
-      {randomProfile ? (
-        <MatchCardFlip profile={randomProfile} />
-      ) : (
-        <p>No profiles found.</p>
-      )}
-    </main>
-  );
+  const email = session?.user?.email || '';
+
+  const currentUserProfile = await prisma.profile.findUnique({
+    where: { email },
+    include: {
+      accepts: true,
+      matches: true,
+    },
+  });
+
+  if (!currentUserProfile) {
+    throw new Error('Profile not found.');
+  }
+
+  const likedProfiles = currentUserProfile.accepts.map((p) => p.id);
+  const matchedProfileIds = currentUserProfile.matches.map((p) => p.id);
+
+  const otherProfiles = await prisma.profile.findMany({
+    where: {
+      id: {
+        notIn: [currentUserProfile.id, ...matchedProfileIds, ...likedProfiles],
+      },
+    },
+  });
+
+  return <MatchClient otherProfiles={otherProfiles} />;
 };
 
-export default Home;
+export default Page;

@@ -21,8 +21,8 @@ const onSubmit = async (data: {
   likes: string;
   mbti: string;
   commute: string;
-  current: string;
-  previous: string;
+  clubs: string;
+  languages: string;
 }) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   await createProfile(data);
@@ -69,7 +69,6 @@ const CreateProfileForm: React.FC = () => {
                   {...register('description')}
                   className={`form-control ${errors.description ? 'is-invalid' : ''}`}
                 />
-
                 <div className="invalid-feedback">{errors.description?.message}</div>
               </Form.Group>
 
@@ -138,23 +137,23 @@ const CreateProfileForm: React.FC = () => {
               </Row>
 
               <Form.Group className="form-group pt-0 p-3">
-                <Form.Label>Current Classes</Form.Label>
+                <Form.Label>Current Clubs</Form.Label>
                 <input
                   type="textarea"
-                  {...register('current')}
-                  className={`form-control ${errors.current ? 'is-invalid' : ''}`}
+                  {...register('clubs')}
+                  className={`form-control ${errors.clubs ? 'is-invalid' : ''}`}
                 />
-                <div className="invalid-feedback">{errors.current?.message}</div>
+                <div className="invalid-feedback">{errors.clubs?.message}</div>
               </Form.Group>
 
               <Form.Group className="form-group pt-0 p-3">
-                <Form.Label>Previous Classes</Form.Label>
+                <Form.Label>Languages</Form.Label>
                 <input
                   type="textarea"
-                  {...register('previous')}
-                  className={`form-control ${errors.previous ? 'is-invalid' : ''}`}
+                  {...register('languages')}
+                  className={`form-control ${errors.languages ? 'is-invalid' : ''}`}
                 />
-                <div className="invalid-feedback">{errors.previous?.message}</div>
+                <div className="invalid-feedback">{errors.languages?.message}</div>
               </Form.Group>
 
               <input type="hidden" {...register('firstName')} value={currentFirstName} />
