@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression'
 import { createSupabaseClient } from '../client';
-import { redirect } from 'next/navigation';
 
 function getStorage() {
   const {storage} = createSupabaseClient()
@@ -37,7 +36,49 @@ export async function uploadImg({file, bucket, folder}: UploadProps) {
 
   const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/${bucket}/${data?.path  }`;
 
-  redirect('/upload');
+  return { imageUrl, error: "" };
+}
+
+export async function uploadProfImg({file, bucket, folder}: UploadProps) {
+  const storage = getStorage();
+
+  const path = `${folder ? folder + "/" : ""}`
+  const { images, error: loadError } = await loadImg(bucket, folder);
+
+  if (loadError) {
+    console.error(loadError);
+  }
+
+  if (images && images.length > 0) {
+    for (const image of images) {
+      const deleteError = await deleteImg(image);
+      if (deleteError.error) {
+        console.error(deleteError.error);
+      }
+    }
+  }
+
+  const fileName = file.name;
+  const fileExtension = fileName.slice(fileName.lastIndexOf(".") + 1);
+  const newPath = `${folder ? folder + "/" : ""}${uuidv4()}.${fileExtension}`
+
+  try {
+    file = await imageCompression(file, {
+      maxSizeMB: 10
+    })
+  } catch (error) {
+    console.error(error)
+    return {imgURL: "", error: "Failed image compression"}
+  }
+
+  const {data, error} = await storage.from(bucket).upload(newPath, file);
+
+  if (error) {
+    return {imgURL: "", error: "Failed image compression"}
+  }
+
+  const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/${bucket}/${data?.path  }`;
+
   return { imageUrl, error: "" };
 }
 

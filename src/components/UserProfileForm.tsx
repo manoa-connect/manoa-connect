@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Profile } from '@prisma/client';
 import { EditProfileSchema } from '@/lib/validationSchemas';
 import { editProfile } from '@/lib/dbActions';
+import * as Icon from 'react-bootstrap-icons';
 import logo from "../../public/assets/manoa-connect_logo.svg";
 
 const onSubmit = async (data: Profile) => {
@@ -33,7 +34,12 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
         <Row className="justify-content-center">
           <Col xs={10} className="pb-5 mb-5 my-auto px-4">
             <Card border="0" className="px-4">
-              <Navbar className="pt-5 justify-content-center align-middle text-center">
+              <Row className="d-flex pt-4 pb-3">
+                  <a className="link-success hover-line text-end" href="/profile">
+                    <Icon.ArrowLeft className="link-success me-2"/>Back to Profile
+                  </a>
+              </Row>
+              <Navbar className="justify-content-center align-middle text-center">
                 <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto"/>
                 <Navbar.Text className="text-center text-black text-heavitas h1 mt-3 ms-2">Edit Profile</Navbar.Text>
               </Navbar>

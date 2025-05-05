@@ -61,6 +61,10 @@ body {
   background-position-y: 30%;
 }
 
+#no-overflow-x {
+  overflow-x: hidden;
+}
+
 .invert {
   filter: invert();
 }
