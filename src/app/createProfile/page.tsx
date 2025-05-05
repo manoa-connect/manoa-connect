@@ -8,7 +8,7 @@ const CreateProfile = async () => {
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
     session as {
-      user: { email: string; id: string; randomKey: string; firstName: string; lastName: string;};
+      user: { email: string; id: string; randomKey: string; firstName: string; lastName: string; };
     } | null,
   );
   return (

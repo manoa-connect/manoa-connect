@@ -33,6 +33,7 @@
     "supabase": "^2.22.6",
     "sweetalert": "^2.1.2",
     "ts-node": "10.9.2",
+    "uuid": "^11.1.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {

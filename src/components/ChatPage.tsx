@@ -3,7 +3,7 @@
 import '@/app/chatcard.css';
 
 import { useEffect, useRef, useState } from 'react';
-import { ListGroup, Row, Col  } from 'react-bootstrap';
+import { ListGroup, Row, Col } from 'react-bootstrap';
 import { Chat, Profile } from '@prisma/client';
 import ChatItem from './ChatItem';
 import AddChatForm from './AddChatForm';
@@ -14,15 +14,14 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
   const chatListRef = useRef<HTMLDivElement | null>(null);
 
   const [selectedMatch, setSelectedMatch] = useState<Profile | null>(
-    matchs.length > 0 ? matchs[0] : null
+    matchs.length > 0 ? matchs[0] : null,
   );
 
   const [chatList, setChatList] = useState<Chat[]>(chats);
 
   const filteredChats = chatList.filter(
-    (chat) =>
-      (chat.contactId === selectedMatch?.id && chat.owner === sessionUserEmail) || 
-      (chat.contactId === currentProfileId && chat.owner === selectedMatch?.email) 
+    (chat) => (chat.contactId === selectedMatch?.id && chat.owner === sessionUserEmail)
+    || (chat.contactId === currentProfileId && chat.owner === selectedMatch?.email),
   );
 
   const fetchChats = async () => {
@@ -46,9 +45,8 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
           body: JSON.stringify({ chatIds: unreadChatIds }),
         });
 
-        setChatList(prev => prev.map(chat =>
-          unreadChatIds.includes(chat.id) ? { ...chat, isRead: true } : chat
-        ));
+        // eslint-disable-next-line no-confusing-arrow
+        setChatList(prev => prev.map(chat => unreadChatIds.includes(chat.id) ? { ...chat, isRead: true } : chat));
       }
     }
 
@@ -62,15 +60,17 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
   return (
     <main className="p-4">
       <Row>
-        <Col style={{ width: '200px', flex: '0 0 auto' , borderRight: '1px solid #ccc'}}>
-          <h5 className="text-body">Friends ({matchs.length})</h5>
+        <Col style={{ width: '200px', flex: '0 0 auto', borderRight: '1px solid #ccc' }}>
+          <h5 className="text-body">
+            Friends (
+            {matchs.length}
+            )
+          </h5>
           <ListGroup style={{ maxHeight: '300px', overflowY: 'auto' }}>
             {matchs.map((match) => {
-              const unreadCount = chatList.filter(chat =>
-                chat.owner === match.email &&              
-                chat.contactId === currentProfileId &&       
-                !chat.isRead
-              ).length;                             
+              const unreadCount = chatList.filter(chat => chat.owner === match.email
+                && chat.contactId === currentProfileId
+                && !chat.isRead).length;
               return (
                 <ListGroup.Item
                   key={match.id}
@@ -78,9 +78,15 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
                   onClick={() => setSelectedMatch(match)}
                   className={`friend-item ${selectedMatch?.id === match.id ? 'active-friend' : ''}`}
                 >
-                  {match.firstName} {match.lastName}
+                  {match.firstName}
+                  {match.lastName}
                   {unreadCount > 0 && (
-                    <span className="badge" style={{ float: 'right', backgroundColor: '#4CAF50', color: '#ffffff' }}>{unreadCount}</span>
+                    <span
+                      className="badge"
+                      style={{ float: 'right', backgroundColor: '#4CAF50', color: '#ffffff' }}
+                    >
+                      {unreadCount}
+                    </span>
                   )}
                 </ListGroup.Item>
               );
@@ -89,11 +95,17 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
         </Col>
         <Col>
           <h5 className="text-body">
-            {selectedMatch?.firstName} {selectedMatch?.lastName}
+            {selectedMatch?.firstName}
+            {selectedMatch?.lastName}
           </h5>
           <ListGroup variant="flush" style={{ maxHeight: '280px', overflowY: 'auto' }} ref={chatListRef}>
             {filteredChats.map((chat, index) => (
-              <ChatItem key={chat.id} chat={chat} prevChat={index > 0 ? filteredChats[index - 1] : null} currentUserEmail={sessionUserEmail} />
+              <ChatItem
+                key={chat.id}
+                chat={chat}
+                prevChat={index > 0 ? filteredChats[index - 1] : null}
+                currentUserEmail={sessionUserEmail}
+              />
             ))}
           </ListGroup>
           {selectedMatch && <AddChatForm profile={selectedMatch} onNewChat={fetchChats} />}

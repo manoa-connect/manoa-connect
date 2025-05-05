@@ -67,7 +67,11 @@ export async function deleteStuff(id: number) {
  * Creates a new user in the database.
  * @param credentials, an object with the following properties: email, password.
  */
-export async function createUser(credentials: { firstName: string; lastName: string; email: string; password: string }) {
+export async function createUser(credentials: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
   await prisma.user.create({
@@ -109,9 +113,9 @@ export async function addChat(chat: { chat: string; contactId: number, owner: st
  * Adds a new Profile to the database.
  * @param profile, an object with the following properties.
  */
-export async function createProfile(profile: { 
-  firstName: string; 
-  lastName: string; 
+export async function createProfile(profile: {
+  firstName: string;
+  lastName: string;
   email: string;
   description: string;
   year: string;
@@ -120,7 +124,7 @@ export async function createProfile(profile: {
   mbti: string;
   commute: string;
   current: string;
-  previous: string; 
+  previous: string;
 }) {
   let year: Year = 'Freshman';
   if (profile.year === 'Freshman') {
@@ -156,7 +160,7 @@ export async function createProfile(profile: {
       mbti: profile.mbti,
       commute,
       current: profile.current,
-      previous: profile.previous, 
+      previous: profile.previous,
     },
   });
 

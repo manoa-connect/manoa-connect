@@ -1,6 +1,11 @@
-'use client'; 
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/require-default-props */
+
+'use client';
 
 import { useState } from 'react';
+import { Button } from 'react-bootstrap';
 
 interface ClassListProps {
   label: string;
@@ -16,12 +21,12 @@ const ClassList = ({ label, classListString }: ClassListProps) => {
 
   return (
     <div className="mb-4">
-      <button
+      <Button
         onClick={() => setIsExpanded(!isExpanded)}
         className="px-4 py-2 bg-blue-500 text-white rounded"
       >
         {isExpanded ? `Hide ${label}` : `Show ${label}`}
-      </button>
+      </Button>
 
       {isExpanded && (
         <>
@@ -32,7 +37,12 @@ const ClassList = ({ label, classListString }: ClassListProps) => {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500 mt-2">No {label.toLowerCase()} listed.</p>
+            <p className="text-gray-500 mt-2">
+              No
+              {label.toLowerCase()}
+              {' '}
+              listed.
+            </p>
           )}
         </>
       )}

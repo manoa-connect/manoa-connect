@@ -10,7 +10,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Manoa Connect',
-  description: 'Final Project for ICS 314, details can be found here https://manoa-connect.github.io/. Made by Aaron Ramos, Chaezen Pebria, Masaki Sakai, and Codie Nakamura.',
+  description: 'Final Project for ICS 314, details can be found here https://manoa-connect.github.io/.'
+  + 'Made by Aaron Ramos, Chaezen Pebria, Masaki Sakai, and Codie Nakamura.',
 };
 
 export default function RootLayout({

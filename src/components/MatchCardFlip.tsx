@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from "react";
-import MatchingCard from "./MatchingCard";
-import MatchingCardBack from "./MatchingCardBack";
-import { Profile } from "@prisma/client";
+import { useState } from 'react';
+import { Profile } from '@prisma/client';
+import MatchingCard from './MatchingCard';
+import MatchingCardBack from './MatchingCardBack';
 
 const MatchCardFlip = ({ profile }: { profile: Profile }) => {
   const [showFront, setShowFront] = useState(true);

@@ -5,17 +5,14 @@ import { Button, Card, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
-import { redirect, useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { addChat } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddChatSchema } from '@/lib/validationSchemas';
 import { Profile } from '@prisma/client';
 import { ArrowUpCircle } from 'react-bootstrap-icons';
-import { on } from 'events';
 
 const AddChatForm = ({ profile, onNewChat }: { profile: Profile; onNewChat: () => void }) => {
-  const router = useRouter();
-
   const { data: session, status } = useSession();
   // console.log('AddContactForm', status, session);
   const currentUser = session?.user?.email || '';

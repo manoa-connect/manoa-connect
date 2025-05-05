@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { PrismaClient, Role, Year, Commute } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
@@ -38,7 +39,7 @@ async function main() {
     } else {
       year = 'Graduate';
     }
-  
+
     let commute: Commute = 'Dorm';
     if (data.commute === 'dorm') {
       commute = 'Dorm';
@@ -72,9 +73,9 @@ async function main() {
         where: { email: data.email },
         data: {
           accepts: {
-            connect: data.liked.map((email: string) => ({ email }))
-          }
-        }
+            connect: data.liked.map((email: string) => ({ email })),
+          },
+        },
       });
     }
     if (data.matched?.length) {
@@ -82,9 +83,9 @@ async function main() {
         where: { email: data.email },
         data: {
           matches: {
-            connect: data.matched.map((email: string) => ({ email }))
-          }
-        }
+            connect: data.matched.map((email: string) => ({ email })),
+          },
+        },
       });
     }
   }

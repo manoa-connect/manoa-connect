@@ -2,15 +2,14 @@ import { getServerSession } from 'next-auth';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
 import authOptions from '@/lib/authOptions';
-import UploadForm from '@/components/UploadImageForm'
-
+import UploadForm from '@/components/UploadImageForm';
 
 const UploadPage = async () => {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
     session as {
-      user: { email: string; id: string; randomKey: string; firstName: string; lastName: string;};
+      user: { email: string; id: string; randomKey: string; firstName: string; lastName: string; };
     } | null,
   );
 
@@ -21,7 +20,7 @@ const UploadPage = async () => {
   }
 
   const profile = await prisma.profile.findUnique({
-    where: { email }
+    where: { email },
   });
 
   if (!profile) {
@@ -29,7 +28,7 @@ const UploadPage = async () => {
   }
 
   return (
-    <UploadForm profile={profile}/>
+    <UploadForm profile={profile} />
   );
 };
 
