@@ -17,8 +17,8 @@ type Profile = {
   likes: string;
   mbti: string;
   commute: $Enums.Commute;
-  current: string;
-  previous: string;
+  clubs: string;
+  languages: string;
 };
 
 const MatchClient = ({ otherProfiles }: { otherProfiles: Profile[] }) => {

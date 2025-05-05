@@ -20,8 +20,8 @@
       "likes": "Surfing, movies, hiking",
       "mbti": "ENFP",
       "commute": "Dorm",
-      "current": "Hale Aloha",
-      "previous": "Waikiki",
+      "clubs": "Hale Aloha",
+      "languages": "Waikiki",
       "liked": ["masaki@foo.com"],
       "matched": ["masaki@foo.com"]
     },
@@ -35,8 +35,8 @@
       "likes": "Surfing, movies, hiking",
       "mbti": "ENFJ",
       "commute": "Commuter",
-      "current": "Kaimuki",
-      "previous": "Tokyo",
+      "clubs": "Kaimuki",
+      "languages": "Tokyo",
       "liked": ["john@foo.com", "uncle@foo.com"],
       "matched": ["john@foo.com", "uncle@foo.com"]
     },
@@ -50,8 +50,8 @@
       "likes": "Surfing, movies, hiking",
       "mbti": "ENFP",
       "commute": "Dorm",
-      "current": "Hale Aloha",
-      "previous": "Waikiki",
+      "clubs": "Hale Aloha",
+      "languages": "Waikiki",
       "liked": ["masaki@foo.com"],
       "matched": ["masaki@foo.com"]
     },
@@ -65,8 +65,8 @@
       "likes": "Guitar, anime, firetrucks",
       "mbti": "INFP",
       "commute": "commuter",
-      "current": "MUS-212, MUS-201, TEST-111, TEST-222, TEST-333",
-      "previous": "MUS-111, MUS-171, MUS-151, Test-1234, test 134, test123",
+      "clubs": "MUS-212, MUS-201, TEST-111, TEST-222, TEST-333",
+      "languages": "MUS-111, MUS-171, MUS-151, Test-1234, test 134, test123",
       "liked": ["jayden@foo.com"],
       "matched": ["jayden@foo.com"]
     },
@@ -80,8 +80,8 @@
       "likes": "Basketball, One Piece, Balatro",
       "mbti": "ITBS",
       "commute": "commuter",
-      "current": "ACC-312",
-      "previous": "ACC-121, BUS-131, BUS-111",
+      "clubs": "ACC-312",
+      "languages": "ACC-121, BUS-131, BUS-111",
       "liked": ["austin@foo.com"],
       "matched": ["austin@foo.com"]
     },
@@ -95,8 +95,8 @@
       "likes": "Ice Cream, Cars",
       "mbti": "INTJ",
       "commute": "commuter",
-      "current": "POL-444, TWH-123, UYJ-123, HED-123",
-      "previous": "POL-111, ACC-121, BUS-131, BUS-111",
+      "clubs": "POL-444, TWH-123, UYJ-123, HED-123",
+      "languages": "POL-111, ACC-121, BUS-131, BUS-111",
       "liked": ["austin@foo.com"],
       "matched": []
     }
