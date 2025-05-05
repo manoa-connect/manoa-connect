@@ -1,8 +1,9 @@
 'use client';
 
 import { Col, Container, Row, Card, Button, Nav } from 'react-bootstrap';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { Profile, Chat } from '@prisma/client';
+import { loadImg } from '@/lib/supabase/storage/client';
 import * as Icon from 'react-bootstrap-icons';
 import card_image from '../../public/img/hero-img.jpg';
 
@@ -11,6 +12,21 @@ type ProfileWithMatches = Profile & {
 };
 
 const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList: Chat[] }) => {
+  const [currImgs, setCurrImgs] = useState<string[]>([]);
+  useEffect(() => {
+      const fetchImages = async () => {
+          const { images, error } = await loadImg('manoa-connect-pics', profile.id.toString());
+
+          if (error) {
+              console.error(error)
+          } else {
+              setCurrImgs(images || [])
+          }
+      };
+
+      fetchImages();
+  }, [profile.id]);
+
   function countUnreadMessages(chatList: Chat[] | undefined, currentUserId: number, currentUserEmail: string): number {
     if (!chatList) return 0;
     return chatList.filter(chat =>
@@ -59,9 +75,17 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                   <Col>
                     <Card className="border-0">
                       <Card.Header className="bg-success px-5" />
+                      {unreadCount ?
+                        <a href="/chat">
+                          <Icon.ChatDotsFill className="d-flex me-3 mt-3 justify-content-center align-middle w-100 link-success" style={{width: '100px', height: '100px', color: 'var(--manoa-green)'}} />
+                        </a>
+                        : 
+                        <a href="/chat">
+                          <Icon.ChatDotsFill className="d-flex me-3 mt-3 justify-content-center align-middle w-100" style={{width: '100px', height: '100px', color: 'var(--manoa-green)'}} />
+                        </a>
+                      }
                       <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                        <Icon.ChatDotsFill className="me-3" />
-                        {unreadCount} new message{unreadCount !== 1 ? 's' : ''}!
+                        {unreadCount} new message{unreadCount !== 1 ? 's' : ''}
                       </Card.Text>
                       <Card.Footer className="text-end">
                         <a href="/chat" className="link-success hover-line">
@@ -74,8 +98,17 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                   <Col>
                     <Card className="border-0">
                       <Card.Header className="bg-success px-5" />
+                      {matchCount ?
+                        <a href="/connect">
+                          <Icon.PersonPlusFill className="d-flex me-3 mt-3 justify-content-center align-middle w-100 link-success" style={{width: '100px', height: '100px', color: 'var(--manoa-green)'}} />
+                        </a>
+                        : 
+                        <a href="/connect">
+                          <Icon.PersonPlusFill className="d-flex me-3 mt-3 justify-content-center align-middle w-100" style={{width: '100px', height: '100px', color: 'var(--manoa-green)'}} />
+                        </a>
+                      }
                       <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                        <Icon.PersonPlusFill className="me-3"/>XX new matches
+                        XX new matches
                       </Card.Text>
                       <Card.Footer className="text-end">
                         <a href="/connect" className="link-success hover-line">
@@ -88,8 +121,17 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                   <Col>
                     <Card className="border-0">
                       <Card.Header className="bg-success px-5" />      
+                      {matchCount ?
+                        <a href="/chat">
+                          <Icon.PeopleFill className="d-flex me-3 mt-3 justify-content-center align-middle w-100 link-success" style={{width: '100px', height: '100px', color: 'var(--manoa-green)'}} />
+                        </a>
+                        : 
+                        <a href="/chat">
+                          <Icon.PeopleFill className="d-flex me-3 mt-3 justify-content-center align-middle w-100" style={{width: '100px', height: '100px', color: 'var(--manoa-green)'}} />
+                        </a>
+                      }
                       <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                        <Icon.PeopleFill className="me-3" /> {matchCount} total friend{matchCount!==1 ? 's' : ''}
+                        {matchCount} total friend{matchCount!==1 ? 's' : ''}
                       </Card.Text>
                       <Card.Footer className="text-end">
                         <a href="/chat" className="link-success hover-line">
@@ -105,26 +147,23 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                     <Card className="border-0">
                       <div style={{overflow: 'scroll', maxHeight: '300px'}}>
                         <Row className="overflow-auto py-3 px-4">
-                          {/* TODO: Replace this section with code that iterates through the pictures from a user and displays them in this format */ }
-                          <Card className="w-50 border-0 p-3">
-                            <Card.Img src={card_image.src} />
-                          </Card>
-
-                          <Card className="w-50 border-0 p-3">
-                            <Card.Img src={card_image.src} />
-                          </Card>
-                          <Card className="w-50 border-0 p-3">
-                            <Card.Img src={card_image.src} />
-                          </Card>
+                          {currImgs.length > 0 ? (currImgs.map((url, index) => (
+                              <Card className="w-50 border-0 p-3">
+                                <Card.Img src={url} key={url} />
+                              </Card>
+                            ))
+                          ) : (
+                          <p>No images found.</p>
+                          )}
                         </Row>
                       </div>
                       <Card.Footer>
                         <Nav className="float-start text-black py-2 ps-3 text-heavitas">
-                          {profile.firstName}'s Photos
+                          {profile.firstName}&apos;s Photos
                         </Nav>
 
-                        <Nav className="float-end link-dark hover-line py-2 pe-3">
-                          Edit
+                        <Nav className="float-end link-dark hover-line py-2 pe-3" >
+                          <a href='/upload' className="link-dark">Edit</a>
                         </Nav>
                       </Card.Footer>
                     </Card>
@@ -166,30 +205,6 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 </Row>
               </Col>
           </Container>
-
-
-          {/*
-          <Row>
-          <Col md={6} className='d-flex flex-column'>
-            <Card className='mb-3 p-3 text-center'>
-              <CardTitle>You have XX new matches!</CardTitle>
-            </Card>
-            <Link href="/chat">
-              <Card className='mb-3 p-3 text-center'>
-                <CardTitle>You have XX new messages!</CardTitle>
-              </Card>
-            </Link>
-            <Button href="/connect" className="btn-success py-2 px-4 w-100">Connect</Button>
-            <Button href="/match" className="btn-success py-2 px-4 w-100">Match</Button>
-            <Button href="/chat" className="btn-success py-2 px-4 w-100">Chat</Button>
-          </Col>
-          <Col md={6} className="d-flex flex-column">
-            <Card className='mb-3 p-3 text-center'>
-              <CardTitle>You have made XX total new friends!</CardTitle>
-            </Card>
-          </Col>
-          </Row>
-        */}
         </Container>
       ) : (
         <p>No profile.</p>
