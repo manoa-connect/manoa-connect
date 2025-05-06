@@ -29,7 +29,9 @@ const ClassList = ({ classListString, previewCount = 3 }: ClassListProps) => {
         <>
           <ul className="list-unstyled mt-2 mb-2 text-center">
             {visibleList.map((className, index) => (
-              <li key={index}> {className}</li>
+              <li key={index}>
+                {className}
+              </li>
             ))}
           </ul>
 

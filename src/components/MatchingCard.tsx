@@ -49,26 +49,26 @@ const MatchingPage = ({ onFlip }: { onFlip: () => void }) => (
               src="data:image/webp;base64,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"
               alt="Profile Picture3"
             />
-            </Col>
-            </Row>
-            {/*<Subtitle src={profile.major} />*/}
-            {/*<Subtitle src={profile.year} />*/}
-            <Card.Subtitle className="mb-2 text-center">Mechanical Engineering, 2nd year</Card.Subtitle>
-            <Card.Text className="text-center">
-              {/*<Text src={profile.description} />*/}
-                I am a sophomore at the University of Hawaii at Manoa. I am looking for a study buddy for my classes.
-                I am also looking for someone to go to the gym with. I love to play basketball and go hiking.
-            </Card.Text>
-          </Card.Body>
-                <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlip}>
-                View Profile
-                </Button>
-        </Card>
-
-      <Button variant="success" className="corner-button bottom-right btn-lg">
-        Match
+          </Col>
+        </Row>
+        {/* <Subtitle src={profile.major} /> */}
+        {/* <Subtitle src={profile.year} /> */}
+        <Card.Subtitle className="mb-2 text-center">Mechanical Engineering, 2nd year</Card.Subtitle>
+        <Card.Text className="text-center">
+          {/* <Text src={profile.description} /> */}
+          I am a sophomore at the University of Hawaii at Manoa. I am looking for a study buddy for my classes.
+          I am also looking for someone to go to the gym with. I love to play basketball and go hiking.
+        </Card.Text>
+      </Card.Body>
+      <Button variant="primary" className="corner-button-card btn-sm" onClick={onFlip}>
+        View Profile
       </Button>
-    </Container>
- );
+    </Card>
+
+    <Button variant="success" className="corner-button bottom-right btn-lg">
+      Match
+    </Button>
+  </Container>
+);
 
 export default MatchingPage;

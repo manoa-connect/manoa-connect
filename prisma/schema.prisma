@@ -13,8 +13,8 @@ datasource db {
   // for local development
   url      = env("DATABASE_URL")
   // for Vercel
-  // url       = env("POSTGRES_URL_NON_POOLING")
-  // directUrl = env("POSTGRES_URL_NON_POOLING")
+  //url       = env("POSTGRES_URL_NON_POOLING")
+  //directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 enum Role {
@@ -71,9 +71,81 @@ model Chat {
     Profile   Profile  @relation(fields: [contactId], references: [id])
 }
 
+enum Location {
+  ArchitectureSchool
+  AgriculturalScience
+  ArtBuilding
+  BachmanHall
+  BilgerHall
+  BiomedicalSciences
+  BurnsHall
+  CenterforKoreanStudies
+  CrawfordHall
+  DanceBuilding
+  DeanHall
+  EdmondsonHall
+  FrearHall
+  GartleyHall
+  GeorgeHall
+  GilmoreHall
+  HawaiiHall
+  HemenwayHall
+  HenkeHall
+  HolmesHall
+  InformationTechnologyCenter
+  JeffersonHall
+  JohnsonHall
+  JohnABurnsSchoolofMedicine
+  KamakakuokalaniCenterforHawaiianStudies
+  KellerHall
+  KennedyTheatre
+  KraussHall
+  KuykendallHall
+  LawSchool
+  LincolnHall
+  MarineSciencesBuilding
+  MillerHall
+  MooreHall
+  MusicBuildingComplex
+  PacificBiosciencesResearchCenter
+  PacificOceanScienceandTechnology
+  PhysicalPlantBuilding
+  PhysicalScienceBuilding
+  PopeLaboratory
+  SakamakiHall
+  SaundersHall
+  ShermanLaboratory
+  ShidlerCollegeofBusiness
+  SnyderHall
+  SpaldingHall
+  StJohnPlantScienceLab
+  WatanabeHall
+  WebsterHall
+  Other
+}
+
+enum Days {
+  M
+  T
+  W
+  R
+  F
+  Other
+}
+
+model Class {
+  id          Int       @id @default(autoincrement())
+  name        String
+  startTime   String
+  endTime     String
+  location    Location
+  days        Days[]
+  email       String
+  Profile     Profile @relation(fields: [email], references: [email], onDelete: SetNull) // Keeps Profile even if Class is deleted
+}
+
 model Profile {
   id          Int       @id @default(autoincrement())
-  // contacts    Contact[] 
   firstName   String
   lastName    String
   email       String    @unique 
@@ -85,7 +157,8 @@ model Profile {
   mbti        String
   commute     Commute
   clubs       String
-  languages    String
+  languages   String
+  classes     Class[]
   User        User  @relation(fields: [email], references: [email]) // Also owner of the profile
   accepts     Profile[] @relation("LikesGiven")
   acceptedBy  Profile[] @relation("LikesGiven")

@@ -2,6 +2,7 @@ import UserHome from '@/components/UserHome';
 import { getServerSession } from 'next-auth';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
+import { notFound } from 'next/navigation';
 import authOptions from '@/lib/authOptions';
 import { Profile } from '@prisma/client';
 
@@ -25,6 +26,15 @@ const ProfilePage = async () => {
     },
   });
 
+  const classData = await prisma.class.findMany({
+    where: {
+      email,
+    },
+  }) || '';
+  if (!email) {
+    notFound();
+  }
+
   const chatList = await prisma.chat.findMany();
 
   type ProfileWithMatches = Profile & {
@@ -34,11 +44,11 @@ const ProfilePage = async () => {
   return (
     <main>
       {profile ? (
-        <UserHome profile={profile as ProfileWithMatches} chatList={chatList} />
+        <UserHome profile={profile as ProfileWithMatches} chatList={chatList} classData={classData} />
       ) : (
         <p>
           No profile found. Please create one
-          <a className="link-success" href="/createProfile">here.</a>
+          <a className="link-success ms-1 hover-line" href="/createProfile">here.</a>
         </p>
       )}
     </main>

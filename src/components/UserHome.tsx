@@ -1,26 +1,43 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-await-in-loop */
 
 'use client';
 
-import { Col, Container, Row, Card, Button, Nav, Modal, Image } from 'react-bootstrap';
+import { Col, Container, Row, Card, Button, Nav, Modal, Image, ListGroup } from 'react-bootstrap';
 import { useRef, ChangeEvent, useState, useEffect, useTransition } from 'react';
-import { Profile, Chat } from '@prisma/client';
+import { Profile, Chat, Class } from '@prisma/client';
 import { uploadProfImg, loadImg } from '@/lib/supabase/storage/client';
-import defaultPic from '../../public/img/deafultProf.png';
+import locationLabels from '@/lib/locationMappings';
 import * as Icon from 'react-bootstrap-icons';
+import defaultPic from '../../public/img/deafultProf.png';
 
 type ProfileWithMatches = Profile & {
   matches: Profile[];
 };
 
-const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList: Chat[] }) => {
+const UserHome = ({ profile, chatList, classData }:
+{ profile: ProfileWithMatches; chatList: Chat[], classData: Class[] }) => {
   const [currImgs, setCurrImgs] = useState<string[]>([]);
   const [currPic, setCurrPic] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
   const [imgURLs, setImgURLs] = useState<string[]>([]);
   const [show, setShow] = useState(false);
+  const [photoShow, setPhotoShow] = useState(false);
   const imgInputRef = useRef<HTMLInputElement>(null);
+  const [selectedImg, setSelectedImg] = useState<string | null>(null);
+
+  const handlePhotoClose = () => {
+    setPhotoShow(false);
+    setSelectedImg(null);
+  };
+
+  const handlePhotoShow = (url: string) => {
+    setSelectedImg(url);
+    setPhotoShow(true);
+  };
 
   const handleClose = () => {
     setShow(false);
@@ -167,14 +184,19 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 {' '}
                 {profile.likes}
               </p>
-              <Button variant="outline-success" className="mt-5 mb-2 py-2 px-4 mx-auto d-block w-100" href="/editProfile">
+              <Button
+                variant="outline-success"
+                className="mt-5 mb-2 py-2 px-4 mx-auto d-block w-100"
+                href="/editProfile"
+              >
                 <Icon.PencilSquare />
                 {' '}
                 Edit Profile
               </Button>
               <Button
                 className="btn-success mb-5 mt-2 py-2 px-4 mx-auto d-block w-100"
-                onClick={handleShow}>
+                onClick={handleShow}
+              >
                 <Icon.PersonCircle />
                 {' '}
                 Change Photo
@@ -210,7 +232,8 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                           src={url}
                           width={350}
                           alt={`img-${index}`}
-                          style={{ width: '150px', height: 'auto', objectFit: 'cover', maxHeight: '150px' }} />
+                          style={{ width: '150px', height: 'auto', objectFit: 'cover', maxHeight: '150px' }}
+                        />
                       ))}
                     </Container>
                   </Row>
@@ -289,7 +312,10 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      XX new matches
+                      {matchCount}
+                      {' '}
+                      new match
+                      {matchCount !== 1 ? 'es' : ''}
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/connect" className="link-success hover-line">
@@ -346,6 +372,8 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                             <Card.Img
                               src={url}
                               key={url}
+                              className="hover-line"
+                              onClick={() => handlePhotoShow(url)}
                               style={{ verticalAlign: 'top' }}
                             />
                           </Card>
@@ -378,11 +406,54 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                     <Card.Header className="text-light" style={{ background: 'var(--manoa-green)' }}>
                       Schedule
                     </Card.Header>
-                    <Card.Text className="mx-5 pb-4 pt-4 h6 text-center">
-                      TEMPORARY: Add schedule
-                    </Card.Text>
+                    <Card.Body>
+                      <Col className="bg-white mt-0 mb-5 px-0 mx-0">
+                        <ListGroup className="pt-4">
+                          {classData.length > 0 ? (
+                            classData.map((cData) => (
+                              <ListGroup.Item className="text-center" key={cData.id}>
+                                <Row className="align-items-center d-flex justify-content-between">
+                                  <Col xs={12} md={4} className="text-center">{cData.name}</Col>
+                                  <Col
+                                    xs={12}
+                                    md={4}
+                                    className="text-center"
+                                  >
+                                    {new Date(`2025-05-04T${cData.startTime}:00`)
+                                      .toLocaleTimeString('en-US', {
+                                        hour: 'numeric', minute: 'numeric', hour12: true })}
+                                  </Col>
+                                  <Col
+                                    xs={12}
+                                    md={4}
+                                    className="text-center"
+                                  >
+                                    {new Date(`2025-05-04T${cData.endTime}:00`)
+                                      .toLocaleTimeString('en-US', {
+                                        hour: 'numeric', minute: 'numeric', hour12: true })}
+                                  </Col>
+                                </Row>
+                                <Row className="align-items-center d-flex justify-content-between">
+                                  <Col
+                                    xs={12}
+                                    md={4}
+                                    className="text-center"
+                                  >
+                                    {locationLabels[cData.location] || cData.location}
+                                  </Col>
+                                  <Col xs={12} md={4} className="text-center">{cData.days.join(', ')}</Col>
+                                  <Col xs={12} md={4} />
+                                </Row>
+                              </ListGroup.Item>
+                            ))
+                          ) : (
+                            <ListGroup.Item className="text-center">No classes found</ListGroup.Item>
+                          )}
+                        </ListGroup>
+                      </Col>
+                    </Card.Body>
                     <Card.Footer className="text-end">
-                      <a href="/connect" className="link-success hover-line">
+                      <a href="/editSchedule" className="link-success hover-line">
                         Edit Schedule
                         <Icon.ArrowRight className="ms-1 link-success hover-line" />
                       </a>
@@ -396,8 +467,9 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                       Map
                     </Card.Header>
                     <Card.Text className="mx-5 pb-4 pt-4 h6 text-center">
-                      TEMPORARY: Add map
+                      <Icon.Globe size="150px" />
                     </Card.Text>
+                    <p className="text-center">Coming Soon.</p>
                     <Card.Footer className="text-end">
                       <a href="/connect" className="link-success hover-line">
                         <Icon.ArrowsAngleExpand className="ms-1 link-success hover-line" />
@@ -415,6 +487,24 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
           <a href="/createProfile">here.</a>
         </p>
       )}
+
+      <Modal show={photoShow} onHide={handleClose} centered size="lg">
+        <Modal.Header className="justify-content-end">
+          <a className="link-success me-2 text-end hover-line" onClick={handlePhotoClose}>
+            <Icon.ArrowLeft className="link-success hover-line me-2" />
+            Back
+          </a>
+        </Modal.Header>
+        <Modal.Body className="d-flex justify-content-center">
+          {selectedImg && (
+            <Image
+              src={selectedImg}
+              alt="Selected"
+              style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+            />
+          )}
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

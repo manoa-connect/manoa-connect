@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import MatchCardFlip from './MatchCardFlip';
-import MatchButton from './MatchButton';
 import { $Enums } from '@prisma/client';
 import * as Icon from 'react-bootstrap-icons';
+import MatchCardFlip from './MatchCardFlip';
+import MatchButton from './MatchButton';
 
 type Profile = {
   id: number;
@@ -60,8 +60,9 @@ const MatchClient = ({ otherProfiles }: { otherProfiles: Profile[] }) => {
       <Button
         variant="danger"
         className="corner-button rounded-25 py-1 ms-4 mb-5 pe-4 bottom-left btn-md"
-        onClick={handleSkip}>
-        <Icon.X size="30px"/>
+        onClick={handleSkip}
+      >
+        <Icon.X size="30px" />
         <span className="text-heavitas text-light">
           Skip
         </span>

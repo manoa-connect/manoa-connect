@@ -31,7 +31,7 @@ const NavBar: React.FC = () => {
                 <Nav.Link id="home-nav" href="/profile" key="home" active={pathName === '/profile'}>
                   Profile
                 </Nav.Link>,
-                <Nav.Link id="schedule-nav" href="/schedule" key="schedule" active={pathName === '/schedule'}>
+                <Nav.Link id="schedule-nav" href="/editSchedule" key="schedule" active={pathName === '/editSchedule'}>
                   Schedule
                 </Nav.Link>,
                 <Nav.Link id="map-nav" href="/map" key="map" active={pathName === '/map'}>
@@ -55,7 +55,13 @@ const NavBar: React.FC = () => {
           </Nav>
           <Nav>
             {session ? (
-              <NavDropdown id="login-dropdown" data-bs-theme="light" className="d-inline-block" align="end" title={currentUser}>
+              <NavDropdown
+                id="login-dropdown"
+                data-bs-theme="light"
+                className="d-inline-block"
+                align="end"
+                title={currentUser}
+              >
                 <NavDropdown.Item id="profile-dropdown" href="/profile">
                   <PersonFill className="me-2" />
                   Profile

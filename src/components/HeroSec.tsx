@@ -1,10 +1,10 @@
 'use client';
 
-import { Col, Container, Image, Row, Button, Card, Navbar, Nav } from 'react-bootstrap';
+import { Col, Container, Image, Row, Button, Navbar, Nav } from 'react-bootstrap';
 import { useSession } from 'next-auth/react';
 import * as Icon from 'react-bootstrap-icons';
 import text_logo from '../../public/assets/manoa-connect_logo-text.svg';
-import card_image from '../../public/img/hero-img.jpg';
+import cover from '../../public/img/cover2.png';
 
 const HeroSec = () => {
   const { data: session } = useSession();
@@ -12,21 +12,11 @@ const HeroSec = () => {
 
   return (
     <Container id="hero" fluid>
-      <Row className="align-items-center justify-content-center v-middle">
-        <Col s={1} />
-        <Col xs={3}>
-          <Card style={{ width: '18rem', height: '350px' }}>
-            <Card.Img variant="top" src={card_image.src} />
-            <Card.Body>
-              <Card.Title>Placeholder Card</Card.Title>
-              <Card.Text>
-                This will be some card once the connect/match page has been fleshed out.
-              </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
-            </Card.Body>
-          </Card>
+      <Row className="align-items-center justify-content-center v-middle mx-3">
+        <Col className="mx-5">
+          <Image src={cover.src} width="100%" className="ms-5 mb-4" />
         </Col>
-        <Col className="justify-content-center align-middle text-center">
+        <Col className="justify-content-center align-middle text-center me-5">
           <Image src={text_logo.src} width="650px" alt="Manoa Connect" className="invert mt-5" />
           <h3 className="py-2 ps-4 text-light shadow">Connecting made easy.</h3>
           {currentUser ? (
@@ -56,7 +46,6 @@ const HeroSec = () => {
             </>
           )}
         </Col>
-        <Col s={1} />
       </Row>
     </Container>
   );
