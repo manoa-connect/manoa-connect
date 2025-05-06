@@ -19,6 +19,7 @@ const Page = async () => {
     include: {
       accepts: true,
       matches: true,
+      classes: true,
     },
   });
 
@@ -35,6 +36,9 @@ const Page = async () => {
         notIn: [currentUserProfile.id, ...matchedProfileIds, ...likedProfiles],
       },
     },
+    include: {
+      classes: true,
+    }
   });
 
   return <MatchClient otherProfiles={otherProfiles} />;

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-async-client-component */
 'use client';
  
 import { Profile } from '@prisma/client';
@@ -5,8 +6,18 @@ import { Col, Container, Image, Row, Button, Card, Navbar } from 'react-bootstra
 import ClassList from './ClassList';
 import * as Icon from 'react-bootstrap-icons';
 import logo from '../../public/assets/manoa-connect_logo.svg';
- 
- const MatchCardBack = ({ profile, onFlipBack, }: { profile: Profile; onFlipBack: () => void; }) => {
+
+type Class = {
+  id: number;
+  name: string;
+};
+
+type ProfileWithClasses = Profile & {
+  classes: Class[];
+};
+
+ const MatchCardBack = ({ profile, onFlipBack }: { profile: ProfileWithClasses; onFlipBack: () => void; }) => {
+  const classString = profile.classes?.map((cls) => cls.name).join(', ') || 'No classes available';
 
   return (
     <Container id="bg-image" className="card-page-container py-5 justify-content-center" style={{ height: '87vh' }} fluid>
@@ -101,7 +112,7 @@ import logo from '../../public/assets/manoa-connect_logo.svg';
                   <strong>
                     Current
                   </strong>
-                  <ClassList classListString={profile.languages} />
+                  <ClassList classListString={classString} />
                 </Col>
               </Row>
             </Col>

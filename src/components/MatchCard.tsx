@@ -3,7 +3,7 @@
 import { Profile } from '@prisma/client';
 import { useState, useEffect } from 'react';
 import { loadImg } from '@/lib/supabase/storage/client';
-import { Col, Container, Image, Card, Button, Navbar, Modal, Row } from 'react-bootstrap';
+import { Col, Container, Image, Card, Button, Navbar, Modal } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
 import logo from '../../public/assets/manoa-connect_logo.svg';
 import defaultPic from '../../public/img/deafultProf.png';

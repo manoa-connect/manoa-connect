@@ -4,7 +4,6 @@ import { useState, useTransition } from 'react';
 import { tryMatch } from '@/lib/dbActions';
 import { Button } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
-import { on } from 'events';
 
 export default function MatchButton({ matchedId, onMatched }: { matchedId: number; onMatched: () => void }) {
   const [isPending, startTransition] = useTransition();

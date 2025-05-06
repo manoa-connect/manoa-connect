@@ -73,7 +73,6 @@ model Chat {
 
 model Profile {
   id          Int       @id @default(autoincrement())
-  // contacts    Contact[] 
   firstName   String
   lastName    String
   email       String    @unique 
@@ -85,7 +84,7 @@ model Profile {
   mbti        String
   commute     Commute
   clubs       String
-  languages    String
+  languages   String
   User        User  @relation(fields: [email], references: [email]) // Also owner of the profile
   accepts     Profile[] @relation("LikesGiven")
   acceptedBy  Profile[] @relation("LikesGiven")

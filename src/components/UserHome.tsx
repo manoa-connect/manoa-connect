@@ -1,60 +1,39 @@
-/* eslint-disable @next/next/no-async-client-component */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-await-in-loop */
 
 'use client';
 
-import { Col, Container, Row, Card, Button, Nav, Modal, Image } from 'react-bootstrap';
+import { Col, Container, Row, Card, Button, Nav, Modal, Image, ListGroup } from 'react-bootstrap';
 import { useRef, ChangeEvent, useState, useEffect, useTransition } from 'react';
+import { Profile, Chat, Class } from '@prisma/client';
 import { uploadProfImg, loadImg } from '@/lib/supabase/storage/client';
-import { getServerSession } from 'next-auth';
-import { loggedInProtectedPage } from '@/lib/page-protection';
-import authOptions from '@/lib/authOptions';
-import { prisma } from '@/lib/prisma';
+import { locationLabels } from '@/lib/locationMappings';
 import defaultPic from '../../public/img/deafultProf.png';
 import * as Icon from 'react-bootstrap-icons';
 
-const UserHome = async () => {
-  // Protect the page, only logged in users can access it.
-  const session = await getServerSession(authOptions);
-  loggedInProtectedPage(
-    session as {
-      user: { email: string; id: string; randomKey: string };
-      // eslint-disable-next-line @typescript-eslint/comma-dangle
-    } | null,
-  );
-  
-  const email = (session && session.user && session.user.email) || '';
-  const profile = await prisma.profile.findUnique({
-    where: {
-      email,
-    },
-    include: {
-      acceptedBy: true,
-      matches: true,
-    },
-  });
+type ProfileWithMatches = Profile & {
+  matches: Profile[];
+};
 
-  const chats = await prisma.chat.findMany({
-    where: {
-      OR: [
-        { owner: email },
-        { contactId: profile?.id },
-      ],
-    },
-  });
-  const filteredChats = chats.filter(
-    (chat) =>
-      (chat.owner !== session?.user?.email) &&
-      (chat.contactId === profile?.id) 
-  );
-
+const UserHome = ({ profile, chatList, classData }: { profile: ProfileWithMatches; chatList: Chat[], classData: Class[] }) => {
   const [currImgs, setCurrImgs] = useState<string[]>([]);
   const [currPic, setCurrPic] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
   const [imgURLs, setImgURLs] = useState<string[]>([]);
   const [show, setShow] = useState(false);
+  const [photoShow, setPhotoShow] = useState(false);
   const imgInputRef = useRef<HTMLInputElement>(null);
+  const [selectedImg, setSelectedImg] = useState<string | null>(null);
+
+  const handlePhotoClose = () => {
+    setPhotoShow(false);
+    setSelectedImg(null); 
+  };
+
+  const handlePhotoShow = (url: string) => {
+    setSelectedImg(url); 
+    setPhotoShow(true); 
+  };
 
   const handleClose = () => {
     setShow(false);
@@ -75,7 +54,7 @@ const UserHome = async () => {
 
   useEffect(() => {
     const fetchImages = async () => {
-      const { images, error } = await loadImg('manoa-connect-pics', profile?.id.toString());
+      const { images, error } = await loadImg('manoa-connect-pics', profile.id.toString());
 
       if (error) {
         console.error(error);
@@ -85,7 +64,7 @@ const UserHome = async () => {
     };
 
     const fetchProfPic = async () => {
-      const { images, error } = await loadImg('manoa-connect-pics', `${profile?.id.toString()}-profile`);
+      const { images, error } = await loadImg('manoa-connect-pics', `${profile.id.toString()}-profile`);
 
       if (error) {
         console.error(error);
@@ -96,11 +75,11 @@ const UserHome = async () => {
 
     fetchImages();
     fetchProfPic();
-  }, [profile?.id]);
+  }, [profile.id]);
 
   const handleClickUpload = () => {
     const fetchProfPic = async () => {
-      const { images, error } = await loadImg('manoa-connect-pics', `${profile?.id.toString()}-profile`);
+      const { images, error } = await loadImg('manoa-connect-pics', `${profile.id.toString()}-profile`);
 
       if (error) {
         console.error(error);
@@ -117,7 +96,7 @@ const UserHome = async () => {
         const { imgURL, error } = await uploadProfImg({
           file: imgFile,
           bucket: 'manoa-connect-pics',
-          folder: `${profile?.id.toString()}-profile`,
+          folder: `${profile.id.toString()}-profile`,
         });
 
         if (error) {
@@ -145,6 +124,20 @@ const UserHome = async () => {
       setImgURLs([...imgURLs, ...newImgURLs]);
     }
   };
+
+  function countUnreadMessages(chatList: Chat[] | undefined, currentUserId: number, currentUserEmail: string): number {
+    if (!chatList) return 0;
+    return chatList.filter(
+      chat => chat.contactId === currentUserId && chat.owner !== currentUserEmail && !chat.isRead,
+    ).length;
+  }
+
+  function countMatches(profile: ProfileWithMatches): number {
+    return profile.matches.length;
+  }
+
+  const unreadCount = countUnreadMessages(chatList, profile.id, profile.email);
+  const matchCount = countMatches(profile);
 
   /* TODO(?): Maybe we could add a feature where the user can customize the colors of their profile */
   return (
@@ -256,7 +249,7 @@ const UserHome = async () => {
                 <Col>
                   <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
-                    {filteredChats.length
+                    {unreadCount
                       ? (
                         <a href="/chat">
                           <Icon.ChatDotsFill
@@ -274,10 +267,10 @@ const UserHome = async () => {
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      {filteredChats.length}
+                      {unreadCount}
                       {' '}
                       new message
-                      {filteredChats.length !== 1 ? 's' : ''}
+                      {unreadCount !== 1 ? 's' : ''}
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/chat" className="link-success hover-line">
@@ -291,7 +284,7 @@ const UserHome = async () => {
                 <Col>
                   <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
-                    {profile?.matches.length
+                    {matchCount
                       ? (
                         <a href="/connect">
                           <Icon.PersonPlusFill
@@ -309,10 +302,10 @@ const UserHome = async () => {
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      {profile?.matches.length}
+                      {matchCount}
                       {' '}
                       new match
-                      {profile?.matches.length !== 1 ? 's' : ''}
+                      {matchCount !== 1 ? 'es' : ''}
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/connect" className="link-success hover-line">
@@ -326,7 +319,7 @@ const UserHome = async () => {
                 <Col>
                   <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
-                    {profile?.matches.length
+                    {matchCount
                       ? (
                         <a href="/chat">
                           <Icon.PeopleFill
@@ -344,10 +337,10 @@ const UserHome = async () => {
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      {profile?.acceptedBy.length}
+                      {matchCount}
                       {' '}
                       total friend
-                      {profile?.acceptedBy.length !== 1 ? 's' : ''}
+                      {matchCount !== 1 ? 's' : ''}
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/chat" className="link-success hover-line">
@@ -369,6 +362,8 @@ const UserHome = async () => {
                             <Card.Img
                               src={url}
                               key={url}
+                              className="hover-line"
+                              onClick={() => handlePhotoShow(url)}
                               style={{ verticalAlign: 'top' }}
                             />
                           </Card>
@@ -401,11 +396,33 @@ const UserHome = async () => {
                     <Card.Header className="text-light" style={{ background: 'var(--manoa-green)' }}>
                       Schedule
                     </Card.Header>
-                    <Card.Text className="mx-5 pb-4 pt-4 h6 text-center">
-                      TEMPORARY: Add schedule
-                    </Card.Text>
+                    <Card.Body>
+                      <Col className="bg-white mt-0 mb-5 px-0 mx-0">
+                        <ListGroup className="pt-4">
+                          {classData.length > 0 ? (
+                            classData.map((cData) => (
+                              <ListGroup.Item className="text-center" key={cData.id}>
+                                <Row className="align-items-center d-flex justify-content-between">
+                                  <Col xs={12} md={4} className="text-center">{cData.name}</Col>
+                                  <Col xs={12} md={4} className="text-center">{new Date(`2025-05-04T${cData.startTime}:00`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Col>
+                                  <Col xs={12} md={4} className="text-center">{new Date(`2025-05-04T${cData.endTime}:00`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Col>
+                                </Row>
+                                <Row className="align-items-center d-flex justify-content-between">
+                                  <Col xs={12} md={4} className="text-center">{locationLabels[cData.location] || cData.location}</Col>
+                                  <Col xs={12} md={4} className="text-center">{cData.days.join(', ')}</Col>
+                                  <Col xs={12} md={4}>
+                                  </Col>
+                                </Row>
+                              </ListGroup.Item>
+                            ))
+                          ) : (
+                            <ListGroup.Item className="text-center">No classes found</ListGroup.Item>
+                          )}
+                        </ListGroup>
+                      </Col>
+                    </Card.Body>
                     <Card.Footer className="text-end">
-                      <a href="/connect" className="link-success hover-line">
+                      <a href="/editSchedule" className="link-success hover-line">
                         Edit Schedule
                         <Icon.ArrowRight className="ms-1 link-success hover-line" />
                       </a>
@@ -419,8 +436,9 @@ const UserHome = async () => {
                       Map
                     </Card.Header>
                     <Card.Text className="mx-5 pb-4 pt-4 h6 text-center">
-                      TEMPORARY: Add map
+                      <Icon.Globe size="150px"/>
                     </Card.Text>
+                    <p className="text-center">Coming Soon.</p>
                     <Card.Footer className="text-end">
                       <a href="/connect" className="link-success hover-line">
                         <Icon.ArrowsAngleExpand className="ms-1 link-success hover-line" />
@@ -438,6 +456,26 @@ const UserHome = async () => {
           <a href="/createProfile">here.</a>
         </p>
       )}
+
+      <Modal show={photoShow} onHide={handleClose} centered size="lg">
+        <Modal.Header className="justify-content-end">
+          <a className="link-success me-2 text-end hover-line" onClick={handlePhotoClose}>
+            <Icon.ArrowLeft className="link-success hover-line me-2" />
+            Back
+          </a>
+        </Modal.Header>
+        <Modal.Body className="d-flex justify-content-center">
+          {selectedImg && (
+            <Image
+              src={selectedImg}
+              alt="Selected"
+              style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+            />
+          )}
+        </Modal.Body>
+      </Modal>
     </>
-)}
+  );
+};
+
 export default UserHome;

@@ -11,18 +11,20 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { createClassSchema } from '@/lib/validationSchemas';
 import logo from "../../public/assets/manoa-connect_logo.svg";
 import { Class } from '@prisma/client';
-import { TrashFill } from 'react-bootstrap-icons';
+import * as Icon from 'react-bootstrap-icons';
 import { locationLabels } from '@/lib/locationMappings';
+
 const onSubmit = async (data: { 
   name: string;
   startTime: string;
   endTime: string;
   location: string;
-  days: string[];
+  days: (string | undefined)[];
   email: string;
 }) => {
+  data.days = data.days.filter((day): day is string => day !== undefined);
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-  await addClass(data);
+  await addClass({ ...data, days: data.days.filter((day): day is string => day !== undefined) });
   swal('Success', 'Your class has been created', 'success', {
     timer: 2000,
   });
@@ -58,11 +60,11 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
 
   return (
     <Container id="bg-image" fluid>
-      <Container className="py-5">
-        <Row className="justify-content-center pt-3">
+      <Container className="py-4">
+        <Row className="justify-content-center">
           <Col xs={5} className="bg-white pb-5 mt-5 mb-5 my-auto px-4 mx-3">
             <Navbar className="pt-5 justify-content-center align-middle text-center">
-              <Image src ={logo.src} width="50px" alt="Manoa Connect" className="my-auto"/>
+              <Icon.PersonWorkspace size="40px" className="mt-1 me-2"/>
               <Navbar.Text className="text-center text-black text-heavitas h1 mt-4 ms-2">Your Classes</Navbar.Text>
             </Navbar>
             <ListGroup className="pt-4">
@@ -79,7 +81,7 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
                       <Col xs={12} md={4} className="text-center">{cData.days.join(', ')}</Col>
                       <Col xs={12} md={4}>
                         <Button variant="danger" className="btn-sm" onClick={() => handleDelete(cData.id)}>
-                          <TrashFill />
+                          <Icon.TrashFill />
                         </Button>
                       </Col>
                     </Row>
@@ -97,7 +99,7 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
               <Navbar.Text className="text-center text-black text-heavitas h1 mt-4 ms-2">Add Class</Navbar.Text>
             </Navbar>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <Row>
+              <Row className="mx-2">
                 <Col>
                   <Form.Group className="form-group pe-3 py-3">
                     <Form.Label>Class Name</Form.Label>
@@ -111,7 +113,7 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
                 </Col>
               </Row>
 
-              <Row>
+              <Row className="mx-2">
                 <Col>
                   <Form.Group className="form-group pe-3 py-3">
                     <Form.Label>Start Time</Form.Label>
@@ -137,9 +139,9 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
                 </Col>
               </Row>
 
-              <Row>
+              <Row className="mx-2">
                 <Col>
-                  <Form.Group className="form-group ps-3 py-3">
+                  <Form.Group className="form-group py-3">
                     <Form.Label>Location</Form.Label>
                     <select {...register("location")} className={`form-control ${errors.location ? "is-invalid" : ""}`}>
                       <option value="Other">Other</option>
@@ -201,7 +203,7 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
               <Row>
                 <Col>
                   <Form.Group className="form-group ps-3 py-3">
-                    <Form.Label>Days</Form.Label>
+                    <Form.Label className="ms-2">Days</Form.Label>
                     <div className="d-flex flex-wrap">
                       {dayOptions.map((day) => (
                         <div key={day} className="form-check pe-3">
@@ -210,7 +212,7 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
                             {...register("days", { required: "Day is required" })}
                             value={day}
                           />
-                          <label className="form-check-label">{day}</label>
+                          <label className="form-check-label ms-2">{day}</label>
                         </div>
                       ))}
                     </div>
