@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-async-client-component */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-await-in-loop */
 
@@ -5,16 +6,49 @@
 
 import { Col, Container, Row, Card, Button, Nav, Modal, Image } from 'react-bootstrap';
 import { useRef, ChangeEvent, useState, useEffect, useTransition } from 'react';
-import { Profile, Chat } from '@prisma/client';
 import { uploadProfImg, loadImg } from '@/lib/supabase/storage/client';
+import { getServerSession } from 'next-auth';
+import { loggedInProtectedPage } from '@/lib/page-protection';
+import authOptions from '@/lib/authOptions';
+import { prisma } from '@/lib/prisma';
 import defaultPic from '../../public/img/deafultProf.png';
 import * as Icon from 'react-bootstrap-icons';
 
-type ProfileWithMatches = Profile & {
-  matches: Profile[];
-};
+const UserHome = async () => {
+  // Protect the page, only logged in users can access it.
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+      // eslint-disable-next-line @typescript-eslint/comma-dangle
+    } | null,
+  );
+  
+  const email = (session && session.user && session.user.email) || '';
+  const profile = await prisma.profile.findUnique({
+    where: {
+      email,
+    },
+    include: {
+      acceptedBy: true,
+      matches: true,
+    },
+  });
 
-const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList: Chat[] }) => {
+  const chats = await prisma.chat.findMany({
+    where: {
+      OR: [
+        { owner: email },
+        { contactId: profile?.id },
+      ],
+    },
+  });
+  const filteredChats = chats.filter(
+    (chat) =>
+      (chat.owner !== session?.user?.email) &&
+      (chat.contactId === profile?.id) 
+  );
+
   const [currImgs, setCurrImgs] = useState<string[]>([]);
   const [currPic, setCurrPic] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
@@ -41,7 +75,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
 
   useEffect(() => {
     const fetchImages = async () => {
-      const { images, error } = await loadImg('manoa-connect-pics', profile.id.toString());
+      const { images, error } = await loadImg('manoa-connect-pics', profile?.id.toString());
 
       if (error) {
         console.error(error);
@@ -51,7 +85,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
     };
 
     const fetchProfPic = async () => {
-      const { images, error } = await loadImg('manoa-connect-pics', `${profile.id.toString()}-profile`);
+      const { images, error } = await loadImg('manoa-connect-pics', `${profile?.id.toString()}-profile`);
 
       if (error) {
         console.error(error);
@@ -62,11 +96,11 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
 
     fetchImages();
     fetchProfPic();
-  }, [profile.id]);
+  }, [profile?.id]);
 
   const handleClickUpload = () => {
     const fetchProfPic = async () => {
-      const { images, error } = await loadImg('manoa-connect-pics', `${profile.id.toString()}-profile`);
+      const { images, error } = await loadImg('manoa-connect-pics', `${profile?.id.toString()}-profile`);
 
       if (error) {
         console.error(error);
@@ -83,7 +117,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
         const { imgURL, error } = await uploadProfImg({
           file: imgFile,
           bucket: 'manoa-connect-pics',
-          folder: `${profile.id.toString()}-profile`,
+          folder: `${profile?.id.toString()}-profile`,
         });
 
         if (error) {
@@ -111,20 +145,6 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
       setImgURLs([...imgURLs, ...newImgURLs]);
     }
   };
-
-  function countUnreadMessages(chatList: Chat[] | undefined, currentUserId: number, currentUserEmail: string): number {
-    if (!chatList) return 0;
-    return chatList.filter(
-      chat => chat.contactId === currentUserId && chat.owner !== currentUserEmail && !chat.isRead,
-    ).length;
-  }
-
-  function countMatches(profile: ProfileWithMatches): number {
-    return profile.matches.length;
-  }
-
-  const unreadCount = countUnreadMessages(chatList, profile.id, profile.email);
-  const matchCount = countMatches(profile);
 
   /* TODO(?): Maybe we could add a feature where the user can customize the colors of their profile */
   return (
@@ -236,7 +256,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 <Col>
                   <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
-                    {unreadCount
+                    {filteredChats.length
                       ? (
                         <a href="/chat">
                           <Icon.ChatDotsFill
@@ -254,10 +274,10 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      {unreadCount}
+                      {filteredChats.length}
                       {' '}
                       new message
-                      {unreadCount !== 1 ? 's' : ''}
+                      {filteredChats.length !== 1 ? 's' : ''}
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/chat" className="link-success hover-line">
@@ -271,7 +291,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 <Col>
                   <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
-                    {matchCount
+                    {profile?.matches.length
                       ? (
                         <a href="/connect">
                           <Icon.PersonPlusFill
@@ -289,7 +309,10 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      XX new matches
+                      {profile?.matches.length}
+                      {' '}
+                      new match
+                      {profile?.matches.length !== 1 ? 's' : ''}
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/connect" className="link-success hover-line">
@@ -303,7 +326,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 <Col>
                   <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
-                    {matchCount
+                    {profile?.matches.length
                       ? (
                         <a href="/chat">
                           <Icon.PeopleFill
@@ -321,10 +344,10 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      {matchCount}
+                      {profile?.acceptedBy.length}
                       {' '}
                       total friend
-                      {matchCount !== 1 ? 's' : ''}
+                      {profile?.acceptedBy.length !== 1 ? 's' : ''}
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/chat" className="link-success hover-line">
@@ -416,7 +439,5 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
         </p>
       )}
     </>
-  );
-};
-
+)}
 export default UserHome;
