@@ -95,7 +95,7 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
                     <Row>
                       <Col>
                         <Form.Group>
-                          <Form.Label><strong>Year</strong></Form.Label>
+                          <Form.Label>Year</Form.Label>
                           <select
                             {...register('year')}
                             className={`form-control ${errors.year ? 'is-invalid' : ''}`}
@@ -112,7 +112,7 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
                       </Col>
                       <Col>
                         <Form.Group>
-                          <Form.Label><strong>Commute Status</strong></Form.Label>
+                          <Form.Label>Commute Status</Form.Label>
                           <select
                             {...register('commute')}
                             className={`form-control ${errors.commute ? 'is-invalid' : ''}`}
@@ -142,7 +142,7 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
 
                     <Row className="py-3">
                       <Form.Group>
-                        <Form.Label><strong className="text-manoa-green">Clubs</strong></Form.Label>
+                        <Form.Label>Clubs</Form.Label>
                         <textarea
                           rows={1}
                           {...register('clubs')}
