@@ -82,11 +82,15 @@ body {
   height: 75vh;
 }
 
+.vr {
+  border-left: 1px solid gray;
+}
+
 .hover-line {
   text-decoration: none;
 }
 
-.hover-line:hover{
+.hover-line:hover {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -127,6 +131,10 @@ body {
   max-width: 1000px;
   max-height: 500px;
   border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.shadow {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 

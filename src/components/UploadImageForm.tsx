@@ -132,7 +132,7 @@ const UploadForm = ({ profile }: { profile : Profile }) => {
             <Button
               onClick={() => imgInputRef.current?.click()}
               disabled={isPending}
-              className="btn-light"
+              variant="outline-success"
             >
               Select Image
             </Button>

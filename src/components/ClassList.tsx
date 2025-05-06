@@ -8,12 +8,12 @@ import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 
 interface ClassListProps {
-  label: string;
+  // label: string;
   classListString?: string | null;
   previewCount?: number;
 }
 
-const ClassList = ({ label, classListString, previewCount = 3 }: ClassListProps) => {
+const ClassList = ({ classListString, previewCount = 3 }: ClassListProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const classList = classListString
@@ -25,11 +25,9 @@ const ClassList = ({ label, classListString, previewCount = 3 }: ClassListProps)
 
   return (
     <div className="mb-4">
-      <h5 className="mb-2">{label}</h5>
-
       {classList.length > 0 ? (
         <>
-          <ul className="list-unstyled mt-3 text-start">
+          <ul className="list-unstyled mt-2 mb-2 text-center">
             {visibleList.map((className, index) => (
               <li key={index}> {className}</li>
             ))}
@@ -37,17 +35,17 @@ const ClassList = ({ label, classListString, previewCount = 3 }: ClassListProps)
 
           {hasMore && (
             <Button
-              variant="outline-primary"
+              variant="outline-success"
               size="sm"
               onClick={() => setIsExpanded(!isExpanded)}
-              className="mt-2"
+              className="mb-1"
             >
               {isExpanded ? 'Show Less' : `+${classList.length - previewCount} more`}
             </Button>
           )}
         </>
       ) : (
-        <p className="text-muted">No {label.toLowerCase()} listed.</p>
+        <></>
       )}
     </div>
   );

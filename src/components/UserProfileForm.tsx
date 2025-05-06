@@ -142,7 +142,7 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
 
                     <Row className="py-3">
                       <Form.Group>
-                        <Form.Label><strong className="text-manoa-green">Current Clubs</strong></Form.Label>
+                        <Form.Label><strong className="text-manoa-green">Clubs</strong></Form.Label>
                         <textarea
                           rows={1}
                           {...register('clubs')}
@@ -156,14 +156,14 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
 
                     <Row>
                       <Form.Group>
-                        <Form.Label>Previous Classes</Form.Label>
+                        <Form.Label>Languages</Form.Label>
                         <textarea
-                          {...register('previous')}
-                          defaultValue={profile.previous}
+                          {...register('languages')}
+                          defaultValue={profile.languages}
                           required
-                          className={`form-control ${errors.previous ? 'is-invalid' : ''}`}
+                          className={`form-control ${errors.languages ? 'is-invalid' : ''}`}
                         />
-                        <div className="invalid-feedback">{errors.previous?.message}</div>
+                        <div className="invalid-feedback">{errors.languages?.message}</div>
                       </Form.Group>
                     </Row>
                   </Col>

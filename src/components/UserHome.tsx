@@ -167,12 +167,14 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 {' '}
                 {profile.likes}
               </p>
-              <Button className="btn-success mt-5 mb-2 py-2 px-4 mx-auto d-block w-100" href="/editProfile">
+              <Button variant="outline-success" className="mt-5 mb-2 py-2 px-4 mx-auto d-block w-100" href="/editProfile">
                 <Icon.PencilSquare />
                 {' '}
                 Edit Profile
               </Button>
-              <Button className="btn-success mb-5 mt-2 py-2 px-4 mx-auto d-block w-100" onClick={handleShow}>
+              <Button
+                className="btn-success mb-5 mt-2 py-2 px-4 mx-auto d-block w-100"
+                onClick={handleShow}>
                 <Icon.PersonCircle />
                 {' '}
                 Change Photo
@@ -196,14 +198,19 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                     <Button
                       onClick={() => imgInputRef.current?.click()}
                       disabled={isPending}
-                      className="btn-light"
+                      variant="outline-success"
                     >
                       Select Image
                     </Button>
 
                     <Container className="d-flex pb-5 justify-content-center">
                       {imgURLs.map((url, index) => (
-                        <Image key={url} src={url} width={350} alt={`img-${index}`} />
+                        <Image
+                          key={url}
+                          src={url}
+                          width={350}
+                          alt={`img-${index}`}
+                          style={{ width: '150px', height: 'auto', objectFit: 'cover', maxHeight: '150px' }} />
                       ))}
                     </Container>
                   </Row>
@@ -227,7 +234,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
             <Col sm={8} className="py-4 ps-5 ms-2 d-block align-middle">
               <Row className="my-4 mb-5">
                 <Col>
-                  <Card className="border-0">
+                  <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
                     {unreadCount
                       ? (
@@ -262,7 +269,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 </Col>
 
                 <Col>
-                  <Card className="border-0">
+                  <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
                     {matchCount
                       ? (
@@ -294,7 +301,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 </Col>
 
                 <Col>
-                  <Card className="border-0">
+                  <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
                     {matchCount
                       ? (
@@ -331,7 +338,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
 
               <Row className="my-5">
                 <Col>
-                  <Card className="border-0">
+                  <Card className="border-0 shadow">
                     <div style={{ overflow: 'scroll', maxHeight: '300px' }}>
                       <Row className="overflow-auto py-3 px-4">
                         {currImgs.length > 0 ? (currImgs.map((url) => (
@@ -356,8 +363,8 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
 
                       <Nav className="float-end link-dark hover-line py-2 pe-3">
                         <a href="/upload" className="link-success hover-line">
-                          Edit Schedule
-                          <Icon.ArrowRight className="ms-1 link-success hover-line" />
+                          Edit Photos
+                          <Icon.Upload className="ms-2 mb-1 link-success hover-line" />
                         </a>
                       </Nav>
                     </Card.Footer>
@@ -367,7 +374,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
 
               <Row className="my-5">
                 <Col>
-                  <Card className="border-0">
+                  <Card className="border-0 shadow">
                     <Card.Header className="text-light" style={{ background: 'var(--manoa-green)' }}>
                       Schedule
                     </Card.Header>
@@ -384,7 +391,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 </Col>
 
                 <Col>
-                  <Card className="border-0">
+                  <Card className="border-0 shadow">
                     <Card.Header className="float-start text-light" style={{ background: 'var(--manoa-green)' }}>
                       Map
                     </Card.Header>

@@ -28,17 +28,17 @@ const HeroSec = () => {
         </Col>
         <Col className="justify-content-center align-middle text-center">
           <Image src={text_logo.src} width="650px" alt="Manoa Connect" className="invert mt-5" />
-          <h3 className="py-2 ps-4 text-light">Connecting made easy.</h3>
+          <h3 className="py-2 ps-4 text-light shadow">Connecting made easy.</h3>
           {currentUser ? (
             <>
               <Col />
               <Col>
-                <Button className="btn-success my-1 py-2 px-5 m-2" href="/connect">
+                <Button className="btn-success my-1 py-2 px-5 m-2 shadow" href="/connect">
                   <Icon.PeopleFill />
                   {' '}
                   Connect
                 </Button>
-                <Button className="btn-success my-1 py-2 px-5 m-4" href="/profile">
+                <Button className="btn-success my-1 py-2 px-5 m-4 shadow" href="/profile">
                   <Icon.PersonFill />
                   {' '}
                   Your Profile

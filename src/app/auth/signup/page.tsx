@@ -56,7 +56,7 @@ const SignUp = () => {
       <Container id="bg-image" fluid>
         <Container className="py-5">
           <Row className="justify-content-center">
-            <Col xs={5} className="bg-white pb-5 mb-5 my-auto">
+            <Col xs={5} className="bg-white pb-5 mb-5 my-auto shadow">
               <Navbar className="pt-5 justify-content-center align-middle text-center">
                 <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto" />
                 <Navbar.Text className="text-center text-black text-heavitas h1 mt-4 ms-2">Sign Up</Navbar.Text>
