@@ -5,51 +5,16 @@
 
 import { Col, Container, Row, Card, Button, Nav, Modal, Image } from 'react-bootstrap';
 import { useRef, ChangeEvent, useState, useEffect, useTransition } from 'react';
-import Link from 'next/link';
-import authOptions from '@/lib/authOptions';
-import { loggedInProtectedPage } from '@/lib/page-protection';
-import { prisma } from '@/lib/prisma';
-import { Profile } from '@prisma/client';
-import { getServerSession } from 'next-auth';
+import { Profile, Chat } from '@prisma/client';
 import { uploadProfImg, loadImg } from '@/lib/supabase/storage/client';
 import defaultPic from '../../public/img/deafultProf.png';
 import * as Icon from 'react-bootstrap-icons';
 
-const UserHome = async () => {
-  // Protect the page, only logged in users can access it.
-  const session = await getServerSession(authOptions);
-  loggedInProtectedPage(
-    session as {
-      user: { email: string; id: string; randomKey: string };
-      // eslint-disable-next-line @typescript-eslint/comma-dangle
-    } | null,
-  );
+type ProfileWithMatches = Profile & {
+  matches: Profile[];
+};
 
-  const email = (session && session.user && session.user.email) || '';
-  const profile = await prisma.profile.findUnique({
-    where: {
-      email,
-    },
-    include: {
-      acceptedBy: true,
-      matches: true,
-    },
-  });
-
-  const chats = await prisma.chat.findMany({
-    where: {
-      OR: [
-        { owner: email },
-        { contactId: profile?.id },
-      ],
-    },
-  });
-  const filteredChats = chats.filter(
-    (chat: { owner: any; contactId: any; }) =>
-      (chat.owner !== session?.user?.email) &&
-      (chat.contactId === profile?.id) 
-  );
-
+const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList: Chat[] }) => {
   const [currImgs, setCurrImgs] = useState<string[]>([]);
   const [currPic, setCurrPic] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
@@ -76,7 +41,7 @@ const UserHome = async () => {
 
   useEffect(() => {
     const fetchImages = async () => {
-      const { images, error } = await loadImg('manoa-connect-pics', profile?.id.toString());
+      const { images, error } = await loadImg('manoa-connect-pics', profile.id.toString());
 
       if (error) {
         console.error(error);
@@ -86,7 +51,7 @@ const UserHome = async () => {
     };
 
     const fetchProfPic = async () => {
-      const { images, error } = await loadImg('manoa-connect-pics', `${profile?.id.toString()}-profile`);
+      const { images, error } = await loadImg('manoa-connect-pics', `${profile.id.toString()}-profile`);
 
       if (error) {
         console.error(error);
@@ -97,11 +62,11 @@ const UserHome = async () => {
 
     fetchImages();
     fetchProfPic();
-  }, [profile?.id]);
+  }, [profile.id]);
 
   const handleClickUpload = () => {
     const fetchProfPic = async () => {
-      const { images, error } = await loadImg('manoa-connect-pics', `${profile?.id.toString()}-profile`);
+      const { images, error } = await loadImg('manoa-connect-pics', `${profile.id.toString()}-profile`);
 
       if (error) {
         console.error(error);
@@ -118,7 +83,7 @@ const UserHome = async () => {
         const { imgURL, error } = await uploadProfImg({
           file: imgFile,
           bucket: 'manoa-connect-pics',
-          folder: `${profile?.id.toString()}-profile`,
+          folder: `${profile.id.toString()}-profile`,
         });
 
         if (error) {
@@ -146,6 +111,20 @@ const UserHome = async () => {
       setImgURLs([...imgURLs, ...newImgURLs]);
     }
   };
+
+  function countUnreadMessages(chatList: Chat[] | undefined, currentUserId: number, currentUserEmail: string): number {
+    if (!chatList) return 0;
+    return chatList.filter(
+      chat => chat.contactId === currentUserId && chat.owner !== currentUserEmail && !chat.isRead,
+    ).length;
+  }
+
+  function countMatches(profile: ProfileWithMatches): number {
+    return profile.matches.length;
+  }
+
+  const unreadCount = countUnreadMessages(chatList, profile.id, profile.email);
+  const matchCount = countMatches(profile);
 
   /* TODO(?): Maybe we could add a feature where the user can customize the colors of their profile */
   return (
@@ -257,7 +236,7 @@ const UserHome = async () => {
                 <Col>
                   <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
-                    {filteredChats.length
+                    {unreadCount
                       ? (
                         <a href="/chat">
                           <Icon.ChatDotsFill
@@ -275,10 +254,10 @@ const UserHome = async () => {
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      {filteredChats.length}
+                      {unreadCount}
                       {' '}
                       new message
-                      {filteredChats.length !== 1 ? 's' : ''}
+                      {unreadCount !== 1 ? 's' : ''}
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/chat" className="link-success hover-line">
@@ -292,7 +271,7 @@ const UserHome = async () => {
                 <Col>
                   <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
-                    {profile?.matches.length
+                    {matchCount
                       ? (
                         <a href="/connect">
                           <Icon.PersonPlusFill
@@ -310,10 +289,7 @@ const UserHome = async () => {
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      {profile?.matches.length}
-                      {' '}
-                      new match
-                      {profile?.matches.length !== 1 ? 'es' : ''}
+                      XX new matches
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/connect" className="link-success hover-line">
@@ -327,7 +303,7 @@ const UserHome = async () => {
                 <Col>
                   <Card className="border-0 shadow">
                     <Card.Header className="px-5" style={{ background: 'var(--manoa-green)' }} />
-                    {profile?.matches.length
+                    {matchCount
                       ? (
                         <a href="/chat">
                           <Icon.PeopleFill
@@ -345,10 +321,10 @@ const UserHome = async () => {
                         </a>
                       )}
                     <Card.Text className="mx-1 pb-1 pt-4 h6 text-center">
-                      {profile?.acceptedBy.length}
+                      {matchCount}
                       {' '}
                       total friend
-                      {profile?.acceptedBy.length !== 1 ? 's' : ''}
+                      {matchCount !== 1 ? 's' : ''}
                     </Card.Text>
                     <Card.Footer className="text-end">
                       <a href="/chat" className="link-success hover-line">
@@ -440,6 +416,7 @@ const UserHome = async () => {
         </p>
       )}
     </>
-)}
+  );
+};
 
 export default UserHome;

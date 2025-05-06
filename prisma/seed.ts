@@ -47,7 +47,7 @@ async function main() {
     } else {
       commute = 'Other';
     }
-    
+
     await prisma.profile.upsert({
       where: { email: data.email },
       update: {},

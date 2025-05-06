@@ -28,16 +28,16 @@ const NavBar: React.FC = () => {
           <Nav className="me-auto justify-content-start">
             {currentUser
               ? [
-                  <Nav.Link id="home-nav" href="/profile" key="home" active={pathName === '/profile'}>
-                    Profile
-                  </Nav.Link>,
-                  <Nav.Link id="schedule-nav" href="/editSchedule" key="schedule" active={pathName === '/editSchedule'}>
-                    Schedule
-                  </Nav.Link>,
-                  <Nav.Link id="map-nav" href="/map" key="map" active={pathName === '/map'}>
-                    Map
-                  </Nav.Link>,
-                  <Nav.Link id="chat-nav" href="/chat" key="chat" active={pathName === '/chat'}>
+                <Nav.Link id="home-nav" href="/profile" key="home" active={pathName === '/profile'}>
+                  Profile
+                </Nav.Link>,
+                <Nav.Link id="schedule-nav" href="/schedule" key="schedule" active={pathName === '/schedule'}>
+                  Schedule
+                </Nav.Link>,
+                <Nav.Link id="map-nav" href="/map" key="map" active={pathName === '/map'}>
+                  Map
+                </Nav.Link>,
+                <Nav.Link id="chat-nav" href="/chat" key="chat" active={pathName === '/chat'}>
                   Chat
                 </Nav.Link>,
                 <Nav.Link id="connect-nav" href="/connect" key="connect" active={pathName === '/connect'}>
