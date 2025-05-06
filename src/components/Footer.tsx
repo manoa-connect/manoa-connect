@@ -57,7 +57,7 @@ const Footer = () => {
 
                 <Nav.Link
                   id="connect-nav"
-                  href="/connect-test"
+                  href="/connect"
                   key="connect"
                   active={pathName === '/connect'}
                   className="link-light px-2 hover-line"

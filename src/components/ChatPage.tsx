@@ -78,8 +78,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
                   onClick={() => setSelectedMatch(match)}
                   className={`friend-item ${selectedMatch?.id === match.id ? 'active-friend' : ''}`}
                 >
-                  {match.firstName}
-                  {match.lastName}
+                  {`${match.firstName} ${match.lastName}`}
                   {unreadCount > 0 && (
                     <span
                       className="badge"
@@ -95,8 +94,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
         </Col>
         <Col>
           <h5 className="text-body">
-            {selectedMatch?.firstName}
-            {selectedMatch?.lastName}
+            {`${selectedMatch?.firstName} ${selectedMatch?.lastName}`}
           </h5>
           <ListGroup variant="flush" style={{ maxHeight: '280px', overflowY: 'auto' }} ref={chatListRef}>
             {filteredChats.map((chat, index) => (

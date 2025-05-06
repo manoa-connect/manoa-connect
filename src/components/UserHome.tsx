@@ -7,6 +7,7 @@ import { Col, Container, Row, Card, Button, Nav, Modal, Image } from 'react-boot
 import { useRef, ChangeEvent, useState, useEffect, useTransition } from 'react';
 import { Profile, Chat } from '@prisma/client';
 import { uploadProfImg, loadImg } from '@/lib/supabase/storage/client';
+import defaultPic from '../../public/img/deafultProf.png';
 import * as Icon from 'react-bootstrap-icons';
 
 type ProfileWithMatches = Profile & {
@@ -138,13 +139,14 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                   src={url}
                   key={url}
                   className="bg-secondary rounded-circle d-block mt-5 mx-auto"
-                  style={{ width: '150px', height: '150px', objectFit: 'cover', maxHeight: '150px' }}
+                  style={{ width: '150px', height: 'auto', objectFit: 'cover', maxHeight: '150px' }}
                 />
               ))
               ) : (
-                <Card
+                <Card.Img
+                  src={defaultPic.src}
                   className="bg-secondary rounded-circle d-block mt-5 mx-auto"
-                  style={{ width: '150px', height: '150px' }}
+                  style={{ width: '150px', height: 'auto', objectFit: 'cover', maxHeight: '150px' }}
                 />
               )}
               <h1 className="text-center pt-4 text-heavitas">
@@ -153,12 +155,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                 {profile.lastName}
               </h1>
               <p className="text-center text-secondary">
-                {profile.year}
-                {' '}
-                |
-                {profile.major}
-                {' '}
-                Major
+                {`${profile.year} | ${profile.major} Major`}
               </p>
               <hr className="w-75 mx-auto d-block" />
               <p className="pb-1 text-center">
@@ -339,7 +336,11 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                       <Row className="overflow-auto py-3 px-4">
                         {currImgs.length > 0 ? (currImgs.map((url) => (
                           <Card className="w-50 border-0 p-3" key={url}>
-                            <Card.Img src={url} key={url} />
+                            <Card.Img
+                              src={url}
+                              key={url}
+                              style={{ verticalAlign: 'top' }}
+                            />
                           </Card>
                         ))
                         ) : (
@@ -354,7 +355,10 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
                       </Nav>
 
                       <Nav className="float-end link-dark hover-line py-2 pe-3">
-                        <a href="/upload" className="link-dark hover-line">Edit</a>
+                        <a href="/upload" className="link-success hover-line">
+                          Edit Schedule
+                          <Icon.ArrowRight className="ms-1 link-success hover-line" />
+                        </a>
                       </Nav>
                     </Card.Footer>
                   </Card>
@@ -401,7 +405,7 @@ const UserHome = ({ profile, chatList }: { profile: ProfileWithMatches; chatList
       ) : (
         <p>
           No profile found. Create one
-          <a href="/createProfile">here</a>
+          <a href="/createProfile">here.</a>
         </p>
       )}
     </>

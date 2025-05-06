@@ -121,6 +121,7 @@ const UploadForm = ({ profile }: { profile : Profile }) => {
           <Row className="px-5 pb-1">
             <input
               type="file"
+              multiple
               hidden
               accept="image/*"
               ref={imgInputRef}
@@ -148,7 +149,12 @@ const UploadForm = ({ profile }: { profile : Profile }) => {
 
           <Container className="d-flex pb-5 justify-content-center">
             {imgURLs.map((url, index) => (
-              <Image key={url} src={url} width={350} alt={`img-${index}`} />
+              <Image
+                key={url}
+                src={url}
+                alt={`img-${index}`}
+                style={{ width: '150px', height: '150px', objectFit: 'cover', maxHeight: '150px' }}
+                />
             ))}
           </Container>
         </Col>
@@ -156,10 +162,10 @@ const UploadForm = ({ profile }: { profile : Profile }) => {
         <Col id="no-overflow-x" className="py-5 mx-0 pe-5 overflow-y-scroll w-100">
           {currImgs.length > 0 ? (
             currImgs.map((url, index) => (
-              <Container className="px-2">
+              <Container className="px-2" key={index}>
                 <Col>
                   <Image className="mx-3 mt-3 mb-2" key={url} src={url} width="100%" alt={`img-${index}`} rounded />
-                  <Card.Footer onClick={() => handleClickDelete(url)} className="link-danger hover-line text-end pb-3">
+                  <Card.Footer onClick={() => handleClickDelete(url)}className="link-danger hover-line text-end pb-3">
                     <Icon.Trash />
                     {' '}
                     Delete

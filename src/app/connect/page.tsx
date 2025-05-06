@@ -6,7 +6,11 @@ import MatchClient from '@/components/MatchClient';
 
 const Page = async () => {
   const session = await getServerSession(authOptions);
-  loggedInProtectedPage(session);
+  loggedInProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+    } | null,
+  );
 
   const email = session?.user?.email || '';
 
