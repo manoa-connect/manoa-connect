@@ -95,12 +95,12 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
             })}
           </ListGroup>
         </Col>
-        <Col id="chat-bg-image">
+        <Col id="chat-bg-image" style={{ height: '87vh' }}>
           <Col className="px-3">
             <h5 className="mt-5 text-heavitas text-light">
               {`${selectedMatch?.firstName} ${selectedMatch?.lastName}`}
             </h5>
-            <ListGroup variant="flush" style={{ maxHeight: '280px', overflowY: 'auto' }} ref={chatListRef}>
+            <ListGroup variant="flush" style={{ maxHeight: '500px', overflowY: 'auto' }} ref={chatListRef}>
               {filteredChats.map((chat, index) => (
                 <ChatItem
                   key={chat.id}

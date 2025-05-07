@@ -47,7 +47,7 @@ const AddChatForm = ({ profile, onNewChat }: { profile: Profile; onNewChat: () =
   }
 
   return (
-    <Container style={{ height: '25vh', marginTop: '50vh' }}>
+    <Container className="pt-3">
       <Row className="justify-content-center">
         <Card>
           <Card.Body className="chat-form-body">
