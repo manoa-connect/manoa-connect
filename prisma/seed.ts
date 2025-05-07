@@ -63,6 +63,7 @@ async function main() {
         commute,
         clubs: data.clubs,
         languages: data.languages,
+        previous: data.previous,
       },
     });
   }

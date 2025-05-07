@@ -156,14 +156,14 @@ const UserHome = ({ profile, chatList, classData }:
                   src={url}
                   key={url}
                   className="bg-secondary rounded-circle d-block mt-5 mx-auto"
-                  style={{ width: '150px', height: 'auto', objectFit: 'cover', maxHeight: '150px' }}
+                  style={{ width: '150px', height: '150px', objectFit: 'cover', maxHeight: '150px' }}
                 />
               ))
               ) : (
                 <Card.Img
                   src={defaultPic.src}
                   className="bg-secondary rounded-circle d-block mt-5 mx-auto"
-                  style={{ width: '150px', height: 'auto', objectFit: 'cover', maxHeight: '150px' }}
+                  style={{ width: '150px', height: '150px', objectFit: 'cover', maxHeight: '150px' }}
                 />
               )}
               <h1 className="text-center pt-4 text-heavitas">
@@ -406,7 +406,7 @@ const UserHome = ({ profile, chatList, classData }:
                     <Card.Header className="text-light" style={{ background: 'var(--manoa-green)' }}>
                       Schedule
                     </Card.Header>
-                    <Card.Body>
+                    <Card.Body className="mt-0 py-0">
                       <Col className="bg-white mt-0 mb-5 px-0 mx-0">
                         <ListGroup className="pt-4">
                           {classData.length > 0 ? (

@@ -127,6 +127,7 @@ export async function createProfile(profile: {
   commute: string;
   clubs: string;
   languages: string;
+  previous: string;
 }) {
   let year: Year = 'Freshman';
   if (profile.year === 'freshman') {
@@ -163,6 +164,7 @@ export async function createProfile(profile: {
       commute,
       clubs: profile.clubs,
       languages: profile.languages,
+      previous: profile.previous,
     },
   });
 
@@ -189,8 +191,11 @@ export async function editProfile(profile: Profile) {
       commute: profile.commute,
       clubs: profile.clubs,
       languages: profile.languages,
+      previous: profile.previous,
     },
   });
+
+  redirect('/profile');
 }
 
 export async function tryMatch(matchedId: number) {

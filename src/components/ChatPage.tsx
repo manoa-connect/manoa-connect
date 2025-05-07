@@ -3,7 +3,7 @@
 import '@/app/chatcard.css';
 
 import { useEffect, useRef, useState } from 'react';
-import { ListGroup, Row, Col } from 'react-bootstrap';
+import { ListGroup, Row, Col, Container } from 'react-bootstrap';
 import { Chat, Profile } from '@prisma/client';
 import ChatItem from './ChatItem';
 import AddChatForm from './AddChatForm';
@@ -58,9 +58,12 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
   }, [filteredChats, sessionUserEmail]);
 
   return (
-    <main className="p-4">
+    <Container fluid>
       <Row>
-        <Col style={{ width: '200px', flex: '0 0 auto', borderRight: '1px solid #ccc' }}>
+        <Col
+          style={{ width: '200px', height: '75vh', flex: '0 0 auto', borderRight: '1px solid #ccc' }}
+          className="py-3"
+        >
           <h5 className="text-body">
             Friends (
             {matchs.length}
@@ -92,7 +95,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
             })}
           </ListGroup>
         </Col>
-        <Col>
+        <Col id="bg-image">
           <h5 className="text-body">
             {`${selectedMatch?.firstName} ${selectedMatch?.lastName}`}
           </h5>
@@ -109,7 +112,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
           {selectedMatch && <AddChatForm profile={selectedMatch} onNewChat={fetchChats} />}
         </Col>
       </Row>
-    </main>
+    </Container>
   );
 };
 

@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Profile } from '@prisma/client';
+import { Profile, Class } from '@prisma/client';
 import MatchCard from './MatchCard';
 import MatchCardBack from './MatchCardBack';
 
-const MatchCardFlip = ({ profile }: { profile: Profile }) => {
+type ProfileWithClasses = Profile & { classes: Class[] };
+
+const MatchCardFlip = ({ profile }: { profile: ProfileWithClasses }) => {
   const [showFront, setShowFront] = useState(true);
 
   return (
@@ -13,7 +15,7 @@ const MatchCardFlip = ({ profile }: { profile: Profile }) => {
       {showFront ? (
         <MatchCard profile={profile} onFlip={() => setShowFront(false)} />
       ) : (
-        <MatchCardBack profile={{ ...profile, classes: [] }} onFlipBack={() => setShowFront(true)} />
+        <MatchCardBack profile={profile} onFlipBack={() => setShowFront(true)} />
       )}
     </div>
   );

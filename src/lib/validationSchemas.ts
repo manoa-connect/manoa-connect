@@ -33,6 +33,7 @@ export const createProfileSchema = Yup.object({
   commute: Yup.string().oneOf(['Dorm', 'Commuter', 'Other']).required(),
   clubs: Yup.string().required(),
   languages: Yup.string().required(),
+  previous: Yup.string().required(),
 });
 
 export const EditProfileSchema = Yup.object({
@@ -48,6 +49,7 @@ export const EditProfileSchema = Yup.object({
   commute: Yup.string().oneOf(['Dorm', 'Commuter', 'Other']).required(),
   clubs: Yup.string().required(),
   languages: Yup.string().required(),
+  previous: Yup.string().required(),
 });
 
 export const createClassSchema = Yup.object({

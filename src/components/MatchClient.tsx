@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { $Enums } from '@prisma/client';
+import { $Enums, Class } from '@prisma/client';
 import * as Icon from 'react-bootstrap-icons';
 import MatchCardFlip from './MatchCardFlip';
 import MatchButton from './MatchButton';
@@ -20,11 +20,16 @@ type Profile = {
   commute: $Enums.Commute;
   clubs: string;
   languages: string;
+  previous: string;
 };
 
-const MatchClient = ({ otherProfiles }: { otherProfiles: Profile[] }) => {
+type ProfileWithClasses = Profile & {
+  classes: Class[];
+};
+
+const MatchClient = ({ otherProfiles }: { otherProfiles: ProfileWithClasses[] }) => {
   const [shownProfiles, setShownProfiles] = useState<number[]>([]);
-  const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
+  const [currentProfile, setCurrentProfile] = useState<ProfileWithClasses | null>(null);
 
   useEffect(() => {
     const stored = sessionStorage.getItem('shownProfiles');

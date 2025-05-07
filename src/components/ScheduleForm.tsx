@@ -121,14 +121,20 @@ const ScheduleForm = ({ classData }: { classData: Class[] }) => {
           </Col>
 
           <Col xs={5} className="bg-white pb-5 mt-5 mb-5 my-auto px-4 mx-3">
-            <Navbar className="pt-5 justify-content-center align-middle text-center">
+            <Row className="d-flex pt-4 pb-0">
+              <a className="link-success hover-line text-end" href="/profile">
+                <Icon.ArrowLeft className="link-success me-2" />
+                Back to Profile
+              </a>
+            </Row>
+            <Navbar className="pt-0 pb-0 justify-content-center align-middle text-center">
               <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto" />
               <Navbar.Text className="text-center text-black text-heavitas h1 mt-4 ms-2">Add Class</Navbar.Text>
             </Navbar>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Row className="mx-2">
                 <Col>
-                  <Form.Group className="form-group pe-3 py-3">
+                  <Form.Group className="form-group pe-3 pt-1 pb-3">
                     <Form.Label>Class Name</Form.Label>
                     <input
                       type="text"

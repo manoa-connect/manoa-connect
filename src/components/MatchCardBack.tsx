@@ -18,7 +18,7 @@ type ProfileWithClasses = Profile & {
 };
 
 const MatchCardBack = ({ profile, onFlipBack }: { profile: ProfileWithClasses; onFlipBack: () => void; }) => {
-  const classString = profile.classes?.map((cls) => cls.name).join(', ') || 'No classes available';
+  const classString = profile.classes.map((cls) => cls.name).join(', ') || 'No classes available';
 
   return (
     <Container
@@ -119,13 +119,13 @@ const MatchCardBack = ({ profile, onFlipBack }: { profile: ProfileWithClasses; o
                 <br />
               </Row>
               <Row className="d-flex justify-content-center">
-                <Col className="ms-5">
+                <Col className="ms-4">
                   <strong>
                     Previous
                   </strong>
-                  <ClassList classListString={profile.clubs} />
+                  <ClassList classListString={profile.previous} />
                 </Col>
-                <Col className="me-5">
+                <Col className="me-4">
                   <strong>
                     Current
                   </strong>

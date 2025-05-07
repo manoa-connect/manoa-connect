@@ -141,30 +141,50 @@ const UserProfileForm = ({ profile }: { profile: Profile }) => {
                     </Row>
 
                     <Row className="py-3">
-                      <Form.Group>
-                        <Form.Label><strong className="text-manoa-green">Clubs</strong></Form.Label>
-                        <textarea
-                          rows={1}
-                          {...register('clubs')}
-                          defaultValue={profile.clubs}
-                          required
-                          className={`form-control ${errors.clubs ? 'is-invalid' : ''}`}
-                        />
-                        <div className="invalid-feedback">{errors.clubs?.message}</div>
-                      </Form.Group>
-                    </Row>
+                      <Col>
+                        <Row className="py-3">
+                          <Form.Group>
+                            <Form.Label><strong className="text-manoa-green">Clubs</strong></Form.Label>
+                            <textarea
+                              rows={1}
+                              {...register('clubs')}
+                              defaultValue={profile.clubs}
+                              required
+                              className={`form-control ${errors.clubs ? 'is-invalid' : ''}`}
+                            />
+                            <div className="invalid-feedback">{errors.clubs?.message}</div>
+                          </Form.Group>
+                        </Row>
 
-                    <Row>
-                      <Form.Group>
-                        <Form.Label>Languages</Form.Label>
-                        <textarea
-                          {...register('languages')}
-                          defaultValue={profile.languages}
-                          required
-                          className={`form-control ${errors.languages ? 'is-invalid' : ''}`}
-                        />
-                        <div className="invalid-feedback">{errors.languages?.message}</div>
-                      </Form.Group>
+                        <Row className="pt-2">
+                          <Form.Group>
+                            <Form.Label><strong>Languages</strong></Form.Label>
+                            <textarea
+                              rows={1}
+                              {...register('languages')}
+                              defaultValue={profile.languages}
+                              required
+                              className={`form-control ${errors.languages ? 'is-invalid' : ''}`}
+                            />
+                            <div className="invalid-feedback">{errors.languages?.message}</div>
+                          </Form.Group>
+                        </Row>
+                      </Col>
+                      <Col>
+                        <Row className="py-3">
+                          <Form.Group>
+                            <Form.Label><strong>Previous Classes</strong></Form.Label>
+                            <textarea
+                              rows={5}
+                              {...register('previous')}
+                              defaultValue={profile.previous}
+                              required
+                              className={`form-control ${errors.previous ? 'is-invalid' : ''}`}
+                            />
+                            <div className="invalid-feedback">{errors.previous?.message}</div>
+                          </Form.Group>
+                        </Row>
+                      </Col>
                     </Row>
                   </Col>
 

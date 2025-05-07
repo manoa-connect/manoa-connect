@@ -23,6 +23,7 @@ const onSubmit = async (data: {
   commute: string;
   clubs: string;
   languages: string;
+  previous: string;
 }) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   await createProfile(data);
@@ -100,7 +101,7 @@ const CreateProfileForm: React.FC = () => {
                 </Col>
               </Row>
 
-              <Form.Group className="form-group pt-0 p-3">
+              <Form.Group className="form-group pt-0 px-3">
                 <Form.Label>Likes</Form.Label>
                 <input
                   type="textarea"
@@ -154,6 +155,16 @@ const CreateProfileForm: React.FC = () => {
                   className={`form-control ${errors.languages ? 'is-invalid' : ''}`}
                 />
                 <div className="invalid-feedback">{errors.languages?.message}</div>
+              </Form.Group>
+
+              <Form.Group className="form-group pt-0 p-3">
+                <Form.Label>Previous Classes</Form.Label>
+                <input
+                  type="textarea"
+                  {...register('previous')}
+                  className={`form-control ${errors.previous ? 'is-invalid' : ''}`}
+                />
+                <div className="invalid-feedback">{errors.previous?.message}</div>
               </Form.Group>
 
               <input type="hidden" {...register('firstName')} value={currentFirstName} />

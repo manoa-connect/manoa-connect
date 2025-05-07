@@ -34,9 +34,10 @@ const NavBar: React.FC = () => {
                 <Nav.Link id="schedule-nav" href="/editSchedule" key="schedule" active={pathName === '/editSchedule'}>
                   Schedule
                 </Nav.Link>,
+                /*
                 <Nav.Link id="map-nav" href="/map" key="map" active={pathName === '/map'}>
                   Map
-                </Nav.Link>,
+                </Nav.Link>, */
                 <Nav.Link id="chat-nav" href="/chat" key="chat" active={pathName === '/chat'}>
                   Chat
                 </Nav.Link>,
