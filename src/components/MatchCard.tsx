@@ -85,7 +85,7 @@ const MatchCard = ({ profile, onFlip }: { profile: Profile; onFlip: () => void; 
                 src={url}
                 key={url}
                 className="rounded-circle mt-4 mx-auto justify-content-start"
-                style={{ width: '225px', height: 'auto', objectFit: 'cover', maxHeight: '225px' }}
+                style={{ width: '225px', height: '225px', objectFit: 'cover', maxHeight: '225px' }}
               />
             ))
             ) : (

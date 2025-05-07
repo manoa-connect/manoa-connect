@@ -65,7 +65,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
           className="py-3"
         >
           <h5 className="text-body">
-            Friends (
+            <span className="text-heavitas">Friends</span> (
             {matchs.length}
             )
           </h5>
@@ -79,7 +79,7 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
                   key={match.id}
                   active={selectedMatch?.id === match.id}
                   onClick={() => setSelectedMatch(match)}
-                  className={`friend-item ${selectedMatch?.id === match.id ? 'active-friend' : ''}`}
+                  className={`friend-item ${selectedMatch?.id === match.id ? 'active-friend' : ''} border-success`}
                 >
                   {`${match.firstName} ${match.lastName}`}
                   {unreadCount > 0 && (
@@ -95,21 +95,23 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
             })}
           </ListGroup>
         </Col>
-        <Col id="bg-image">
-          <h5 className="text-body">
-            {`${selectedMatch?.firstName} ${selectedMatch?.lastName}`}
-          </h5>
-          <ListGroup variant="flush" style={{ maxHeight: '280px', overflowY: 'auto' }} ref={chatListRef}>
-            {filteredChats.map((chat, index) => (
-              <ChatItem
-                key={chat.id}
-                chat={chat}
-                prevChat={index > 0 ? filteredChats[index - 1] : null}
-                currentUserEmail={sessionUserEmail}
-              />
-            ))}
-          </ListGroup>
-          {selectedMatch && <AddChatForm profile={selectedMatch} onNewChat={fetchChats} />}
+        <Col id="chat-bg-image">
+          <Col className="px-3">
+            <h5 className="mt-5 text-heavitas text-light">
+              {`${selectedMatch?.firstName} ${selectedMatch?.lastName}`}
+            </h5>
+            <ListGroup variant="flush" style={{ maxHeight: '280px', overflowY: 'auto' }} ref={chatListRef}>
+              {filteredChats.map((chat, index) => (
+                <ChatItem
+                  key={chat.id}
+                  chat={chat}
+                  prevChat={index > 0 ? filteredChats[index - 1] : null}
+                  currentUserEmail={sessionUserEmail}
+                />
+              ))}
+            </ListGroup>
+            {selectedMatch && <AddChatForm profile={selectedMatch} onNewChat={fetchChats} />}
+          </Col>
         </Col>
       </Row>
     </Container>

@@ -22,6 +22,7 @@ const ChatItem = ({ chat, prevChat, currentUserEmail }:
     <ListGroup>
       <ListGroup.Item
         className={`${isOwnMessage ? 'text-end' : 'text-start'} border-0`}
+        style={{ backgroundColor: 'transparent' }}
       >
         {isDifferentDate ? (
           <div className="text-center">
@@ -40,12 +41,12 @@ const ChatItem = ({ chat, prevChat, currentUserEmail }:
         {isOwnMessage ? (
           <div className="user-message">
             {chat.isRead ? <CheckAll /> : <EyeSlash />}
-            {new Date(chat.createdAt).toLocaleTimeString('en-US', {
+            <span className="ms-1">{new Date(chat.createdAt).toLocaleTimeString('en-US', {
               hour: '2-digit',
               minute: '2-digit',
-            })}
+            })}</span>
           &nbsp;
-            <p className="user-chat-bubble">
+            <p className="user-chat-bubble ms-2">
               {chat.chat}
             </p>
           </div>

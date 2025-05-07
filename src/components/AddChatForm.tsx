@@ -47,7 +47,7 @@ const AddChatForm = ({ profile, onNewChat }: { profile: Profile; onNewChat: () =
   }
 
   return (
-    <Container>
+    <Container style={{ height: '25vh', marginTop: '50vh' }}>
       <Row className="justify-content-center">
         <Card>
           <Card.Body className="chat-form-body">
@@ -60,7 +60,7 @@ const AddChatForm = ({ profile, onNewChat }: { profile: Profile; onNewChat: () =
                   placeholder="Enter a message"
                 />
                 <div className="invalid-feedback">{errors.chat?.message}</div>
-                <Button type="submit" variant="primary">
+                <Button type="submit" className="ms-3" variant="success">
                   <ArrowUpCircle />
                 </Button>
               </Form.Group>

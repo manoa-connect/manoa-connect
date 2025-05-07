@@ -482,10 +482,10 @@ const UserHome = ({ profile, chatList, classData }:
           </Container>
         </Container>
       ) : (
-        <p>
-          No profile found. Create one
-          <a href="/createProfile">here.</a>
-        </p>
+          <p className="text-center mx-5 py-5">
+            No profile found. Create one
+            <a href="/createProfile">here.</a>
+          </p>
       )}
 
       <Modal show={photoShow} onHide={handleClose} centered size="lg">
