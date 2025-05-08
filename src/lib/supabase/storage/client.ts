@@ -65,7 +65,7 @@ export async function loadImg(bucket: string, folder?: string) {
     console.error(error);
   }
 
-  const images = data?.map((file: { name: any; }) => {
+  const images = data?.map((file: { name: string; }) => {
     console.log(file.name);
     return `${process.env.NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/${bucket}/${path}${file.name}`;
   });

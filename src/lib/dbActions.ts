@@ -8,19 +8,6 @@ import authOptions from '@/lib/authOptions';
 import { prisma } from './prisma';
 
 /**
- * Deletes an existing stuff from the database.
- * @param id, the id of the stuff to delete.
- */
-export async function deleteStuff(id: number) {
-  // console.log(`deleteStuff id: ${id}`);
-  await prisma.stuff.delete({
-    where: { id },
-  });
-  // After deleting, redirect to the list page
-  redirect('/list');
-}
-
-/**
  * Creates a new user in the database.
  * @param credentials, an object with the following properties: email, password.
  */

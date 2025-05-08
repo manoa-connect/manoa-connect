@@ -14,7 +14,7 @@ const HeroSec = () => {
     <Container id="hero" fluid>
       <Row className="align-items-center justify-content-center v-middle mx-3">
         <Col className="mx-5">
-          <Image src={cover.src} width="100%" className="ms-5 mb-4" />
+          <Image src={cover.src} width="100%" className="ms-5 mb-4" alt=''/>
         </Col>
         <Col className="justify-content-center align-middle text-center me-5">
           <Image src={text_logo.src} width="650px" alt="Manoa Connect" className="invert mt-5" />
