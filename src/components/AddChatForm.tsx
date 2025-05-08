@@ -10,7 +10,7 @@ import { addChat } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddChatSchema } from '@/lib/validationSchemas';
 import { Profile } from '@prisma/client';
-import { ArrowUpCircle } from 'react-bootstrap-icons';
+import { SendFill } from 'react-bootstrap-icons';
 
 const AddChatForm = ({ profile, onNewChat }: { profile: Profile; onNewChat: () => void }) => {
   const { data: session, status } = useSession();
@@ -60,8 +60,8 @@ const AddChatForm = ({ profile, onNewChat }: { profile: Profile; onNewChat: () =
                   placeholder="Enter a message"
                 />
                 <div className="invalid-feedback">{errors.chat?.message}</div>
-                <Button type="submit" className="ms-3" variant="success">
-                  <ArrowUpCircle />
+                <Button type="submit" className="ms-3" variant="outline-success">
+                  <SendFill />
                 </Button>
               </Form.Group>
               <input type="hidden" {...register('contactId')} value={profile.id} />

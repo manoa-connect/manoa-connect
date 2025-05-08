@@ -65,9 +65,9 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
           className="py-3"
         >
           <h5 className="text-body">
-            <span className="text-heavitas">Friends</span> (
+            <span className="text-heavitas">Friends</span>
+            {' | '}
             {matchs.length}
-            )
           </h5>
           <ListGroup style={{ maxHeight: '300px', overflowY: 'auto' }}>
             {matchs.map((match) => {
@@ -100,7 +100,12 @@ const ChatCard = ({ profile, chats, matchs }: { profile: Profile, chats: Chat[],
             <h5 className="mt-5 text-heavitas text-light">
               {`${selectedMatch?.firstName} ${selectedMatch?.lastName}`}
             </h5>
-            <ListGroup variant="flush" style={{ maxHeight: '500px', overflowY: 'auto' }} ref={chatListRef}>
+            <ListGroup
+              variant="flush"
+              style={{ maxHeight: '500px', overflowY: 'auto' }}
+              ref={chatListRef}
+              className="hover-line"
+            >
               {filteredChats.map((chat, index) => (
                 <ChatItem
                   key={chat.id}

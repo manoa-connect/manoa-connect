@@ -41,10 +41,12 @@ const ChatItem = ({ chat, prevChat, currentUserEmail }:
         {isOwnMessage ? (
           <div className="user-message">
             {chat.isRead ? <CheckAll /> : <EyeSlash />}
-            <span className="ms-1">{new Date(chat.createdAt).toLocaleTimeString('en-US', {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}</span>
+            <span className="ms-1">
+              {new Date(chat.createdAt).toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </span>
           &nbsp;
             <p className="user-chat-bubble ms-2">
               {chat.chat}
