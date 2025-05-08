@@ -12,7 +12,7 @@
     },
     {
       "name": "next-auth.callback-url",
-      "value": "http%3A%2F%2Flocalhost%3A3000%2Flist",
+      "value": "http%3A%2F%2Flocalhost%3A3000%2Fprofile",
       "domain": "localhost",
       "path": "/",
       "expires": -1,
@@ -22,10 +22,10 @@
     },
     {
       "name": "next-auth.session-token",
-      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..EwiryrOi14mUF6NT.qKKUjAKfRRKC_sKDi3o6Q-bAoEsOqTkiJqvjRhzOhnzPAqnoaG-uXb5gDNCU52wnLl4ZK1r2M_z9jgEsAoXONEAXu2Sq3Qy3b9_MSTTDAbmMct7DMSurhBCQ0fgiCFXrO_fKEDFilou9CxCsWVFSRxrDCzDVo3bDjDvVqOkTfhH1JyGZh3v8Kamnnd39.1fFl6lEGR9GYNzXKhFjXZw",
+      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..UywmQfmsGHczOTzx.BcXse5B9uQRQZbYstLFYxbKKwOG2WLbkIkPJJx-5RtDSCj8I6KY1zF24KoM7hP27VEyeYW76GfYus2JZcNv1j4AkFwqxHmdyjAO45liCNkZrNOIlqgL4LY_LAYlPYPBXt4e88S-erG7W8s5QfaN7sQq_CZAGOAJdQuIZfy9YSXe532BMWUhq6ZRT_NVjJ00vv69yP0jWclRVg53LyK6ynyf_3JLZrmL6KD9QBJ0UKnKp.8br-oil8HlcOe9zQTI3Qtg",
       "domain": "localhost",
       "path": "/",
-      "expires": 1733426291.195629,
+      "expires": 1749328432.33853,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
@@ -37,7 +37,7 @@
       "localStorage": [
         {
           "name": "nextauth.message",
-          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1730834291}"
+          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1746736432}"
         }
       ]
     }

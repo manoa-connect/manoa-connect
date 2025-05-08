@@ -2,7 +2,7 @@
 
 import { signIn } from 'next-auth/react';
 import { Button, Card, Col, Container, Form, Row, Image, Navbar } from 'react-bootstrap';
-import logo from "../../../../public/assets/manoa-connect_logo.svg";
+import logo from '../../../../public/assets/manoa-connect_logo.svg';
 
 /** The sign in page. */
 const SignIn = () => {
@@ -30,9 +30,9 @@ const SignIn = () => {
       <Container id="bg-image" fluid>
         <Container className="py-5">
           <Row className="justify-content-center">
-            <Col xs={5} className="bg-white pb-5 mb-5 my-auto">
+            <Col xs={5} className="bg-white pb-5 mb-5 my-auto shadow">
               <Navbar className="pt-5 justify-content-center align-middle text-center">
-                <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto"/>
+                <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto" />
                 <Navbar.Text className="text-center text-black text-heavitas h1 mt-4 ms-2">Login</Navbar.Text>
               </Navbar>
               <Form method="post" onSubmit={handleSubmit}>
@@ -46,9 +46,9 @@ const SignIn = () => {
                 </Form.Group>
                 <Container>
                   <Row className="justify-content-center pt-2 px-3">
-                      <Button type="submit" className="mt-3 btn-success">
-                          Login
-                      </Button>
+                    <Button type="submit" className="mt-3 btn-success">
+                      Login
+                    </Button>
                   </Row>
                 </Container>
               </Form>

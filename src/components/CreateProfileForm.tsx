@@ -9,11 +9,11 @@ import { redirect } from 'next/navigation';
 import { createProfile } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { createProfileSchema } from '@/lib/validationSchemas';
-import logo from "../../public/assets/manoa-connect_logo.svg";
+import logo from '../../public/assets/manoa-connect_logo.svg';
 
-const onSubmit = async (data: { 
-  firstName: string; 
-  lastName: string; 
+const onSubmit = async (data: {
+  firstName: string;
+  lastName: string;
   email: string;
   description: string;
   year: string;
@@ -21,8 +21,9 @@ const onSubmit = async (data: {
   likes: string;
   mbti: string;
   commute: string;
-  current: string;
-  previous: string; 
+  clubs: string;
+  languages: string;
+  previous: string;
 }) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   await createProfile(data);
@@ -58,7 +59,7 @@ const CreateProfileForm: React.FC = () => {
         <Row className="justify-content-center pt-3">
           <Col xs={5} className="bg-white pb-5 mb-5 my-auto px-4">
             <Navbar className="pt-5 justify-content-center align-middle text-center">
-              <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto"/>
+              <Image src={logo.src} width="50px" alt="Manoa Connect" className="my-auto" />
               <Navbar.Text className="text-center text-black text-heavitas h1 mt-4 ms-2">Create Profile</Navbar.Text>
             </Navbar>
             <Form onSubmit={handleSubmit(onSubmit)}>
@@ -69,7 +70,6 @@ const CreateProfileForm: React.FC = () => {
                   {...register('description')}
                   className={`form-control ${errors.description ? 'is-invalid' : ''}`}
                 />
-                
                 <div className="invalid-feedback">{errors.description?.message}</div>
               </Form.Group>
 
@@ -101,7 +101,7 @@ const CreateProfileForm: React.FC = () => {
                 </Col>
               </Row>
 
-              <Form.Group className="form-group pt-0 p-3">
+              <Form.Group className="form-group pt-0 px-3">
                 <Form.Label>Likes</Form.Label>
                 <input
                   type="textarea"
@@ -138,13 +138,23 @@ const CreateProfileForm: React.FC = () => {
               </Row>
 
               <Form.Group className="form-group pt-0 p-3">
-                <Form.Label>Current Classes</Form.Label>
+                <Form.Label>Current Clubs</Form.Label>
                 <input
                   type="textarea"
-                  {...register('current')}
-                  className={`form-control ${errors.current ? 'is-invalid' : ''}`}
+                  {...register('clubs')}
+                  className={`form-control ${errors.clubs ? 'is-invalid' : ''}`}
                 />
-                <div className="invalid-feedback">{errors.current?.message}</div>
+                <div className="invalid-feedback">{errors.clubs?.message}</div>
+              </Form.Group>
+
+              <Form.Group className="form-group pt-0 p-3">
+                <Form.Label>Languages</Form.Label>
+                <input
+                  type="textarea"
+                  {...register('languages')}
+                  className={`form-control ${errors.languages ? 'is-invalid' : ''}`}
+                />
+                <div className="invalid-feedback">{errors.languages?.message}</div>
               </Form.Group>
 
               <Form.Group className="form-group pt-0 p-3">
@@ -163,8 +173,11 @@ const CreateProfileForm: React.FC = () => {
 
               <Row>
                 <Col className="justify-content-end d-flex">
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,
+                  jsx-a11y/click-events-have-key-events,
+                  jsx-a11y/no-static-element-interactions */}
                   <a type="button" onClick={() => reset()} className="link-danger text-end pe-2 pt-3 hover-line">
-                        Reset Form
+                    Reset Form
                   </a>
                 </Col>
               </Row>

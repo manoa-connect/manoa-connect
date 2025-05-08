@@ -1,73 +1,21 @@
 'use server';
 
-import { Stuff, Condition, Year, Commute, Profile } from '@prisma/client';
+import { Year, Commute, Profile, Location, Days } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
 import { prisma } from './prisma';
-
-/**
- * Adds a new stuff to the database.
- * @param stuff, an object with the following properties: name, quantity, owner, condition.
- */
-export async function addStuff(stuff: { name: string; quantity: number; owner: string; condition: string }) {
-  // console.log(`addStuff data: ${JSON.stringify(stuff, null, 2)}`);
-  let condition: Condition = 'good';
-  if (stuff.condition === 'poor') {
-    condition = 'poor';
-  } else if (stuff.condition === 'excellent') {
-    condition = 'excellent';
-  } else {
-    condition = 'fair';
-  }
-  await prisma.stuff.create({
-    data: {
-      name: stuff.name,
-      quantity: stuff.quantity,
-      owner: stuff.owner,
-      condition,
-    },
-  });
-  // After adding, redirect to the list page
-  redirect('/list');
-}
-
-/**
- * Edits an existing stuff in the database.
- * @param stuff, an object with the following properties: id, name, quantity, owner, condition.
- */
-export async function editStuff(stuff: Stuff) {
-  // console.log(`editStuff data: ${JSON.stringify(stuff, null, 2)}`);
-  await prisma.stuff.update({
-    where: { id: stuff.id },
-    data: {
-      name: stuff.name,
-      quantity: stuff.quantity,
-      owner: stuff.owner,
-      condition: stuff.condition,
-    },
-  });
-  // After updating, redirect to the list page
-  redirect('/list');
-}
-
-/**
- * Deletes an existing stuff from the database.
- * @param id, the id of the stuff to delete.
- */
-export async function deleteStuff(id: number) {
-  // console.log(`deleteStuff id: ${id}`);
-  await prisma.stuff.delete({
-    where: { id },
-  });
-  // After deleting, redirect to the list page
-  redirect('/list');
-}
 
 /**
  * Creates a new user in the database.
  * @param credentials, an object with the following properties: email, password.
  */
-export async function createUser(credentials: { firstName: string; lastName: string; email: string; password: string }) {
+export async function createUser(credentials: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
   await prisma.user.create({
@@ -109,9 +57,9 @@ export async function addChat(chat: { chat: string; contactId: number, owner: st
  * Adds a new Profile to the database.
  * @param profile, an object with the following properties.
  */
-export async function createProfile(profile: { 
-  firstName: string; 
-  lastName: string; 
+export async function createProfile(profile: {
+  firstName: string;
+  lastName: string;
   email: string;
   description: string;
   year: string;
@@ -119,26 +67,27 @@ export async function createProfile(profile: {
   likes: string;
   mbti: string;
   commute: string;
-  current: string;
-  previous: string; 
+  clubs: string;
+  languages: string;
+  previous: string;
 }) {
   let year: Year = 'Freshman';
-  if (profile.year === 'Freshman') {
+  if (profile.year === 'freshman') {
     year = 'Freshman';
-  } else if (profile.year === 'Sophomore') {
+  } else if (profile.year === 'sophomore') {
     year = 'Sophomore';
-  } else if (profile.year === 'Junior') {
+  } else if (profile.year === 'junior') {
     year = 'Junior';
-  } else if (profile.year === 'Senior') {
+  } else if (profile.year === 'senior') {
     year = 'Senior';
   } else {
     year = 'Graduate';
   }
 
   let commute: Commute = 'Dorm';
-  if (profile.commute === 'Dorm') {
+  if (profile.commute === 'dorm') {
     commute = 'Dorm';
-  } else if (profile.commute === 'Commuter') {
+  } else if (profile.commute === 'commuter') {
     commute = 'Commuter';
   } else {
     commute = 'Other';
@@ -155,8 +104,9 @@ export async function createProfile(profile: {
       likes: profile.likes,
       mbti: profile.mbti,
       commute,
-      current: profile.current,
-      previous: profile.previous, 
+      clubs: profile.clubs,
+      languages: profile.languages,
+      previous: profile.previous,
     },
   });
 
@@ -181,10 +131,110 @@ export async function editProfile(profile: Profile) {
       likes: profile.likes,
       mbti: profile.mbti,
       commute: profile.commute,
-      current: profile.current,
+      clubs: profile.clubs,
+      languages: profile.languages,
       previous: profile.previous,
     },
   });
 
   redirect('/profile');
+}
+
+export async function tryMatch(matchedId: number) {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.email) {
+    throw new Error('Not authenticated');
+  }
+
+  const currentUser = await prisma.profile.findUnique({
+    where: { email: session.user.email },
+    include: { accepts: true, acceptedBy: true, matches: true },
+  });
+
+  if (!currentUser) {
+    throw new Error('Current user profile not found');
+  }
+
+  const otherUser = await prisma.profile.findUnique({
+    where: { id: matchedId },
+    include: { accepts: true },
+  });
+
+  if (!otherUser) {
+    throw new Error('Other user profile not found');
+  }
+
+  const theyLikedMe = otherUser.accepts.some(p => p.id === currentUser.id);
+
+  if (theyLikedMe) {
+    // Mutual match → move both to matches, remove from accepts
+    await prisma.profile.update({
+      where: { id: currentUser.id },
+      data: {
+        accepts: { disconnect: { id: matchedId } },
+        matches: { connect: { id: matchedId } },
+      },
+    });
+
+    await prisma.profile.update({
+      where: { id: matchedId },
+      data: {
+        accepts: { disconnect: { id: currentUser.id } },
+        matches: { connect: { id: currentUser.id } },
+      },
+    });
+
+    return { matched: true };
+  }
+  // One-sided like
+  await prisma.profile.update({
+    where: { id: currentUser.id },
+    data: {
+      accepts: { connect: { id: matchedId } },
+    },
+  });
+
+  return { matched: false };
+}
+
+/**
+ * Adds a new class to the database.
+ * @param class, an object with the following properties: name, startTime, endTime, location.
+ */
+export async function addClass(classData: {
+  name: string;
+  startTime: string;
+  endTime: string;
+  location: string;
+  days: string[];
+  email: string }) {
+  // console.log(`addClass data: ${JSON.stringify(class, null, 2)}`);
+  const location = classData.location as Location;
+  const days = classData.days.map(day => day as Days);
+  await prisma.class.create({
+    data: {
+      name: classData.name,
+      startTime: classData.startTime,
+      endTime: classData.endTime,
+      location,
+      days,
+      email: classData.email,
+    },
+  });
+  // After adding, redirect/reload the page
+  redirect('/editSchedule');
+}
+
+/**
+ * Deletes an existing class from the database.
+ * @param id, the id of the class to delete.
+ */
+export async function deleteClass(id: number) {
+  // console.log(`deleteClass id: ${id}`);
+  await prisma.class.delete({
+    where: { id },
+  });
+  // After adding, redirect/reload the page
+  redirect('/editSchedule');
 }

@@ -1,40 +1,53 @@
-'use client'; 
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/require-default-props */
+
+'use client';
 
 import { useState } from 'react';
+import { Button } from 'react-bootstrap';
 
 interface ClassListProps {
-  label: string;
+  // label: string;
   classListString?: string | null;
+  previewCount?: number;
 }
 
-const ClassList = ({ label, classListString }: ClassListProps) => {
+const ClassList = ({ classListString, previewCount = 3 }: ClassListProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const classList = classListString
     ? classListString.split(',').map((item) => item.trim())
     : [];
 
+  const visibleList = isExpanded ? classList : classList.slice(0, previewCount);
+  const hasMore = classList.length > previewCount;
+
   return (
     <div className="mb-4">
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="px-4 py-2 bg-blue-500 text-white rounded"
-      >
-        {isExpanded ? `Hide ${label}` : `Show ${label}`}
-      </button>
-
-      {isExpanded && (
+      {classList.length > 0 ? (
         <>
-          {classList.length > 0 ? (
-            <ul className="list-disc pl-5 mt-3 text-start">
-              {classList.map((className, index) => (
-                <li key={index}>{className}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-500 mt-2">No {label.toLowerCase()} listed.</p>
+          <ul className="list-unstyled mt-2 mb-2 text-center">
+            {visibleList.map((className, index) => (
+              <li key={index}>
+                {className}
+              </li>
+            ))}
+          </ul>
+
+          {hasMore && (
+            <Button
+              variant="outline-success"
+              size="sm"
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="mb-1"
+            >
+              {isExpanded ? 'Show Less' : `+${classList.length - previewCount} more`}
+            </Button>
           )}
         </>
+      ) : (
+        <></>
       )}
     </div>
   );

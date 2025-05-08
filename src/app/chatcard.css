@@ -4,6 +4,13 @@ html,
     font-weight: bold !important;
 }
 
+#chat-bg-image {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url(../../public/img/hero-img.jpg);
+    background-size: cover;
+    background-position-x: 60%;
+    background-position-y: 30%;
+}
+
 .list-group-item {
     padding: 0.2rem !important;
 }
@@ -60,9 +67,9 @@ html,
     background-color: #C7EDBA !important;
     font-size: 1.0rem;
     color: #212529;
-    padding: 0.1rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding: 0.3rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
     border-radius: 0.5rem;
     max-width: 70%;
     word-break: break-word;
@@ -76,9 +83,9 @@ html,
     background-color: #D4F7DC !important;
     font-size: 1.0rem;
     color: #212529;
-    padding: 0.1rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding: 0.3rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
     border-radius: 0.5rem;
     max-width: 70%;
     word-break: break-word;

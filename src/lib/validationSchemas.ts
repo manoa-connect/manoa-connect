@@ -1,20 +1,5 @@
 import * as Yup from 'yup';
 
-export const AddStuffSchema = Yup.object({
-  name: Yup.string().required(),
-  quantity: Yup.number().positive().required(),
-  condition: Yup.string().oneOf(['excellent', 'good', 'fair', 'poor']).required(),
-  owner: Yup.string().required(),
-});
-
-export const EditStuffSchema = Yup.object({
-  id: Yup.number().required(),
-  name: Yup.string().required(),
-  quantity: Yup.number().positive().required(),
-  condition: Yup.string().oneOf(['excellent', 'good', 'fair', 'poor']).required(),
-  owner: Yup.string().required(),
-});
-
 export const AddChatSchema = Yup.object({
   chat: Yup.string().required(),
   contactId: Yup.number().required(),
@@ -31,7 +16,8 @@ export const createProfileSchema = Yup.object({
   likes: Yup.string().required(),
   mbti: Yup.string().required(),
   commute: Yup.string().oneOf(['Dorm', 'Commuter', 'Other']).required(),
-  current: Yup.string().required(),
+  clubs: Yup.string().required(),
+  languages: Yup.string().required(),
   previous: Yup.string().required(),
 });
 
@@ -46,6 +32,72 @@ export const EditProfileSchema = Yup.object({
   likes: Yup.string().required(),
   mbti: Yup.string().required(),
   commute: Yup.string().oneOf(['Dorm', 'Commuter', 'Other']).required(),
-  current: Yup.string().required(),
+  clubs: Yup.string().required(),
+  languages: Yup.string().required(),
   previous: Yup.string().required(),
+});
+
+export const createClassSchema = Yup.object({
+  name: Yup.string().required(),
+  startTime: Yup.string().required(),
+  endTime: Yup.string().required(),
+  location: Yup.string()
+    .oneOf([
+      'Other',
+      'ArchitectureSchool',
+      'AgriculturalScience',
+      'ArtBuilding',
+      'BachmanHall',
+      'BilgerHall',
+      'BiomedicalSciences',
+      'BurnsHall',
+      'CenterforKoreanStudies',
+      'CrawfordHall',
+      'DanceBuilding',
+      'DeanHall',
+      'EdmondsonHall',
+      'FrearHall',
+      'GartleyHall',
+      'GeorgeHall',
+      'GilmoreHall',
+      'HawaiiHall',
+      'HemenwayHall',
+      'HenkeHall',
+      'HolmesHall',
+      'InformationTechnologyCenter',
+      'JeffersonHall',
+      'JohnsonHall',
+      'JohnABurnsSchoolofMedicine',
+      'KamakakuokalaniCenterforHawaiianStudies',
+      'KellerHall',
+      'KennedyTheatre',
+      'KraussHall',
+      'KuykendallHall',
+      'LawSchool',
+      'LincolnHall',
+      'MarineSciencesBuilding',
+      'MillerHall',
+      'MooreHall',
+      'MusicBuildingComplex',
+      'PacificBiosciencesResearchCenter',
+      'PacificOceanScienceandTechnology',
+      'PhysicalPlantBuilding',
+      'PhysicalScienceBuilding',
+      'PopeLaboratory',
+      'SakamakiHall',
+      'SaundersHall',
+      'ShermanLaboratory',
+      'ShidlerCollegeofBusiness',
+      'SnyderHall',
+      'SpaldingHall',
+      'StJohnPlantScienceLab',
+      'WatanabeHall',
+      'WebsterHall',
+    ])
+    .required('Location is required'),
+  days: Yup.array()
+    .of(
+      Yup.string().oneOf(['M', 'T', 'W', 'R', 'F', 'Other']),
+    ).required('Days selection is required').min(1, 'At least one day must be selected'),
+  email: Yup.string().email().required(),
 });

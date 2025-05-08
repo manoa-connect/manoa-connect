@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
+// eslint-disable-next-line import/prefer-default-export
 export async function POST(req: NextRequest) {
   const { chatIds } = await req.json();
 
