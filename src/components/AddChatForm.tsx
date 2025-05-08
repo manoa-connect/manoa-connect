@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
 import { addChat } from '@/lib/dbActions';
-import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddChatSchema } from '@/lib/validationSchemas';
 import { Profile } from '@prisma/client';
 import { SendFill } from 'react-bootstrap-icons';
