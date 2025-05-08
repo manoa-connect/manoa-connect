@@ -6,16 +6,10 @@
     "dev": "next dev",
     "dev-https": "next dev --experimental-https",
     "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
     "playwright-development": "npx playwright test",
-    "playwright-ci": "next dev && npx playwright test",
-    "start": "meteor --no-release-check --exclude-archs web.browser.legacy,web.cordova --settings ../config/settings.development.json",
-    "lint": "eslint --quiet --ext .jsx --ext .js ./imports && eslint --quiet --ext .js ./tests",
-    "lint-fix": "eslint --quiet --fix --ext .jsx --ext .js ./imports && eslint --quiet --ext .js ./tests",
-    "testcafe": "testcafe chrome tests/*.testcafe.js",
-    "testcafe-single": "testcafe chrome tests/*.testcafe.js -t \"Test that signin and signout work\"",
-    "testcafe-ci": "testcafe chrome:headless tests/*.testcafe.js -q --app \"meteor npm run start\"",
-    "test-all": "meteor reset && meteor npm run lint && meteor npm run testcafe-ci",
-    "unimported": "npx unimported"
+    "playwright-ci": "next dev && npx playwright test"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -23,17 +17,14 @@
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
     "@ngneat/falso": "^7.2.0",
-    "@playwright/test": "^1.52.0",
     "@prisma/client": "^6.6.0",
     "@supabase/ssr": "^0.6.1",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
     "browser-image-compression": "^2.0.2",
-    "lint": "^1.1.2",
     "multiselect-react-dropdown": "^2.0.25",
     "next": "^14.2.24",
     "next-auth": "^4.24.7",
-    "playwright": "^1.52.0",
     "react": "^18",
     "react-bootstrap": "^2.10.4",
     "react-bootstrap-icons": "^1.11.4",
@@ -46,6 +37,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.48.2",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.5.4",
     "@types/react": "^18",
