@@ -1,386 +1,387 @@
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/landing-page.png)
+<img src="doc/assets/manoa-connect_logo-text_dark.png" width="100%" style="margin-left: auto; margin-right: auto; display: block; padding-bottom: 5%; padding-top: 2%">
 
-nextjs-application-template is a sample Next.js 14 application that illustrates:
+## **Table of contents**
+* [Overview](#overview)
+* [User Guide](#user-guide)
+* [Community Feedback](#community-feedback)
+* [Developer Guide](#developer-guide)
 
-- A standard directory layout using 'src/' as recommended in the [Next.js Project Structure](https://nextjs.org/docs/getting-started/project-structure) guide.
-- [Bootstrap 5 React](https://react-bootstrap.github.io/) for user interface.
-- [React Hook Form](https://www.react-hook-form.com/) for form development.
-- Authorization, authentication, and registration using [NextAuth.js](https://next-auth.js.org/).
-- Initialization of users and data from a settings file.
-- Alerts regarding success or failure of DB updates using [Sweet Alert](https://sweetalert.js.org/).
-- Quality assurance using [ESLint](http://eslint.org) with packages to partially enforce the [Next.js ESLint rules](https://nextjs.org/docs/app/building-your-application/configuring/eslint) and the [AirBnB Javascript Style Guide](https://github.com/airbnb/javascript).
+### **Development Process**
+* [Team](#team-and-roles)
+* [Deployment](#deployment)
+* [Page List](#page-list)
+* [Mockups](#mockups)
+* [Development Timeline](#development-timeline)
 
-The goal of this template is to help you get quickly started doing Next.js development by providing a reasonable directory structure for development and deployment, a set of common extensions to the core framework, and boilerplate code to implement basic page display, navigation, forms, roles, and database manipulation.
+[Link](https://github.com/manoa-connect) to GitHub page.
 
-To keep this codebase simple and small, some important capabilities are intentionally excluded from this template:
+[Link](https://manoa-connect-now.vercel.app/) to Manoa Connect deployed on Vercel.
 
-- Unit Testing
-- Security
-- Deployment
+![ci-badge](https://github.com/manoa-connect/manoa-connect/workflows/ci-manoa-connect-app-react/badge.svg)
 
-Examples of the these capabilities will be provided elsewhere.
+## **Overview**
+To facilitate student connection, we introduce **Manoa Connect**, a social networking website that applies matching functionalities reminiscent of dating apps (_Tinder_, _Hinge_, etc.) but in the context of finding friends on the UH Manoa campus.
 
-## Installation
+### **Motivation**
+* Despite 20,000 students on the UH Manoa campus, some students have a hard time making friends outside of their (ongoing/previous) classes or majors
+  * Difficulties being in a foreign environment (_i.e. incoming freshmen, sophomores, exchange students_)
+  * Difficulty breaking into established social groups (_i.e. juniors/seniors_)
+* Some students lack time to commit to social events
+* Certain people may be socially inexperience/have an introverted nature
+* Pandemic times may have shifted cultural norms on offline socialization (_i.e. people may prefer socializing online more now_)
 
-First, [install PostgreSQL](https://www.postgresql.org/download/). Then create a database for your application.
+### **Goal**
+Our "Big Picture" vision is to develop a thriving social platform distinct to members of UH Manoa (specifically students). Our ideal outcomes for students include:
 
-```
+* Developing friendships with people from different majors at UH Manoa provide new perspectives
+* New career/networking opportunities can arise from students in different fields of study
+* Learning how to socialize with people who have unique backgrounds nurtures social skills applicable throughout life
 
-$ createdb nextjs-application-template
-Password:
-$
 
-```
 
-Second, go to [https://github.com/ics-software-engineering/nextjs-application-template](https://github.com/ics-software-engineering/nextjs-application-template), and click the "Use this template" button. Complete the dialog box to create a new repository that you own that is initialized with this template's files.
+## **User Guide**
+This portion covers how users can use a live version of our app deployed on Vercel, found [here](https://manoa-connect-now.vercel.app/), and will assume the user has no prior knowledge of Manoa Connect. After clicking the link, users will be greeted by a landing page and additional information about how the core functionalities of Manoa Connect. If interested, the user can either click on 'Get Started' within the hero banner of the website, or click 'Login' on the top-right corner, which will open a dropdown that makes the 'Sign Up' link available.
 
-Third, go to your newly created repository, and click the "Clone or download" button to download your new GitHub repo to your local file system. Using [GitHub Desktop](https://desktop.github.com/) is a great choice if you use MacOS or Windows.
+<img src="doc/m3/home.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-Fourth, cd into the directory of your local copy of the repo, and install third party libraries with:
+<img src="doc/m2/landing1.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-```
+### **Create an Account**
+Users with an existing account can choose to log in with their credentials by navigating to the bottom of the sign-up page, or clicking in the top-right corner. However, new users should fill out their information on the following sign-up form. Once completed, this will direct the user to the next step of the account creation process: making a profile.
 
-$ npm install
+<img src="doc/m2/signup.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
+<img src="doc/m2/login.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-```
+### **Make Your Profile**
+Upon signing up, users can now create their own profile by filling out the form. This profile will also be shown to other users looking to connect in a separate page. The form asks for surface-level information that will help find connections based on compatible schedules, interests, likes, and majors.
 
-Fifth, create a `.env` file from the `sample.env`. Set the `DATABASE_URL` variable to match your PostgreSQL database that you created in the first step. See the Prisma docs [Connect your database](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/connect-your-database-typescript-postgresql). Then run the Prisma migration `npx prisma migrate dev` to set up the PostgreSQL tables.
+<img src="doc/m2/createProfile.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-```
+### **View Your Profile**
+Users are then directed to their profile homepage (to be completed), which will include their current profile information and relevant notifications (i.e. possible connections, outgoing connections, total friends, and new messages). There are also quick links to other pages of the website if users wish to explore.
 
-$ npx prisma migrate dev
-Environment variables loaded from .env
-Prisma schema loaded from prisma/schema.prisma
-Datasource "db": PostgreSQL database "<your database name>", schema "public" at "localhost:5432"
+<img src="doc/m3/prof1.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
+<img src="doc/m3/prof2.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-Applying migration `20240708195109_init`
+### **Edit Your Profile**
+If users do not find their profile to their liking, they can choose to edit the information by clicking the "Edit Profile" button.
 
-The following migration(s) have been applied:
+<img src="doc/m3/editprof.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-migrations/
-└─ 20240708195109_init/
-└─ migration.sql
+Additionally, users can change their profile pictures and add to their gallery, which will be shown to other users during the ['Connect'](#connect) process. To do this, click 'Change Photo' on the left column or 'Edit Photos' within the photo section respectively.
 
-Your database is now in sync with your schema.
+Clicking 'Change Photo' simply brings up a pop-up where users are prompted to select a new photo, whereas clicking 'Edit Photos' brings users to an entirely new page where they can upload or delete images.
 
-✔ Generated Prisma Client (v5.16.1) to ./node_modules/@prisma/client in 51ms
+<img src="doc/m3/editprofpic.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
+<img src="doc/m3/addphotos.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-$
+### **Add a Schedule**
+In addition to previous classes, Manoa Connect allows users to add their class schedule onto their profile! The specific times and schedules are not made publicly available. However, others can see if you are taking similar classes. To add classes to a schedule, navigate to the 'Schedule' page and fill out the form shown below.
 
-```
+<img src="doc/m3/schedule.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-Then seed the database with the `/config/settings.development.json` data using `npx prisma db seed`.
+### **Connect!**
+Once a user has fully set up their profile. Navigating to the Connect page shows a random Profile with various information, including:
+* Email
+* Major
+* Current Year
+* MBTI
+* Description
 
-```
+Clicking the 'More' button on the bottom-right of the card displays additional information about the Profile, such as:
+* Interests
+* Languages
+* Clubs
+* Commuter Status
+* Previous and Current Classes
 
-$ npx prisma db seed
-Environment variables loaded from .env
-Running seed command `ts-node --compiler-options {"module":"CommonJS"} prisma/seed.ts` ...
-Seeding the database
-Creating user: admin@foo.com with role: ADMIN
-Creating user: john@foo.com with role: USER
-Adding stuff: Basket (john@foo.com)
-Adding stuff: Bicycle (john@foo.com)
-Adding stuff: Banana (admin@foo.com)
-Adding stuff: Boogie Board (admin@foo.com)
+Users can choose to **Skip** a Profile or **Connect** with a Profile with buttons at the bottom corners.
 
-🌱 The seed command has been executed.
-$
+<img src="doc/m3/cardfront.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
+<img src="doc/m3/cardback.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-```
+### **Chat With Friends**
+When 2 Profiles choose to connect with each other, they are allowed to use the Chat page, sending messages to each other!
 
-## Running the system
+<img src="doc/m3/chat.png" width="100%" style="margin-left: auto; margin-right: auto; display: block;">
 
-Once the libraries are installed and the database seeded, you can run the application by invoking the "dev" script in the [package.json file](https://github.com/ics-software-engineering/nextjs-application-template/blob/master/app/package.json):
 
-```
+## **Community Feedback**
+After testing our website with various audiences, here is some feedback we've received. The general idea is that, while the functionality and technical aspects of the website mostly work, it should also be further optimized for other devices, various scenarios, and consider the privacy of the people using the service.
 
-$ npm run dev
+1. **Good Technical Functions** - A lot of testers had little to no issues with our main function, saying it was simple and straightforward to navigate through. They enjoyed being able to create your own profile and seeing real-time updates when matches are made, messages are sent, or pictures are uploaded.
+2. **Lacks Responsiveness** - One issue that was brought up but critical was how the application is not responsive for mobile devices. Unfortunately, mobile views were not as rigorously tested as the desktop version during development. This is something Manoa Connect can further improve upon.
+3. **Personalization** - Most users loved the customizable aspects---specifically filling out their profile, adding a schedule, and uploading their pictures---then seeing it laid out on their dashboard. They also liked being able to see others' interests and information that they filled out. A piece of feedback that stood out was adding more customization capabilities (e.g., choosing what pictures are displayed, changing the color of the card, etc.).
+4. **Privacy Concerns** - Some testers raised ethical concerns. While a good product from a technical standpoint, the application currently lacks checks and balances that inform users how their information will be used and shared across the site.
+5. **Verification** - An interesting question posed by a few test users was, "How do you know if this person is really a student?" This is similar to the previous point but much more critical as the application is tailored for students and should be ensured to be **only** for students. A possible way to mitigate outside account creation is by setting up an institutional login, where only members with 'hawaii.edu' emails are allowed to sign up. Though this does not ensure users are specifically UH Manoa members, it at least narrows the user base to the University of Hawaii.
 
-> nextjs-application-template-1@0.1.0 dev
-> next dev
+## **Developer Guide**
+### **Dependencies**
+Here is a list of all dependencies and tools used for this project:
+- [PostgreSQL](https://www.postgresql.org/) (database)
+- [Prisma](https://www.prisma.io/) (ORM, object-relational mapping)
+- [NextJS](https://nextjs.org/) (web development)
+- [Vercel](https://vercel.com/) (cloud service)
+- [Supabase](https://supabase.com/) (backend)
 
-▲ Next.js 14.2.4
+Please be sure to install them and be familiar with the framework.
 
-- Local: http://localhost:3000
-- Environments: .env
+### **Installation**
+The GitHub project of this website can be found and downloaded through [here](https://github.com/manoa-connect/manoa-connect).
 
-✓ Starting...
-✓ Ready in 1619ms
-
-```
-
-### Viewing the running app
-
-If all goes well, the template application will appear at [http://localhost:3000](http://localhost:3000). You can login using the credentials in [settings.development.json](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/config/settings.development.json), or else register a new account.
-
-### ESLint
-
-You can verify that the code obeys our coding standards by running ESLint over the code in the src/ directory with:
-
-```
-$ npm run lint
-
-> nextjs-application-template-1@0.1.0 lint
-> next lint
-
-✔ No ESLint warnings or errors
-$
-```
-
-## Walkthrough
-
-The following sections describe the major features of this template.
-
-### Directory structure
-
-The top-level directory structure is:
+First navigate to the working directory. Using psql or with the command line interface, create a sample database and install npm.
 
 ```
-
-.github # holds the GitHub Continuous Integration action and Issue template.
-
-config/ # holds configuration files, such as settings.development.json
-
-doc/ # holds developer documentation, user guides, etc.
-
-prisma/ # holds the Prisma ORM schema and seed.ts files.
-
-public/ # holds the public images.
-
-src/ # holds the application files.
-
-tests/ # holds the Playwright acceptance tests.
-
-.eslintrc.json # The ESLint configuration.
-
-.gitignore # don't commit VSCode settings files, node_modules, and settings.production.json
-
+npm install
+createdb sample-manoa-connect
 ```
 
-This structure separates documentation files (such as screenshots) and configuration files (such as the settings files) from the actual Next.js application.
-
-The src/ directory has this structure:
+Copy and paste the **sample.env** file included in the repository and edit the following **DATABASE_URL** fields to connect to the created database.
 
 ```
-
-app/
-
-  add/ # The add route
-    page.tsx # The Add Stuff Page
-
-  admin/
-    page.tsx # The Admin Page
-
-  api/auth/[...nextauth]/
-    route.ts # The NextAuth configuration
-
-  auth/
-    change-password/
-      page.tsx # The Change Password Page
-
-    signin/
-      page.tsx # The Sign In Page
-
-    signout/
-      page.tsx # The Sign Out Page
-
-    signup/
-      page.tsx # The Sign Up / Register Page
-
-  edit/
-    page.tsx # The Edit Stuff Page
-
-  list/
-    page.tsx # The List Stuff Page
-
-  not-authorized/
-    page.tsx # The Not Authorized Page
-
-  layout.tsx # The layout of the application
-
-  page.tsx # The Landing Page
-
-  providers.tsx # Session providers.
-
-  components/
-    AddStuffForm.tsx # The React Hook Form for adding stuff.
-
-    EditStuffForm.tsx # The Edit Stuff Form.
-
-    Footer.tsx # The application footer.
-
-    LoadingSpinner.tsx # Indicates working.
-
-    Navbar.tsx # The application navbar.
-
-    StuffItem.tsx # Row in the list stuff page.
-
-    StuffItemAdmin.tsx # Row in the admin list stuff page.
-
-  lib/
-
-    dbActions.ts # Functions to manipulate the Postgres database.
-
-    page-protections.ts # Functions to check for logged in users and their roles.
-
-    prisma.ts # Singleton Prisma client.
-
-    validationSchemas.ts # Yup schemas for validating forms.
-
-  tests/ # playwright acceptance tests.
-
+DATABASE_URL="postgresql://<YOUR_POSTGRES_USERNAME>:<PASSWORD>@localhost:5432/<DATABASE_NAME>?schema=public"
 ```
 
-### Application functionality
+Migrate the schema and populate the database using the following commands. If you would like to add/alter data, check the **seed.ts** (/prisma/seed.ts) and **settings.development.json** (/config/settings.development.json) files.
 
-The application implements a simple CRUD application for managing "Stuff", which is a PostgreSQL table consisting of a name (String), a quantity (Number), a condition (one of 'excellent', 'good', 'fair', or 'poor') and an owner.
+```
+npx prisma migrate dev
+npx prisma db seed
+```
 
-By default, each user only sees the Stuff that they have created. However, the settings file enables you to define default accounts. If you define a user with the role "admin", then that user gets access to a special page which lists all the Stuff defined by all users.
+### **Local testing and deployment**
+To run the project locally, use
 
-#### Landing page
+```
+npm run dev
+```
 
-When you retrieve the app at http://localhost:3000, this is what should be displayed:
+When attempting to deploy, you must create accounts for Vercel and Supabase and link the project. This can be done with
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/landing-page.png)
+```
+npm install vercel
+vercel link
+```
 
-The next step is to use the Login menu to either Login to an existing account or register a new account.
+in addition to creating a Supabase bucket to store images. For more information, read [here](https://supabase.com/partners/integrations/vercel). This also requires the configuration of the following Supabase .env variables:
 
-#### Login page
+```
+NEXT_PUBLIC_SUPABASE_URL=<your URL here>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your key here>
+```
 
-Clicking on the Login link, then on the Sign In menu item displays this page:
+To create a build for test purposes and deployment, you must first alter the **schema.prisma** file (/prisma/schema.prisma) to be the following
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/signin-page.png)
-
-#### Register page
-
-Alternatively, clicking on the Login link, then on the Sign Up menu item displays this page:
-
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/register-page.png)
-
-#### Landing (after Login) page, non-Admin user
-
-Once you log in (either to an existing account or by creating a new one), the navbar changes as follows:
-
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/landing-after-login-page.png)
-
-You can now add new Stuff documents, and list the Stuff you have created. Note you cannot see any Stuff created by other users.
-
-#### Add Stuff page
-
-After logging in, here is the page that allows you to add new Stuff:
-
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/add-stuff-page.png)
-
-#### List Stuff page
-
-After logging in, here is the page that allows you to list all the Stuff you have created:
-
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/list-stuff-page.png)
-
-You click the "Edit" link to go to the Edit Stuff page, shown next.
-
-#### Edit Stuff page
-
-After clicking on the "Edit" link associated with an item, this page displays that allows you to change and save it:
-
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/edit-stuff-page.png)
-
-#### Landing (after Login), Admin user
-
-You can define an "admin" user in the settings.json file. This user, after logging in, gets a special entry in the navbar:
-
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/admin-landing-page.png)
-
-#### Admin page (list all users stuff)
-
-To provide a simple example of a "super power" for Admin users, the Admin page lists all of the Stuff by all of the users:
-
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/admin-list-stuff-page.png)
-
-Note that non-admin users cannot get to this page, even if they type in the URL by hand.
-
-### Tables
-
-The application implements two tables "Stuff" and "User". Each Stuff row has the following columns: id, name, quantity, condition, and owner. The User table has the following columns: id, email, password (hashed using bcrypt), role.
-
-The Stuff and User models are defined in [prisma/schema.prisma](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/prisma/schema.prisma).
-
-The tables are initialized in [prisma/seed.ts](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/prisma/seed.ts) using the command `npx prisma db seed`.
-
-### CSS
-
-The application uses the [React implementation of Bootstrap 5](https://react-bootstrap.github.io/). You can adjust the theme by editing the `src/app/globals.css` file. To change the theme override the Bootstrap 5 CSS variables.
-
-```css
-/* Change bootstrap variable values.
- See https://getbootstrap.com/docs/5.2/customize/css-variables/
- */
-body {
-  --bs-light-rgb: 236, 236, 236;
-}
-
-/* Define custom styles */
-.gray-background {
-  background-color: var(--bs-gray-200);
-  color: var(--bs-dark);
-  padding-top: 10px;
-  padding-bottom: 20px;
+```
+datasource db {
+  provider = "postgresql"
+  // for local development
+  // url      = env("DATABASE_URL")
+  // for Vercel
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 ```
 
-### Routing
-
-For display and navigation among its four pages, the application uses [Next.js App Router](https://nextjs.org/docs/app/building-your-application/routing).
-
-Routing is defined by the directory structure.
-
-### Authentication
-
-For authentication, the application uses the NextAuth package.
-
-When the database is seeded, a settings file (such as [config/settings.development.json](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/config/settings.development.json)) is used to create users and stuff in the PostgreSQL database. That will lead to a default accounts being created.
-
-The application allows users to register and create new accounts at any time.
-
-### Authorization
-
-Only logged in users can manipulate Stuff items (but any registered user can manipulate any Stuff item, even if they weren't the user that created it.)
-
-### Configuration
-
-The [config](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/config) directory is intended to hold settings files. The repository contains one file: [config/settings.development.json](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/config/settings.development.json).
-
-The [.gitignore](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/.gitignore) file prevents a file named settings.production.json from being committed to the repository. So, if you are deploying the application, you can put settings in a file named settings.production.json and it will not be committed.
-
-### Quality Assurance
-
-#### ESLint
-
-The application includes a [.eslintrc.json](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/.eslintrc.json) file to define the coding style adhered to in this application. You can invoke ESLint from the command line as follows:
+Once completed you can run a build and attempt to deploy to Vercel with the following commands.
 
 ```
-[~/nextjs-application-template]-> npm run lint
-
-> nextjs-application-template-1@0.1.0 lint
-> next lint
-
-✔ No ESLint warnings or errors
-[~/nextjs-application-template]->
+vercel build
+vercel deploy
+vercel --prod
 ```
 
-ESLint should run without generating any errors.
+### **Modifying the Project**
+All files in the repository can be edited and modified. Within the /src directory, there are 3 directories.
+1. **/app** - contains all pages and website structure
+2. **/components** - ReactJS components used for the pages in **/app**
+3. **/lib** - technical functions for database, validation, and authentication
 
-It's significantly easier to do development with ESLint integrated directly into your IDE (such as VSCode).
+## **Team and Roles**
+Manoa Connect is designed, implemented, and maintained by [Codie Nakamura](http://codie-n.github.io/), [Chaezen-Lee Pebria](https://chaezenp.github.io/), [Masaki Sakai](https://masaki-sk.github.io/), and [Aaron Ramos](https://aar0m.github.io/).
 
-<!--
-## Screencasts
+**Formal Team Contract**: Our formal contract with agreements and criteria can be found [here](https://docs.google.com/document/d/1HFMJAH2i93QQrADcZRahhympfoDfzt7imEc7af-ks4g/edit?usp=sharing).
 
-For more information about this system, please watch one or more of the following screencasts. Note that the current source code might differ slightly from the code in these screencasts, but the changes should be very minor.
+**Chaezen Pebria - Page Specialist**\
+_Develops design for certain pages and page-specific features._\
+\- “Matching/Connect” page\
+\- Settings page
 
-- [Walkthrough of system user interface (6 min)](https://youtu.be/48xu1hrqUi8)
-- [Data and accounts structure and initialization (18 min)](https://youtu.be/HZRjwrVBWp4)
-- [Navigation, routing, pages, components (34 min)](https://youtu.be/XztTdHpv6Jw)
-- [Forms (32 min)](https://youtu.be/8FyWR3gUGCM)
-- [Authorization, authentication, and roles (12 min)](https://youtu.be/9HX5vuXTlvA)
--->
+**Masaki Sakai - Page Specialist**\
+_Develops design for certain pages and page-specific features._\
+\- Friends page\
+\- Chat page
+
+**Codie Nakamura - Project Manager, Page Specialist**\
+_Tracks team actions on GitHub; develops design for pages and specific features._\
+\- GitHub\
+\- User home page\
+\- User profile
+
+**Aaron Ramos - Project Manager, Gopher**\
+_Coordinate team and project direction; help others with design/code/testing._\
+\- Landing page\
+\- Login/Signup page\
+\- Graphics
+
+## **Tools and Organization**
+**Meeting Time:** Sunday 6PM Discord + Tuesday in-class
+
+**Discord Text Channels**\
+\- Communication\
+\- Links --- _important documents/links (i.e. proposal, sheets tracking, GitHub)_\
+\- Assets --- _Preliminary assets for everyone to review and look at_
+
+**Final Presentation:** [Google Slides](https://docs.google.com/presentation/d/1SNOkvmU1mH7Ymwontio2Z7-_S7rfsOa7PxnWv8czc8g/edit?usp=sharing)
+
+
+
+# **Deployment**
+Manoa Connect uses PostgreSQL, NextJS, and is deployed on Vercel. To visit the website, click [here](https://manoa-connect-now.vercel.app/).
+
+
+
+## **Page List**
+This section provides a set of pages for Manoa Connect that will be implemented.
+
+* [Landing page](#landing-page)
+* [Login/signup page](#loginsignup)
+* [User home page](#user-home-page)
+* [User profile page](#user-profile-page)
+* [“Matching/Connect” page](#matchingconnect-page)
+* [Friends list and chat page](#friends-list-and-chat-page)
+* [Settings page](#settings-page)
+
+**M2 Additions**
+* [Schedule upload page](#schedule-form)
+* [Map page](#map-page)
+
+**User Profile:** Add/edit name, photo(s), major, likes/interests, list of (previous/current) classes, dorm/commuter/other status, clubs, MBTI
+
+**Matching/Connect:** Random person pops up and users have the option of “match” or “skip” with two buttons
+
+**Friends:** _(Now combined with chat)_ Add freinds to a favorites/block list that can also be accessed; this page also includes the feature to delete friends
+
+**Chat:** _(Now combined with friends)_ List of chats with people matched and a selected chat page that allows for message functioning
+
+**Settings:** Settings to filter people shown (i.e. by major, interests, etc.)
+
+**Schedule Upload:** Allows users to upload a schedule where they can add, edit, or remove classes (includes name of class, time, and building). These will be appended to their Profile so that users with similar classes/buildings/time blocks.
+
+## **Mockups**
+
+### **Landing Page**
+- Links to join now page
+
+<img src="doc/m1/landing.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+### **Login/Signup**
+
+<img src="doc/m1/signup.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+<img src="doc/m1/login.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+### **User Home Page**
+- New messages box will be a button leading to the chat page
+- There is second connect button (besides the one in the navbar) to go to the matching page
+
+<img src="doc/m1/user-home.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+### **User Profile Page**
+- **Dropdown:** Major, Year, Commuter status, MBTI
+- **Text Boxes:** List of current and previous classes, clubs, likes/interests
+- Scroll down to upload/edit photos
+
+<img src="doc/m1/chat-clicked.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+### **“Matching/Connect” Page**
+- Manoa ID-inspired layout (flips from front to back on button press)
+- Contact object
+  - Name
+  -  Photo(s) - _limit to 3_
+  -  Major
+  -  Likes/interests
+  -  List of (previous/current) classes
+  -  Dorm/commuter/other status
+  -  Extracurricular clubs
+  -  MBTI
+
+<img src="doc/m1/connect-front.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+<img src="doc/m1/connect-back.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+### **Settings Page**
+- Access from profile page/dropdown from top right corner
+- Scrollable 
+- Test 
+- Mostly dropdowns
+- Some text boxes
+
+<img src="doc/m1/settings.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+### **Friends List and Chat Page**
+- Chat implemented using note and timestamp function
+- Last conversation is the order of list
+- Sort the chat box by the most recent conversation
+- Default page is blank, just contacts
+  - Clicking on the icon box will open the chat box
+- Deleting is like blocking because we will not reconnect the same people again
+  - It shows caution window to delete someone
+
+<img src="doc/m1/chat-default.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+<img src="doc/m1/chat-clicked.png" width="75%" style="margin-left: auto; margin-right: auto; display: block;">
+
+### **Schedule Form**
+- Schedule object that holds an array of Classes objects
+- Classes have the following:
+ - Time (00:00 - 00:00)
+ - Place
+ - Name
+- Will be linked to Profile
+- Used to populate Map page
+
+### **Map Page**
+- Based on schedule of student
+- Highlights the buildings they frequent
+
+
+## **Development Timeline**
+- [Milestone 1](#milestone-1-m1)
+- [Milestone 2](#milestone-2-m2)
+- [Milestone 3](#milestone-3-m3)
+
+### **Milestone 1 (M1)**
+
+<img src="doc/repo/milestone1.png" width="90%" style="margin-left: auto; margin-right: auto; display: block; padding-bottom: 2%;">
+
+[Link](https://github.com/orgs/manoa-connect/projects/1/views/1) to the GitHub project view for Milestone 1.
+
+- Completed landing Page
+- Templates mockups of other pages in NextJS
+- Setup GitHub issues and GitHub project
+- Project home page
+
+### **Milestone 2 (M2)**
+
+<img src="doc/repo/milestone2.png" width="90%" style="margin-left: auto; margin-right: auto; display: block; padding-bottom: 2%;">
+
+[Link](https://github.com/orgs/manoa-connect/projects/2) to the GitHub project view for Milestone 2.
+
+- Configure and test database for 'Friends' object
+- Complete account creation process
+- Test 1 account
+- Continue refining incomplete pages
+
+### **Milestone 3 (M3)**
+
+<img src="doc/repo/milestone3.png" width="90%" style="margin-left: auto; margin-right: auto; display: block; padding-bottom: 2%;">
+
+[Link](https://github.com/orgs/manoa-connect/projects/3) to the GitHub project view for Milestone 3.
+
+- Create schedule form
+- Add map page based on schedule
+- Clean up user profile page
+- Clean up chat page
+- Populate card with other user data
+- Implement match and skip buttons
